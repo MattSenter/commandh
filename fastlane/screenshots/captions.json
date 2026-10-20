@@ -1,0 +1,31 @@
+{
+  "_comment": "Every word drawn on the store screenshots, by shot id, field and App Store locale. Rendered by scripts/screenshots.sh. Copy rules in fastlane/AGENTS.md apply (the renderer enforces them). 'labels' fill in-slide text in the order the slide uses them.",
+  "hero": {
+    "eyebrow": { "en-US": "CommandH" },
+    "headline": { "en-US": "Command-H hides the last app, too" },
+    "labels": { "en-US": ["Hidden"] }
+  },
+  "before-after": {
+    "eyebrow": { "en-US": "One keystroke" },
+    "headline": { "en-US": "Finally see your desktop" },
+    "labels": { "en-US": ["Without CommandH", "Nothing happens", "With CommandH", "Hidden"] }
+  },
+  "settings": {
+    "eyebrow": { "en-US": "Settings" },
+    "headline": { "en-US": "Set it once. It just works." }
+  },
+  "menu-bar": {
+    "eyebrow": { "en-US": "Menu bar" },
+    "headline": { "en-US": "Stays out of your way" },
+    "labels": { "en-US": ["Enabled", "Show in Menu Bar", "Open at Login", "Settings…", "Quit CommandH"] }
+  },
+  "privacy": {
+    "eyebrow": { "en-US": "Private by design" },
+    "headline": { "en-US": "No permissions. No data. Free." },
+    "labels": { "en-US": [
+      "No permissions", "No Accessibility, Screen Recording, or Input Monitoring access to grant.",
+      "Nothing leaves", "No network access, no account, no analytics. It never reads your screen or keys.",
+      "Free for good", "No ads, no subscription, nothing to buy. Open source."
+    ] }
+  }
+}

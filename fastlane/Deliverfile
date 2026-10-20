@@ -1,0 +1,7 @@
+# fastlane/Deliverfile
+#
+# Deliberately empty. Every deliver setting CommandH uses is passed explicitly
+# from the lanes in the Fastfile, so there is exactly one place to look. The text
+# of the listing lives in fastlane/metadata/ and the stills in fastlane/screenshots/.
+#
+# https://docs.fastlane.tools/actions/deliver/

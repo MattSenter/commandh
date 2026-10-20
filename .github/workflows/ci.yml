@@ -1,0 +1,87 @@
+name: CI
+
+# Pre-release gate. Builds both flavors (build.sh's direct-download app and the
+# sandboxed App Store project), checks the App Store build carries only the
+# sandbox entitlement and no private API, and runs the offline fastlane checks,
+# so breakage surfaces before a `v*` tag hands the build to fastlane and Apple.
+on:
+  pull_request:
+  push:
+    branches: [main]
+    paths:
+      - 'Sources/**'
+      - 'Resources/**'
+      - 'Tools/**'
+      - 'Info.plist'
+      - 'CommandH.entitlements'
+      - 'project.yml'
+      - 'build.sh'
+      - 'fastlane/**'
+      - 'Gemfile'
+      - '.github/workflows/ci.yml'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: macos-15
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Select Xcode
+        uses: maxim-lobanov/setup-xcode@v1
+        with:
+          xcode-version: latest-stable
+
+      - name: Build the direct-download app
+        run: ./build.sh
+
+      - name: Build the App Store app
+        run: |
+          set -euo pipefail
+          brew install xcodegen
+          xcodegen generate
+          xcodebuild -project CommandH.xcodeproj -scheme CommandH \
+            -configuration Release -derivedDataPath build/DerivedData build
+
+      - name: Assert App Store build is sandboxed and private-API free
+        # get-task-allow is excluded: Xcode adds it to local/ad-hoc builds and
+        # strips it from every distribution-signed one.
+        run: |
+          set -euo pipefail
+          APP="build/DerivedData/Build/Products/Release/CommandH.app"
+          FILTER='import json,sys; print("\n".join(sorted(k for k in json.load(sys.stdin) if k != "com.apple.security.get-task-allow")))'
+          ENTS=$(codesign -d --entitlements - --xml "$APP" 2>/dev/null | plutil -convert json -o - - | python3 -c "$FILTER")
+          echo "Entitlements: $ENTS"
+          if [ "$ENTS" != "com.apple.security.app-sandbox" ]; then
+            echo "::error::The App Store build must have the App Sandbox and nothing else; got: $ENTS"
+            exit 1
+          fi
+          # Show Desktop's private Dock call must be compiled out (APP_STORE).
+          if strings "$APP/Contents/MacOS/CommandH" | grep -q CoreDock; then
+            echo "::error::The App Store binary references CoreDock, a private API App Review rejects."
+            exit 1
+          fi
+
+  fastlane:
+    runs-on: macos-15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.3'
+          bundler-cache: true
+      - name: Offline draft-lane checks
+        run: bundle exec ruby fastlane/tests/prepare_drafts_test.rb
+      - name: Listing copy rules
+        # fastlane/AGENTS.md: never "Mac" or "macOS" in App Store copy, no em dashes.
+        run: |
+          if grep -rniE '\bmac(os)?\b|—' fastlane/metadata fastlane/screenshots/captions.json; then
+            echo "::error::Forbidden wording or em dash in App Store copy (see fastlane/AGENTS.md)."
+            exit 1
+          fi

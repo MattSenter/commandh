@@ -1,0 +1,31 @@
+No sign-in, account, or network connection is required to use CommandH.
+
+The system will not hide an app when it is the only regular app left showing:
+pressing Command-H on it does nothing. CommandH makes Command-H work in that
+case too. It is a menu-bar app; the settings window opens on first launch and
+from the menu-bar icon.
+
+To try it:
+1. Launch CommandH and leave Enabled on.
+2. Hide every app but one (for example Option-Command-H in Finder, then
+   Command-H in the remaining apps), leaving one app such as Safari showing.
+3. Press Command-H in that last app. Without CommandH nothing happens; with
+   CommandH running it hides and the desktop is visible.
+
+How: while at most one other app is showing, CommandH switches its activation
+policy to regular and orders front a 1x1, nearly transparent, click-through
+window, so the last app is no longer the last regular app and its own
+Command-H hide succeeds. CommandH's Dock icon is visible only during that time
+and disappears once two or more apps are showing again. Bring hidden apps back
+from the Dock or with Command-Tab as usual.
+
+Closing the settings window or pressing Command-Q there keeps CommandH running
+in the menu bar, so a stray keystroke never disables it. "Quit CommandH" in the
+menu-bar menu or the settings window quits it.
+
+The app runs in the App Sandbox with no other entitlements. It uses only public
+APIs (NSWorkspace running-application state and notifications, NSApplication
+activation policy, SMAppService for the optional Open at Login). It requests no
+Accessibility, Screen Recording, or Input Monitoring permission, does not read
+keystrokes or screen contents, makes no network connections, and collects no
+data. There is no in-app purchase.

@@ -1,0 +1,4 @@
+# The App Store listing's screenshots (2880x1800 PNGs). LFS keeps them out of the
+# pack, as in Weatherling; the release workflows check out with lfs: true so
+# deliver uploads the real files and not 130-byte pointers.
+fastlane/screenshots/**/*.png filter=lfs diff=lfs merge=lfs -text

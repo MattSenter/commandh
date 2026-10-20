@@ -22,9 +22,20 @@ import AppKit
 import Carbon.HIToolbox
 import ServiceManagement
 import SwiftUI
+import os // DEBUG-STANDIN
+
+let standInLog = Logger(subsystem: "com.mattsenter.CommandH", category: "standin") // DEBUG-STANDIN
 
 // MARK: - Show Desktop (private Dock API, no permissions needed)
 
+#if APP_STORE
+// The Mac App Store build (APP_STORE, set in project.yml) leaves Show Desktop
+// out: it is a private Dock call, and App Review rejects private API use.
+private enum ShowDesktop {
+    static let isAvailable = false
+    static func toggle() {}
+}
+#else
 private enum ShowDesktop {
     private typealias SendFn = @convention(c) (CFString, UnsafeMutableRawPointer?) -> Void
     private static let send: SendFn? = {
@@ -40,6 +51,7 @@ private enum ShowDesktop {
         send("com.apple.showdesktop.awake" as CFString, nil)
     }
 }
+#endif
 
 // MARK: - Global Cmd+H hotkey (Carbon, no permissions needed)
 
@@ -76,8 +88,8 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
     private var statusItem: NSStatusItem!
     private var statusVisibilityObservation: NSKeyValueObservation?
     private var enabledItem: NSMenuItem!
-    private var hideAppItem: NSMenuItem!
-    private var showDesktopItem: NSMenuItem!
+    private var hideAppItem: NSMenuItem?
+    private var showDesktopItem: NSMenuItem?
     private var menuBarItem: NSMenuItem!
     private var loginItem: NSMenuItem!
     private lazy var hotKey = HotKey { ShowDesktop.toggle() }
@@ -95,7 +107,10 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
     }
 
     private var method: HideMethod {
-        get { defaults.string(forKey: Keys.method).flatMap(HideMethod.init) ?? .hideApp }
+        get {
+            guard ShowDesktop.isAvailable else { return .hideApp }
+            return defaults.string(forKey: Keys.method).flatMap(HideMethod.init) ?? .hideApp
+        }
         set { defaults.set(newValue.rawValue, forKey: Keys.method) }
     }
 
@@ -200,6 +215,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
         } else {
             hotKey.unregister()
         }
+        standInLog.notice("update front=\(front?.localizedName ?? "-", privacy: .public) visible=\(visible.map { $0.localizedName ?? "?" }.joined(separator: ","), privacy: .public) standIn=\(standIn) policy=\(NSApp.activationPolicy().rawValue) hidden=\(NSApp.isHidden) active=\(NSApp.isActive) placeholderVisible=\(self.placeholder.isVisible) onScreen=\(self.placeholder.occlusionState.contains(.visible))") // DEBUG-STANDIN
     }
 
     private lazy var placeholder: NSWindow = {
@@ -288,14 +304,18 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
         enabledItem = menu.addItem(withTitle: "Enabled", action: #selector(toggleEnabled), keyEquivalent: "")
         enabledItem.target = self
 
+        #if !APP_STORE
         let methodMenu = NSMenu()
-        hideAppItem = methodMenu.addItem(withTitle: "Hide the App (Dock icon appears)", action: #selector(chooseHideApp), keyEquivalent: "")
-        showDesktopItem = methodMenu.addItem(withTitle: "Show Desktop (no Dock icon)", action: #selector(chooseShowDesktop), keyEquivalent: "")
+        let hideAppItem = methodMenu.addItem(withTitle: "Hide the App (Dock icon appears)", action: #selector(chooseHideApp), keyEquivalent: "")
+        let showDesktopItem = methodMenu.addItem(withTitle: "Show Desktop (no Dock icon)", action: #selector(chooseShowDesktop), keyEquivalent: "")
         hideAppItem.target = self
         showDesktopItem.target = self
         if !ShowDesktop.isAvailable { showDesktopItem.action = nil }
+        self.hideAppItem = hideAppItem
+        self.showDesktopItem = showDesktopItem
         let methodItem = menu.addItem(withTitle: "When Cmd+H Can't Hide", action: nil, keyEquivalent: "")
         methodItem.submenu = methodMenu
+        #endif
 
         menu.addItem(.separator())
         menuBarItem = menu.addItem(withTitle: "Show in Menu Bar", action: #selector(toggleMenuBar), keyEquivalent: "")
@@ -319,8 +339,8 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
     private func refreshMenu() {
         if statusItem.isVisible != showInMenuBar { statusItem.isVisible = showInMenuBar }
         enabledItem.state = enabled ? .on : .off
-        hideAppItem.state = method == .hideApp ? .on : .off
-        showDesktopItem.state = method == .showDesktop ? .on : .off
+        hideAppItem?.state = method == .hideApp ? .on : .off
+        showDesktopItem?.state = method == .showDesktop ? .on : .off
         menuBarItem.state = showInMenuBar ? .on : .off
         loginItem.state = SMAppService.mainApp.status == .enabled ? .on : .off
     }

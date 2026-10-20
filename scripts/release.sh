@@ -15,7 +15,7 @@ cd "${0:A:h}/.."
 TEAM_ID="SD44498F6T"
 PROFILE="${NOTARY_PROFILE:-commandh-notary}"
 APP=build/CommandH.app
-VERSION=$(/usr/libexec/PlistBuddy -c "Print :CFBundleShortVersionString" Info.plist)
+VERSION=$(sed -n 's/^ *MARKETING_VERSION: "\(.*\)"$/\1/p' project.yml)
 ZIP="build/CommandH-$VERSION.zip"
 
 ./build.sh

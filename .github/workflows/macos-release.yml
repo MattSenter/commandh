@@ -1,0 +1,151 @@
+name: macOS Release
+
+# Mac App Store release, the same model as Weatherling's. Push to `main` -> build +
+# sign -> upload to TestFlight -> wait for Apple's processing -> internal testers
+# (fastlane mac beta). Push a tag like `v1.0` -> same build -> upload the listing
+# (fastlane/metadata + fastlane/screenshots) and submit to the App Store with
+# automatic release (fastlane mac release) -> once that succeeds, raise
+# MARKETING_VERSION on `main` to the next minor (1.1), without tagging it, so the
+# TestFlight builds that follow go to the new version's train.
+#
+# Apple is the distribution surface, so there is no Firebase Storage upload, no
+# manifest.json and no app-released dispatch. Native macOS (not Catalyst), so it
+# is a single job.
+on:
+  push:
+    branches: [main]
+    # App-only paths: a docs-only commit must not cut a TestFlight build. Tag pushes
+    # are unfiltered (GitHub applies paths to branch pushes only).
+    paths:
+      - 'Sources/**'
+      - 'Resources/**'
+      - 'Info.plist'
+      - 'CommandH.entitlements'
+      - 'project.yml'
+      - 'fastlane/**'
+      - 'Gemfile'
+      - '.github/workflows/macos-release.yml'
+    tags: ['v*']
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: commandh-app-store
+  cancel-in-progress: false
+
+jobs:
+  macos-release:
+    runs-on: macos-15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          # The store screenshots are in LFS. Without this deliver gets pointer files.
+          lfs: true
+
+      - name: Select Xcode
+        # latest-stable, NOT pinned: Apple requires a current SDK for App Store uploads.
+        uses: maxim-lobanov/setup-xcode@v1
+        with:
+          xcode-version: latest-stable
+
+      - name: Generate the Xcode project
+        # CommandH.xcodeproj is gitignored. This MUST run before the fastlane lane and
+        # MUST NOT run again after it: the lane's update_code_signing_settings edits
+        # the project generated here.
+        run: brew install xcodegen && xcodegen generate
+
+      - name: Set up Ruby + fastlane
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.3'
+          bundler-cache: true
+
+      - name: Import Apple Distribution certificate
+        # Signs the .app. Per-TEAM: the same .p12 as Weatherling and StockCar.
+        uses: apple-actions/import-codesign-certs@v3
+        with:
+          p12-file-base64: ${{ secrets.APPLE_CERTIFICATE }}
+          p12-password: ${{ secrets.APPLE_CERTIFICATE_PASSWORD }}
+          keychain-password: ${{ github.run_id }}   # shared so both certs land in one keychain
+
+      - name: Import Mac Installer Distribution certificate
+        # Signs the App Store .pkg, a different cert type than the one that signs the .app.
+        uses: apple-actions/import-codesign-certs@v3
+        with:
+          p12-file-base64: ${{ secrets.APPLE_INSTALLER_CERTIFICATE }}
+          p12-password: ${{ secrets.APPLE_INSTALLER_CERTIFICATE_PASSWORD }}
+          keychain-password: ${{ github.run_id }}
+          create-keychain: false
+
+      - name: Determine lane from the ref
+        id: lane
+        run: |
+          set -euo pipefail
+          if [ "$GITHUB_REF_TYPE" = "tag" ]; then
+            echo "lane=release" >> "$GITHUB_OUTPUT"   # v* tag -> App Store submission
+          else
+            echo "lane=beta" >> "$GITHUB_OUTPUT"      # main push -> TestFlight, internal testers
+          fi
+
+      - name: Build + sign + distribute
+        env:
+          APP_STORE_CONNECT_API_KEY_ID: ${{ secrets.APP_STORE_CONNECT_API_KEY_ID }}
+          APP_STORE_CONNECT_API_ISSUER_ID: ${{ secrets.APP_STORE_CONNECT_API_ISSUER_ID }}
+          APP_STORE_CONNECT_API_KEY_P8: ${{ secrets.APP_STORE_CONNECT_API_KEY_P8 }}
+          # A FLOOR for the build number; the lane asks App Store Connect for the
+          # highest build it has and adds one, because a re-run reuses run_number.
+          BUILD_NUMBER: ${{ github.run_number }}
+        run: |
+          set -euo pipefail
+          if [ "$GITHUB_REF_TYPE" = "tag" ]; then
+            export MARKETING_VERSION="${GITHUB_REF_NAME#v}"
+          fi
+          bundle exec fastlane mac ${{ steps.lane.outputs.lane }}
+
+      - name: Preserve archive diagnostics on failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: macos-archive-logs
+          path: ~/Library/Logs/gym/*.log
+          if-no-files-found: ignore
+          retention-days: 7
+
+  bump-version:
+    # After a tagged release only, and only once it has gone through. Pushed with
+    # GITHUB_TOKEN, so this commit does not start another workflow run.
+    needs: macos-release
+    if: github.ref_type == 'tag'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - name: Raise MARKETING_VERSION to the next minor
+        run: |
+          set -euo pipefail
+          released="${GITHUB_REF_NAME#v}"
+          IFS=. read -r major minor rest <<< "$released"
+          next="$major.$((minor + 1))"
+          [ -n "${rest:-}" ] && next="$next.0"
+          current=$(sed -n 's/^ *MARKETING_VERSION: "\(.*\)"$/\1/p' project.yml)
+          # A re-run, or a version already raised by hand: leave it alone.
+          if [ "$(printf '%s\n%s\n' "$current" "$next" | sort -V | tail -1)" = "$current" ]; then
+            echo "project.yml is already at $current (next after $released is $next); nothing to do."
+            exit 0
+          fi
+          sed -i "s/^\( *MARKETING_VERSION: \)\"[^\"]*\"$/\1\"$next\"/" project.yml
+          git diff --exit-code --quiet project.yml && { echo "MARKETING_VERSION not found in project.yml"; exit 1; }
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -am "Raise the version to $next after releasing $released"
+          for _ in 1 2 3; do
+            git push origin HEAD:main && exit 0
+            git pull --rebase origin main
+          done
+          exit 1

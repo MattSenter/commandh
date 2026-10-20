@@ -1,3 +1,15 @@
 build/
+build-macos/
 .DS_Store
 *.p8
+CommandH.xcodeproj/
+fastlane/report.xml
+.bundle/
+vendor/
+
+# Personal App Review contact info: kept locally, never committed (public repo).
+# App Store Connect keeps the contact across versions, so CI doesn't need it.
+fastlane/metadata/review_information/first_name.txt
+fastlane/metadata/review_information/last_name.txt
+fastlane/metadata/review_information/email_address.txt
+fastlane/metadata/review_information/phone_number.txt

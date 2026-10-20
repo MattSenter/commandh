@@ -1,0 +1,17 @@
+{
+  "_comment": "Read by scripts/screenshots.sh and Tools/StoreScreenshots.swift. CommandH is English only, so there is one language row; add a row (and captions) when the app gains a localization. No help shots: CommandH has no site yet.",
+  "languages": [
+    { "app": "en", "store": ["en-US"] }
+  ],
+  "store": {
+    "outDir": "fastlane/screenshots/{store}",
+    "devices": ["mac"],
+    "shots": [
+      { "id": "hero" },
+      { "id": "before-after" },
+      { "id": "settings" },
+      { "id": "menu-bar" },
+      { "id": "privacy" }
+    ]
+  }
+}

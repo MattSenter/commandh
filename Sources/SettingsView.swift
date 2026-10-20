@@ -40,6 +40,12 @@ struct SettingsView: View {
 
             Section {
                 Toggle("Enabled", isOn: $enabled)
+                #if APP_STORE
+                // Store screenshots show this window, and App Store copy never says "macOS".
+                Text("CommandH briefly appears in the Dock so your last app can hide.")
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+                #else
                 Picker("When Cmd+H can't hide the last app", selection: $method) {
                     Text("Hide the app").tag(HideMethod.hideApp)
                     Text("Show Desktop").tag(HideMethod.showDesktop)
@@ -51,6 +57,7 @@ struct SettingsView: View {
                      : "Windows slide to the edges of the screen. Press Cmd+H again to bring them back. No Dock icon.")
                     .font(.caption)
                     .foregroundStyle(.secondary)
+                #endif
             }
 
             Section {

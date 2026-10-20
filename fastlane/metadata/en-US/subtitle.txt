@@ -1,0 +1,1 @@
+Make Command-H always work

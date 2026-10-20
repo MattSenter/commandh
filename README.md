@@ -171,7 +171,7 @@ The whole app is under 500 lines of Swift in [`Sources/`](Sources).
 3. Drag `/Applications/CommandH.app` to the Trash.
 4. Optionally remove its settings:
    ```sh
-   defaults delete net.senter.commandh
+   defaults delete com.mattsenter.CommandH
    ```
 
 ## Building and contributing
@@ -189,6 +189,8 @@ swift Tools/make-icon.swift   # regenerates the app icon in Resources/
 | `Sources/MenuBarIcon.swift` | The menu bar icon, drawn in code |
 | `Tools/make-icon.swift` | Renders the app icon |
 | `scripts/release.sh` | Developer ID signing and notarization for releases |
+| `project.yml`, `fastlane/` | The Mac App Store build (sandboxed, without Show Desktop). See [docs/AppStore.md](docs/AppStore.md) |
+| `scripts/screenshots.sh` | Renders the App Store screenshots |
 
 Issues and pull requests are welcome.
 

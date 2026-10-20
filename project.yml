@@ -1,0 +1,46 @@
+# XcodeGen spec for the Mac App Store build. CommandH.xcodeproj is generated
+# (gitignored): run `xcodegen generate`. build.sh still builds the direct-download
+# app with plain swiftc; this project is what fastlane archives for the App Store.
+#
+# The two builds differ in one place: this one defines APP_STORE, which leaves out
+# Show Desktop (a private Dock call App Review rejects) and runs in the App Sandbox.
+name: CommandH
+options:
+  bundleIdPrefix: com.mattsenter
+  deploymentTarget:
+    macOS: "14.0"
+settings:
+  base:
+    # The App Store version. fastlane overrides both at archive time (the tag's
+    # version, a fresh build number); the Release workflow raises this after a release.
+    MARKETING_VERSION: "1.0"
+    CURRENT_PROJECT_VERSION: "1"
+    # Local builds need no identity. fastlane sets real signing at the target level.
+    CODE_SIGN_IDENTITY: "-"
+    CODE_SIGN_STYLE: Manual
+    DEVELOPMENT_TEAM: ""
+targets:
+  CommandH:
+    type: application
+    platform: macOS
+    sources:
+      - path: Sources
+      - path: Resources/AppIcon.icns
+        buildPhase: resources
+    settings:
+      base:
+        PRODUCT_NAME: CommandH
+        PRODUCT_BUNDLE_IDENTIFIER: com.mattsenter.CommandH
+        INFOPLIST_FILE: Info.plist
+        GENERATE_INFOPLIST_FILE: NO
+        CODE_SIGN_ENTITLEMENTS: CommandH.entitlements
+        ENABLE_HARDENED_RUNTIME: YES
+        SWIFT_VERSION: "5.0"
+        SWIFT_ACTIVE_COMPILATION_CONDITIONS: "$(inherited) APP_STORE"
+schemes:
+  CommandH:
+    build:
+      targets:
+        CommandH: all
+    archive:
+      config: Release

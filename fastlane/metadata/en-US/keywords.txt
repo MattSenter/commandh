@@ -1,0 +1,1 @@
+hide,hide all,hotkey,shortcut,keyboard,desktop,menu bar,windows,declutter,clean,focus,minimal,dock

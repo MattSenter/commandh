@@ -1,0 +1,386 @@
+# fastlane/Fastfile, modeled on Weatherling's (native macOS track of
+# /senternet-private-github-action-ios-release). CommandH is a free, macOS-only
+# AppKit menu-bar app that ships through the Mac App Store, so this is the
+# `platform :mac` form.
+#
+# Lanes, one signing story:
+#   mac beta               -> pilot   -> TestFlight for internal testers (push to main)
+#   mac release            -> deliver -> submit to the App Store (push a v* tag)
+#   mac prepare_drafts     -> stage the listing and optional TestFlight build, no submission
+#   mac upload_screenshots -> refresh only the screenshots of an editable version
+#   mac set_privacy        -> publish the App Privacy answers (Apple ID login, run once)
+#
+# The store listing is version-controlled, not edited in App Store Connect: the
+# text lives in fastlane/metadata/ and the stills in fastlane/screenshots/
+# (rendered by scripts/screenshots.sh). Release and prepare_drafts push both.
+#
+# The App Store build is project.yml (XcodeGen), which defines APP_STORE and runs
+# in the App Sandbox. build.sh's swiftc build is the direct-download one.
+#
+# Signing is MANUAL: the App Store Connect API key fetches the Mac App Store
+# PROFILE (never mints a certificate) and the .app is signed with the team's
+# Apple Distribution certificate that the workflow imports into the runner
+# keychain. Nothing is created in the portal per run.
+
+require "fileutils"
+require "spaceship"
+
+default_platform(:mac)
+
+BUNDLE_ID = "com.mattsenter.CommandH"
+
+# Where the store listing lives. Absolute so a lane behaves the same whether
+# fastlane was invoked from the repo root or from fastlane/.
+METADATA_PATH    = File.expand_path("./metadata", __dir__)
+SCREENSHOTS_PATH = File.expand_path("./screenshots", __dir__)
+
+# True when <root>/<locale>/ holds at least one file with one of these extensions.
+# Guards the deliver calls below: the screenshot sync runs with `overwrite`, and
+# an overwrite driven by an EMPTY folder deletes the live listing's screenshots.
+def listing_assets?(root, extensions)
+  Dir.glob(File.join(root, "*", "*")).any? do |path|
+    extensions.include?(File.extname(path).downcase)
+  end
+end
+
+# Apple rejected Weatherling for saying "Mac" in its listing (see AGENTS.md), and
+# no user-facing copy gets em dashes. Refuse to upload either.
+def check_listing_copy!
+  Dir.glob(File.join(METADATA_PATH, "**", "*.txt")).each do |path|
+    text = File.read(path)
+    UI.user_error!("Forbidden platform wording in #{path}") if text.match?(/\bmac(?:os)?\b/i)
+    UI.user_error!("Em dash in #{path}") if text.include?("—")
+  end
+end
+
+# App Store Connect API key for the UPLOAD actions (pilot/deliver) and for
+# fetching provisioning profiles. `key_content` is the raw .p8 straight from the
+# secret, so no key file is written to disk for the upload path.
+# Local fallbacks so the hand-run lanes work from a laptop without exporting
+# anything. CI always sets all three env vars and they win. The key id and issuer
+# id are not secrets; the private key itself stays on disk, outside the repo.
+LOCAL_ASC_KEY_ID    = "<KEY_ID>"
+LOCAL_ASC_ISSUER_ID = "<ISSUER_ID>"
+LOCAL_ASC_KEY_PATH  = File.expand_path("~/Downloads/AuthKey_#{LOCAL_ASC_KEY_ID}.p8")
+
+def asc_api_key
+  key_content = ENV["APP_STORE_CONNECT_API_KEY_P8"].to_s
+  if key_content.empty?
+    unless File.exist?(LOCAL_ASC_KEY_PATH)
+      UI.user_error!("No APP_STORE_CONNECT_API_KEY_P8 in the environment and no key file at #{LOCAL_ASC_KEY_PATH}.")
+    end
+    UI.important("Using the local App Store Connect key at #{LOCAL_ASC_KEY_PATH}")
+    key_content = File.read(LOCAL_ASC_KEY_PATH)
+  end
+
+  app_store_connect_api_key(
+    key_id: ENV["APP_STORE_CONNECT_API_KEY_ID"] || LOCAL_ASC_KEY_ID,
+    issuer_id: ENV["APP_STORE_CONNECT_API_ISSUER_ID"] || LOCAL_ASC_ISSUER_ID,
+    key_content: key_content,
+    is_key_content_base64: false,
+    in_house: false
+  )
+end
+
+# Version/build-number build settings. These OVERRIDE the values in project.yml
+# (settings.base) at archive time, so the shipped build carries the tag's version
+# and a fresh, monotonic build number without editing any file. The workflow sets
+# BUILD_NUMBER from the CI run and, on a tag, MARKETING_VERSION from ${GITHUB_REF_NAME#v}.
+def version_xcargs
+  args = []
+  args << "MARKETING_VERSION=#{ENV['MARKETING_VERSION']}" unless ENV["MARKETING_VERSION"].to_s.empty?
+  args << "CURRENT_PROJECT_VERSION=#{ENV['BUILD_NUMBER']}" unless ENV["BUILD_NUMBER"].to_s.empty?
+  args.join(" ")
+end
+
+# One past the highest build App Store Connect already has for this app on macOS.
+#
+# The workflow's BUILD_NUMBER (github.run_number) is kept only as a FLOOR, never
+# as the source, because re-running a failed run reuses its run_number and Apple
+# rejects the duplicate. Asking Apple for the highest build and adding one cannot
+# collide, while the floor covers App Store Connect's query lagging an upload.
+def next_build_number(api_key)
+  latest = begin
+    latest_testflight_build_number(
+      api_key: api_key,
+      app_identifier: BUNDLE_ID,
+      platform: "osx" # the macOS app record, not an iOS one
+    )
+  rescue => e
+    # A brand new app with no builds raises rather than returning 0.
+    UI.important("Could not read the latest TestFlight build number (#{e.class}); treating it as 0.")
+    0
+  end
+  [latest.to_i + 1, ENV["BUILD_NUMBER"].to_i].max
+end
+
+def find_app!(api_key)
+  Spaceship::ConnectAPI.token = Spaceship::ConnectAPI::Token.from(hash: api_key)
+  app = Spaceship::ConnectAPI::App.find(BUNDLE_ID)
+  UI.user_error!("No App Store Connect app record for #{BUNDLE_ID}. Create it first (see docs/AppStore.md).") unless app
+  app
+end
+
+# Apple refuses to review a version until the app-level content rights question
+# is answered, and deliver has NO option for it, so it has to be set directly.
+# CommandH ships no third-party content. Idempotent: reads first and only patches
+# when it differs. The read uses App.get, because the find-by-bundle-id query does
+# not return this attribute and it always comes back nil there.
+def ensure_content_rights!(api_key)
+  wanted = Spaceship::ConnectAPI::App::ContentRightsDeclaration::DOES_NOT_USE_THIRD_PARTY_CONTENT
+  app = Spaceship::ConnectAPI::App.get(app_id: find_app!(api_key).id)
+  if app.content_rights_declaration == wanted
+    UI.message("Content rights already #{wanted}.")
+  else
+    UI.important("Setting content rights #{app.content_rights_declaration.inspect} -> #{wanted}")
+    app.update(attributes: { content_rights_declaration: wanted })
+  end
+end
+
+# TestFlight "What to Test" text, shown to testers: the subject of the commit
+# being built. Em dashes are swapped out because this is user-facing text.
+def beta_changelog
+  subject = sh("git", "log", "-1", "--format=%s", log: false).strip
+  subject = "Bug fixes and improvements." if subject.empty?
+  subject.gsub(/\s*—\s*/, ", ")[0, 4000]
+end
+
+# Every signing target in the macOS build: bundle id => Xcode target name.
+MAC_TARGETS = {
+  BUNDLE_ID => "CommandH",
+}.freeze
+
+# CommandH is XcodeGen: `xcodegen generate` MUST already have run (the workflow
+# does it) and MUST NOT run again after this point. update_code_signing_settings
+# edits the GENERATED CommandH.xcodeproj, and a regenerate silently discards those
+# edits, after which the export falls back to hunting for a profile.
+#
+# project.yml pins CODE_SIGN_IDENTITY "-" / CODE_SIGN_STYLE Manual / empty
+# DEVELOPMENT_TEAM so local builds work with no identity. update_code_signing_settings
+# writes real values at the TARGET level, which override those base settings.
+def build_the_native_mac_app
+  key = asc_api_key
+  profiles = MAC_TARGETS.map do |bundle_id, target|
+    name = get_provisioning_profile( # sigh: Mac App Store profile for the imported dist cert
+      api_key: key,
+      app_identifier: bundle_id,
+      platform: "macos",           # NOT "catalyst": this is a native macOS target
+      # readonly: FETCH an existing profile, never create one. The key can read
+      # profiles but not create them, so the Mac App Store profile is created
+      # ONCE by hand in the Developer portal (docs/AppStore.md).
+      readonly: true
+    )
+    update_code_signing_settings(
+      path: "CommandH.xcodeproj",
+      use_automatic_signing: false,
+      team_id: "SD44498F6T",
+      code_sign_identity: "Apple Distribution",
+      targets: [target],
+      profile_name: name
+    )
+    [bundle_id, name]
+  end.to_h
+
+  build_mac_app( # gym, macOS entry point: exports a .pkg for the Mac App Store
+    scheme: "CommandH",
+    export_options: {
+      method: "app-store",
+      signingStyle: "manual",
+      provisioningProfiles: profiles
+    },
+    # Version/build number only. NO -allowProvisioningUpdates, because manual
+    # signing must not let Xcode create anything in the portal per run.
+    xcargs: version_xcargs,
+    output_directory: "build-macos",
+    clean: true
+  )
+end
+
+platform :mac do
+  # There is deliberately NO price lane. deliver sets price through Apple's
+  # legacy price-TIER API, which Apple deleted in the 2023 move to price points.
+  # CommandH is free: set that once in App Store Connect under Pricing and
+  # Availability (docs/AppStore.md).
+
+  desc "Publish the App Privacy answers (no data collected). Needs an Apple ID login."
+  lane :set_privacy do
+    # NOT the API key: this action talks to the App Store Connect web API, which
+    # wants an Apple ID session (username, password, 2FA), so it cannot run
+    # unattended in CI. `username` comes from FASTLANE_USER.
+    upload_app_privacy_details_to_app_store(
+      app_identifier: BUNDLE_ID,
+      json_path: File.expand_path("./app_privacy_details.json", __dir__)
+    )
+  end
+
+  desc "Build the native macOS app and upload it to TestFlight for internal testers (runs on a push to main)"
+  lane :beta do
+    api_key = asc_api_key
+    # Must be set BEFORE the build: version_xcargs bakes CURRENT_PROJECT_VERSION
+    # into the archive from this env var.
+    ENV["BUILD_NUMBER"] = next_build_number(api_key).to_s
+    UI.important("Build number for this run: #{ENV['BUILD_NUMBER']}")
+    build_the_native_mac_app
+    upload_to_testflight( # pilot
+      api_key: api_key,
+      app_platform: "osx",                      # target the macOS app record explicitly
+      skip_waiting_for_build_processing: false,
+      wait_processing_timeout_duration: 3600,
+      changelog: beta_changelog,
+      distribute_external: false
+    )
+  end
+
+  desc "Prepare an editable macOS App Store listing without submitting for review"
+  lane :prepare_drafts do |options|
+    version = options[:version].to_s.strip
+    UI.user_error!("Pass version:X.Y or version:X.Y.Z (for example 1.0).") unless version.match?(/\A[0-9]+\.[0-9]+(?:\.[0-9]+)?\z/)
+    attach_builds = options.fetch(:attach_builds, true).to_s
+    UI.user_error!("attach_builds must be true or false.") unless %w[true false].include?(attach_builds)
+
+    UI.user_error!("No screenshots available to upload") unless listing_assets?(SCREENSHOTS_PATH, [".png", ".jpg", ".jpeg"])
+    check_listing_copy!
+    api_key = asc_api_key
+    app = find_app!(api_key)
+    platform = "MAC_OS"
+
+    # Check the listing before changing it. Never rename another draft or
+    # modify a version already in review. Reruns may refresh this exact draft.
+    live = app.get_live_app_store_version(platform: platform)
+    if live && Gem::Version.new(version) <= Gem::Version.new(live.version_string)
+      UI.user_error!("#{platform}: #{version} must be newer than live #{live.version_string}.")
+    end
+    review = app.get_in_review_app_store_version(platform: platform)
+    UI.user_error!("#{platform}: a version is already in review.") if review
+    draft = app.get_edit_app_store_version(platform: platform)
+    if draft && (draft.version_string != version || draft.app_store_state != "PREPARE_FOR_SUBMISSION")
+      UI.user_error!("#{platform}: existing #{draft.version_string} is #{draft.app_store_state}; leaving it untouched.")
+    end
+
+    upload_to_app_store(
+      api_key: api_key,
+      app_identifier: BUNDLE_ID,
+      platform: "osx",
+      app_version: version,
+      edit_live: false,
+      use_live_version: false,
+      skip_app_version_update: false,
+      submit_for_review: false,
+      automatic_release: false,
+      run_precheck_before_submit: false,
+      precheck_include_in_app_purchases: false,
+      skip_binary_upload: true,
+      skip_metadata: false,
+      skip_screenshots: false,
+      overwrite_screenshots: true,
+      metadata_path: METADATA_PATH,
+      screenshots_path: SCREENSHOTS_PATH,
+      app_rating_config_path: File.expand_path("./app_rating_config.json", __dir__),
+      force: true
+    )
+    draft = app.get_edit_app_store_version(platform: platform)
+    unless draft && draft.version_string == version && draft.app_store_state == "PREPARE_FOR_SUBMISSION"
+      UI.user_error!("#{platform}: #{version} was not read back in PREPARE_FOR_SUBMISSION.")
+    end
+    if attach_builds == "true"
+      build = Spaceship::ConnectAPI::Build.all(
+        app_id: app.id, version: version, platform: platform,
+        processing_states: "VALID", sort: "-uploadedDate"
+      ).find { |candidate| !candidate.expired }
+      if build
+        draft.select_build(build_id: build.id)
+        UI.user_error!("#{platform}: attached build readback failed.") unless draft.get_build&.id == build.id
+        UI.message("#{platform}: attached processed build #{build.version}.")
+      else
+        UI.message("#{platform}: no processed #{version} build available; listing is ready to edit. Rerun after TestFlight processing to attach it.")
+      end
+    end
+    result = "#{platform} #{version}: PREPARE_FOR_SUBMISSION, https://appstoreconnect.apple.com/apps/#{app.id}/distribution"
+    UI.success(result)
+    File.open(ENV["GITHUB_STEP_SUMMARY"], "a") { |file| file.puts("- #{result}") } if ENV["GITHUB_STEP_SUMMARY"]
+  end
+
+  desc "Upload the screenshots to an editable App Store version (no binary, no metadata, no submission)"
+  lane :upload_screenshots do |options|
+    version = options[:version].to_s
+    UI.user_error!("Specify the editable version, e.g. mac upload_screenshots version:1.0") if version.empty?
+    UI.user_error!("No screenshots available to upload") unless listing_assets?(SCREENSHOTS_PATH, [".png", ".jpg", ".jpeg"])
+    upload_to_app_store(
+      api_key: asc_api_key,
+      app_identifier: BUNDLE_ID,
+      platform: "osx",
+      app_version: version,
+      skip_binary_upload: true,
+      skip_metadata: true,
+      skip_screenshots: false,
+      screenshots_path: SCREENSHOTS_PATH,
+      overwrite_screenshots: true,
+      submit_for_review: false,
+      force: true,
+      run_precheck_before_submit: false
+    )
+  end
+
+  desc "Build the native macOS app and submit to the App Store (runs on a v* tag)"
+  lane :release do
+    check_listing_copy!
+    api_key = asc_api_key
+    # Must be set BEFORE the build: version_xcargs bakes CURRENT_PROJECT_VERSION
+    # into the archive from this env var.
+    ENV["BUILD_NUMBER"] = next_build_number(api_key).to_s
+    UI.important("Build number for this run: #{ENV['BUILD_NUMBER']}")
+    build_the_native_mac_app
+
+    has_screenshots = listing_assets?(SCREENSHOTS_PATH, [".png", ".jpg", ".jpeg"])
+    UI.important("No screenshots under #{SCREENSHOTS_PATH}, leaving the listing's screenshots alone.") unless has_screenshots
+    ensure_content_rights!(api_key)
+
+    # Upload through pilot so we wait for this exact package to finish Apple's
+    # processing. A binary-only deliver call returns immediately after upload,
+    # leaving the listing submission racing a build that is not yet selectable.
+    upload_to_testflight(
+      api_key: api_key,
+      app_platform: "osx",
+      skip_waiting_for_build_processing: false,
+      wait_processing_timeout_duration: 3600,
+      skip_submission: true,
+      distribute_external: false
+    )
+
+    # deliver omits the platform when configuring precheck with an API key, so
+    # its default would inspect the nonexistent iOS version.
+    ENV["PRECHECK_PLATFORM"] = "osx"
+
+    # Upload the listing (text and stills), then submit for review.
+    upload_to_app_store( # deliver
+      api_key: api_key,
+      app_identifier: BUNDLE_ID,
+      platform: "osx",
+      skip_binary_upload: true,  # already uploaded above
+      build_number: ENV["BUILD_NUMBER"],
+
+      skip_metadata: false,
+      metadata_path: METADATA_PATH,
+
+      # Age rating. Apple will not let a version be submitted until the whole
+      # questionnaire is answered, and it reports only the first missing field.
+      app_rating_config_path: File.expand_path("./app_rating_config.json", __dir__),
+
+      skip_screenshots: !has_screenshots,
+      screenshots_path: SCREENSHOTS_PATH,
+      overwrite_screenshots: true,
+
+      submit_for_review: true,
+      automatic_release: true,
+      force: true,
+      run_precheck_before_submit: true,
+      precheck_include_in_app_purchases: false,
+      # No IDFA, and no encryption beyond what the OS provides. Keep false in sync
+      # with ITSAppUsesNonExemptEncryption in Info.plist for TestFlight builds.
+      submission_information: {
+        add_id_info_uses_idfa: false,
+        export_compliance_uses_encryption: false
+      }
+    )
+  end
+end

@@ -1,0 +1,8 @@
+# fastlane/Appfile, modeled on Weatherling's (/senternet-private-github-action-ios-release).
+# With App Store Connect API-key auth the Apple ID email and App Store Connect
+# team id are optional, but pinning the bundle id + Developer Team ID keeps
+# gym/pilot/deliver from guessing.
+app_identifier("com.mattsenter.CommandH")  # matches PRODUCT_BUNDLE_IDENTIFIER in project.yml
+# apple_id: set FASTLANE_USER in your shell (only the set_privacy lane needs it).
+team_id("SD44498F6T")                  # Developer Portal Team ID
+itc_team_id("14608")                   # App Store Connect team id

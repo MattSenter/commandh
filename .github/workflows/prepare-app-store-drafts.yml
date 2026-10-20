@@ -1,0 +1,46 @@
+name: Prepare App Store Drafts
+
+# Manual: create or refresh an editable App Store version with the listing from
+# fastlane/metadata and fastlane/screenshots, optionally attaching a processed
+# TestFlight build. Never submits for review. See docs/AppStore.md.
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'App Store marketing version to prepare (e.g. 1.0).'
+        required: true
+        type: string
+      attach_builds:
+        description: 'Attach the latest processed TestFlight build matching this version.'
+        default: true
+        type: boolean
+
+permissions:
+  contents: read
+
+concurrency:
+  group: commandh-app-store
+  cancel-in-progress: false
+
+jobs:
+  prepare-drafts:
+    runs-on: macos-15
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          lfs: true
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.3'
+          bundler-cache: true
+      - name: Validate draft automation
+        run: bundle exec ruby fastlane/tests/prepare_drafts_test.rb
+      - name: Prepare and verify draft listing
+        env:
+          DRAFT_VERSION: ${{ inputs.version }}
+          ATTACH_BUILDS: ${{ inputs.attach_builds }}
+          APP_STORE_CONNECT_API_KEY_ID: ${{ secrets.APP_STORE_CONNECT_API_KEY_ID }}
+          APP_STORE_CONNECT_API_ISSUER_ID: ${{ secrets.APP_STORE_CONNECT_API_ISSUER_ID }}
+          APP_STORE_CONNECT_API_KEY_P8: ${{ secrets.APP_STORE_CONNECT_API_KEY_P8 }}
+        run: bundle exec fastlane mac prepare_drafts "version:$DRAFT_VERSION" "attach_builds:$ATTACH_BUILDS"

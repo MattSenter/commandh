@@ -1,0 +1,28 @@
+Press Command-H on the last app showing and nothing happens. Your computer refuses to hide the only app left on screen, so the window stays put and you never get to your desktop.
+
+CommandH fixes that. With it running, Command-H works the same way every time, even on the last app.
+
+NOTHING NEW TO LEARN
+
+Keep using Command-H. When two or more apps are showing, CommandH stays out of the way. When only one is left, CommandH steps in so Command-H hides it too. Bring an app back the usual way: click its Dock icon or switch to it with Command-Tab.
+
+HOW IT WORKS
+
+The system only refuses to hide an app when no other regular app would be left showing. While one app or none is showing, CommandH briefly becomes a regular app with a tiny, nearly invisible window. Your last app is then no longer the last one, so it hides normally. CommandH's icon appears in the Dock during that time and goes away as soon as a second app is showing.
+
+PRIVATE AND LIGHTWEIGHT
+
+- No permissions to grant: no Accessibility, Screen Recording, or Input Monitoring
+- Never reads your screen or your keystrokes
+- No network access, no account, no analytics, no data collected
+- Runs in the App Sandbox
+- Free, with no ads and no in-app purchases
+
+SET IT AND FORGET IT
+
+- Turn CommandH on or off without quitting it
+- Show its icon in the menu bar, or run with no icon at all
+- Open at login so it's always ready
+- Closing the settings window, or pressing Command-Q, keeps CommandH running, so a stray keystroke never turns it off. Choose Quit CommandH to quit for real.
+
+CommandH is open source and free, and always will be.
