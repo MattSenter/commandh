@@ -83,7 +83,7 @@ Open the settings window by opening CommandH from your Applications folder (or S
 | Setting | What it does |
 |---|---|
 | **Enabled** | Turns CommandH on or off without quitting it. When off, Cmd+H behaves like stock macOS. |
-| **When Cmd+H can't hide the last app** | Chooses **Hide the app** or **Show Desktop**. See [the comparison above](#two-ways-to-handle-the-last-app). |
+| **When only one app is showing** | Chooses **Hide the app** or **Show Desktop**. See [the comparison above](#two-ways-to-handle-the-last-app). |
 | **Show in menu bar** | Shows or removes the ⌘H icon in your menu bar. With it off, CommandH runs invisibly. Open CommandH from your Applications folder to get back to this window. |
 | **Open at login** | Starts CommandH automatically when you log in. It starts quietly, without opening this window. |
 | **Quit CommandH** | Actually quits the app. Closing the window (or pressing Cmd+Q) only closes the window and leaves CommandH running. |

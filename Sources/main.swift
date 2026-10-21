@@ -87,6 +87,7 @@ private final class HotKey {
 final class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
     private var statusItem: NSStatusItem!
     private var statusVisibilityObservation: NSKeyValueObservation?
+    private var settingStatusVisibility = false
     private var enabledItem: NSMenuItem!
     private var hideAppItem: NSMenuItem?
     private var showDesktopItem: NSMenuItem?
@@ -337,7 +338,14 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
     }
 
     private func refreshMenu() {
-        if statusItem.isVisible != showInMenuBar { statusItem.isVisible = showInMenuBar }
+        // Setting isVisible makes AppKit write its own defaults key, which posts
+        // didChangeNotification and lands back here before isVisible reads the new
+        // value. Without the guard that loops until the stack overflows.
+        if !settingStatusVisibility && statusItem.isVisible != showInMenuBar {
+            settingStatusVisibility = true
+            statusItem.isVisible = showInMenuBar
+            settingStatusVisibility = false
+        }
         enabledItem.state = enabled ? .on : .off
         hideAppItem?.state = method == .hideApp ? .on : .off
         showDesktopItem?.state = method == .showDesktop ? .on : .off

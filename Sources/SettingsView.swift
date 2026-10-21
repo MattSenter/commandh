@@ -42,21 +42,21 @@ struct SettingsView: View {
                 Toggle("Enabled", isOn: $enabled)
                 #if APP_STORE
                 // Store screenshots show this window, and App Store copy never says "macOS".
-                Text("CommandH briefly appears in the Dock so your last app can hide.")
+                Text("Cmd+H hides the last app completely. While one app or none is showing, CommandH's icon appears in the Dock. That's what lets the last app hide.")
                     .font(.caption)
                     .foregroundStyle(.secondary)
                 #else
-                Picker("When Cmd+H can't hide the last app", selection: $method) {
-                    Text("Hide the app").tag(HideMethod.hideApp)
-                    Text("Show Desktop").tag(HideMethod.showDesktop)
+                // Both options stay described so the trade-off is visible before choosing.
+                Picker("When only one app is showing", selection: $method) {
+                    methodOption("Hide the app",
+                                 "The app hides completely, like Cmd+H anywhere else. CommandH's icon appears in the Dock while one app or none is showing.")
+                        .tag(HideMethod.hideApp)
+                    methodOption("Show Desktop",
+                                 "Windows slide to the edges of the screen, and Cmd+H again brings them back. CommandH never appears in the Dock.")
+                        .tag(HideMethod.showDesktop)
                 }
                 .pickerStyle(.radioGroup)
                 .disabled(!enabled)
-                Text(method == .hideApp
-                     ? "CommandH briefly appears in the Dock so macOS lets the last app hide."
-                     : "Windows slide to the edges of the screen. Press Cmd+H again to bring them back. No Dock icon.")
-                    .font(.caption)
-                    .foregroundStyle(.secondary)
                 #endif
             }
 
@@ -85,6 +85,17 @@ struct SettingsView: View {
         .focusEffectDisabled()
         .frame(width: 440)
         .fixedSize(horizontal: false, vertical: true)
+    }
+
+    private func methodOption(_ title: String, _ detail: String) -> some View {
+        VStack(alignment: .leading, spacing: 2) {
+            Text(title)
+            Text(detail)
+                .font(.caption)
+                .foregroundStyle(.secondary)
+                .fixedSize(horizontal: false, vertical: true)
+        }
+        .padding(.vertical, 2)
     }
 
     private func setOpenAtLogin(_ on: Bool) {
