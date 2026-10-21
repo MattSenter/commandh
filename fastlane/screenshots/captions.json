@@ -1,31 +1,182 @@
 {
-  "_comment": "Every word drawn on the store screenshots, by shot id, field and App Store locale. Rendered by scripts/screenshots.sh. Copy rules in fastlane/AGENTS.md apply (the renderer enforces them). 'labels' fill in-slide text in the order the slide uses them.",
+  "_comment": "Every word drawn on the store screenshots, by shot id, field and App Store locale. Rendered by scripts/screenshots.sh. Copy rules in fastlane/AGENTS.md apply (the renderer enforces them). 'labels' fill in-slide text in the order the slide uses them. The settings and menu-bar slides take their in-window words from the app's own Localization/<lang>.lproj, so they always match the app.",
   "hero": {
-    "eyebrow": { "en-US": "CommandH" },
-    "headline": { "en-US": "Command-H hides the last app, too" },
-    "labels": { "en-US": ["Hidden"] }
+    "eyebrow": {
+      "en-US": "CommandH",
+      "de-DE": "CommandH",
+      "es-ES": "CommandH",
+      "es-MX": "CommandH",
+      "fr-FR": "CommandH",
+      "fr-CA": "CommandH",
+      "ja": "CommandH",
+      "ko": "CommandH",
+      "pt-BR": "CommandH",
+      "zh-Hans": "CommandH",
+      "zh-Hant": "CommandH"
+    },
+    "headline": {
+      "en-US": "Command-H hides the last app, too",
+      "de-DE": "Command-H blendet auch die letzte App aus",
+      "es-ES": "Command-H también oculta la última app",
+      "es-MX": "Command-H también oculta la última app",
+      "fr-FR": "Commande + H masque aussi la dernière app",
+      "fr-CA": "Commande + H masque aussi la dernière app",
+      "ja": "最後のアプリも、Command-Hで非表示に",
+      "ko": "Command-H로 마지막 앱까지 가리기",
+      "pt-BR": "Command-H oculta até o último app",
+      "zh-Hans": "Command-H 也能隐藏最后一个 App",
+      "zh-Hant": "Command-H 連最後一個應用程式也能隱藏"
+    },
+    "labels": {
+      "en-US": ["Hidden"],
+      "de-DE": ["Ausgeblendet"],
+      "es-ES": ["Oculta"],
+      "es-MX": ["Oculta"],
+      "fr-FR": ["Masquée"],
+      "fr-CA": ["Masquée"],
+      "ja": ["非表示"],
+      "ko": ["가려짐"],
+      "pt-BR": ["Oculto"],
+      "zh-Hans": ["已隐藏"],
+      "zh-Hant": ["已隱藏"]
+    }
   },
   "before-after": {
-    "eyebrow": { "en-US": "One keystroke" },
-    "headline": { "en-US": "Finally see your desktop" },
-    "labels": { "en-US": ["Without CommandH", "Nothing happens", "With CommandH", "Hidden"] }
+    "eyebrow": {
+      "en-US": "One keystroke",
+      "de-DE": "Ein Tastendruck",
+      "es-ES": "Un solo atajo",
+      "es-MX": "Un solo atajo",
+      "fr-FR": "Un seul raccourci",
+      "fr-CA": "Un seul raccourci",
+      "ja": "キーひとつで",
+      "ko": "키 한 번이면",
+      "pt-BR": "Um só atalho",
+      "zh-Hans": "一键搞定",
+      "zh-Hant": "一個按鍵"
+    },
+    "headline": {
+      "en-US": "Finally see your desktop",
+      "de-DE": "Endlich den Schreibtisch sehen",
+      "es-ES": "Por fin verás tu escritorio",
+      "es-MX": "Por fin verás tu escritorio",
+      "fr-FR": "Voyez enfin votre bureau",
+      "fr-CA": "Voyez enfin votre bureau",
+      "ja": "ようやくデスクトップが見える",
+      "ko": "드디어 데스크탑이 보입니다",
+      "pt-BR": "Enfim, veja a sua Mesa",
+      "zh-Hans": "终于看到你的桌面",
+      "zh-Hant": "終於看得到桌面"
+    },
+    "labels": {
+      "en-US": ["Without CommandH", "Nothing happens", "With CommandH", "Hidden"],
+      "de-DE": ["Ohne CommandH", "Nichts passiert", "Mit CommandH", "Ausgeblendet"],
+      "es-ES": ["Sin CommandH", "No pasa nada", "Con CommandH", "Oculta"],
+      "es-MX": ["Sin CommandH", "No pasa nada", "Con CommandH", "Oculta"],
+      "fr-FR": ["Sans CommandH", "Rien ne se passe", "Avec CommandH", "Masquée"],
+      "fr-CA": ["Sans CommandH", "Rien ne se passe", "Avec CommandH", "Masquée"],
+      "ja": ["CommandHなし", "何も起こらない", "CommandHあり", "非表示"],
+      "ko": ["CommandH 없이", "아무 일도 없음", "CommandH와 함께", "가려짐"],
+      "pt-BR": ["Sem o CommandH", "Nada acontece", "Com o CommandH", "Oculto"],
+      "zh-Hans": ["没有 CommandH", "毫无反应", "有了 CommandH", "已隐藏"],
+      "zh-Hant": ["沒有 CommandH", "毫無反應", "有了 CommandH", "已隱藏"]
+    }
   },
   "settings": {
-    "eyebrow": { "en-US": "Settings" },
-    "headline": { "en-US": "Set it once. It just works." }
+    "eyebrow": {
+      "en-US": "Settings",
+      "de-DE": "Einstellungen",
+      "es-ES": "Ajustes",
+      "es-MX": "Ajustes",
+      "fr-FR": "Réglages",
+      "fr-CA": "Réglages",
+      "ja": "設定",
+      "ko": "설정",
+      "pt-BR": "Ajustes",
+      "zh-Hans": "设置",
+      "zh-Hant": "設定"
+    },
+    "headline": {
+      "en-US": "Set it once. It just works.",
+      "de-DE": "Einmal einstellen. Läuft einfach.",
+      "es-ES": "Configúralo una vez y listo.",
+      "es-MX": "Configúralo una vez y listo.",
+      "fr-FR": "Réglez-le une fois. C’est tout.",
+      "fr-CA": "Réglez-le une fois. C’est tout.",
+      "ja": "一度決めれば、あとはおまかせ",
+      "ko": "한 번 설정하면 알아서 작동합니다",
+      "pt-BR": "Configure uma vez. E pronto.",
+      "zh-Hans": "设置一次，就能一直好用",
+      "zh-Hant": "設定一次，從此搞定。"
+    }
   },
   "menu-bar": {
-    "eyebrow": { "en-US": "Menu bar" },
-    "headline": { "en-US": "Stays out of your way" },
-    "labels": { "en-US": ["Enabled", "Show in Menu Bar", "Open at Login", "Preferences…", "Quit CommandH"] }
+    "eyebrow": {
+      "en-US": "Menu bar",
+      "de-DE": "Menüleiste",
+      "es-ES": "Barra de menús",
+      "es-MX": "Barra de menús",
+      "fr-FR": "Barre des menus",
+      "fr-CA": "Barre des menus",
+      "ja": "メニューバー",
+      "ko": "메뉴 막대",
+      "pt-BR": "Barra de menus",
+      "zh-Hans": "菜单栏",
+      "zh-Hant": "選單列"
+    },
+    "headline": {
+      "en-US": "Stays out of your way",
+      "de-DE": "Steht dir nie im Weg",
+      "es-ES": "Nunca te estorba",
+      "es-MX": "Nunca te estorba",
+      "fr-FR": "Il se fait oublier",
+      "fr-CA": "Il se fait oublier",
+      "ja": "作業のじゃまをしません",
+      "ko": "방해하지 않습니다",
+      "pt-BR": "Fica fora do seu caminho",
+      "zh-Hans": "安安静静，从不打扰",
+      "zh-Hant": "安靜待命，不打擾你"
+    }
   },
   "privacy": {
-    "eyebrow": { "en-US": "Private by design" },
-    "headline": { "en-US": "No permissions. No data. Free." },
-    "labels": { "en-US": [
-      "No permissions", "No Accessibility, Screen Recording, or Input Monitoring access to grant.",
-      "Nothing leaves", "No network access, no account, no analytics. It never reads your screen or keys.",
-      "Free for good", "No ads, no subscription, nothing to buy. Open source."
-    ] }
+    "eyebrow": {
+      "en-US": "Private by design",
+      "de-DE": "Privat von Grund auf",
+      "es-ES": "Privado por diseño",
+      "es-MX": "Privado por diseño",
+      "fr-FR": "Confidentiel par nature",
+      "fr-CA": "Confidentiel par nature",
+      "ja": "プライバシー重視の設計",
+      "ko": "설계부터 개인정보 보호",
+      "pt-BR": "Privado por padrão",
+      "zh-Hans": "隐私至上",
+      "zh-Hant": "隱私至上"
+    },
+    "headline": {
+      "en-US": "No permissions. No data. Free.",
+      "de-DE": "Keine Berechtigungen. Keine Daten. Gratis.",
+      "es-ES": "Sin permisos. Sin datos. Gratis.",
+      "es-MX": "Sin permisos. Sin datos. Gratis.",
+      "fr-FR": "Aucune autorisation. Aucune donnée. Gratuit.",
+      "fr-CA": "Aucune autorisation. Aucune donnée. Gratuit.",
+      "ja": "権限なし。データ収集なし。無料。",
+      "ko": "권한도, 데이터도 없이. 무료로.",
+      "pt-BR": "Sem permissões. Sem dados. Grátis.",
+      "zh-Hans": "无需权限，不碰数据，完全免费",
+      "zh-Hant": "不要權限。不收資料。免費。"
+    },
+    "labels": {
+      "en-US": ["No permissions", "No Accessibility, Screen Recording, or Input Monitoring access to grant.", "Nothing leaves", "No network access, no account, no analytics. It never reads your screen or keys.", "Free for good", "No ads, no subscription, nothing to buy. Open source."],
+      "de-DE": ["Keine Berechtigungen", "Kein Zugriff auf Bedienungshilfen, Bildschirmaufnahme oder Eingabeüberwachung nötig.", "Alles bleibt lokal", "Kein Netzwerkzugriff, kein Konto, keine Analysen. Liest nie Bildschirm oder Tasten.", "Für immer kostenlos", "Keine Werbung, kein Abo, nichts zu kaufen. Open Source."],
+      "es-ES": ["Sin permisos", "Sin acceso que conceder a Accesibilidad, Grabación de pantalla ni Monitorización de entrada.", "Nada sale de tu equipo", "Sin acceso a la red, sin cuenta, sin analíticas. Nunca lee tu pantalla ni tus teclas.", "Gratis para siempre", "Sin anuncios, sin suscripción, nada que comprar. Código abierto."],
+      "es-MX": ["Sin permisos", "Sin acceso que conceder a Accesibilidad, Grabación de pantalla ni Monitorización de entrada.", "Nada sale de tu equipo", "Sin acceso a la red, sin cuenta, sin analíticas. Nunca lee tu pantalla ni tus teclas.", "Gratis para siempre", "Sin anuncios, sin suscripción, nada que comprar. Código abierto."],
+      "fr-FR": ["Aucune autorisation", "Aucun accès Accessibilité, Enregistrement de l’écran ou Surveillance de l’entrée à accorder.", "Rien ne sort", "Aucun accès réseau, aucun compte, aucune statistique. Il ne lit jamais votre écran ni vos touches.", "Gratuit pour de bon", "Sans pub, sans abonnement, rien à acheter. Open source."],
+      "fr-CA": ["Aucune autorisation", "Aucun accès Accessibilité, Enregistrement de l’écran ou Surveillance de l’entrée à accorder.", "Rien ne sort", "Aucun accès réseau, aucun compte, aucune statistique. Il ne lit jamais votre écran ni vos touches.", "Gratuit pour de bon", "Sans pub, sans abonnement, rien à acheter. Open source."],
+      "ja": ["権限は不要", "アクセシビリティ、画面収録、入力監視の許可は必要ありません。", "何も送信しません", "ネットワーク通信なし、アカウントなし、分析なし。画面やキー入力も読み取りません。", "ずっと無料", "広告なし、サブスクリプションなし、購入するものもありません。オープンソースです。"],
+      "ko": ["권한 필요 없음", "손쉬운 사용, 화면 기록, 입력 모니터링 권한을 허용할 필요가 없습니다.", "밖으로 나가는 정보 없음", "네트워크 접근, 계정, 분석이 없습니다. 화면이나 키 입력을 읽지 않습니다.", "언제까지나 무료", "광고도, 구독도, 구입할 것도 없습니다. 오픈 소스입니다."],
+      "pt-BR": ["Sem permissões", "Nenhum acesso de Acessibilidade, Gravação de Tela ou Monitoramento de Entrada para conceder.", "Nada sai daqui", "Sem acesso à rede, sem conta, sem análises. Nunca lê a sua tela nem as suas teclas.", "Grátis para sempre", "Sem anúncios, sem assinatura, nada para comprar. Código aberto."],
+      "zh-Hans": ["无需权限", "无需授予“辅助功能”“屏幕录制”或“输入监控”权限。", "数据不外流", "不访问网络，无需账户，没有分析统计。从不读取你的屏幕或按键。", "永久免费", "没有广告，没有订阅，无需购买任何东西。开源。"],
+      "zh-Hant": ["不需任何權限", "不必授予「輔助使用」、「螢幕錄製」或「輸入監控」權限。", "資料不外流", "不連網、不需帳號、不做分析。絕不讀取你的螢幕或按鍵。", "永久免費", "沒有廣告、沒有訂閱，也沒有東西要買。開放原始碼。"]
+    }
   }
 }

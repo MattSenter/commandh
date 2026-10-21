@@ -54,7 +54,15 @@ struct SettingsView: View {
         case otherProjects = "Other Projects"
         case about = "About"
         var id: String { rawValue }
-        var title: String { rawValue }
+        var title: String {
+            switch self {
+            case .hiding: return String(localized: "Hiding", comment: "Settings sidebar tab and pane title.")
+            case .system: return String(localized: "System", comment: "Settings sidebar tab and pane title. Also the label of the system version row in About.")
+            case .privacy: return String(localized: "Privacy", comment: "Settings sidebar tab and pane title.")
+            case .otherProjects: return String(localized: "Other Projects", comment: "Settings sidebar tab and pane title listing the developer's other apps.")
+            case .about: return String(localized: "About", comment: "Settings sidebar tab and pane title.")
+            }
+        }
         var icon: String {
             switch self {
             case .hiding: return "eye.slash"
@@ -173,7 +181,7 @@ struct SettingsView: View {
         }
     }
 
-    private func methodOption(_ title: String, _ detail: String) -> some View {
+    private func methodOption(_ title: LocalizedStringKey, _ detail: LocalizedStringKey) -> some View {
         VStack(alignment: .leading, spacing: 2) {
             Text(title).font(.system(size: 13))
             Text(detail)
@@ -230,11 +238,19 @@ struct SettingsView: View {
                 caption("None. CommandH never connects to the internet on its own. The links in these settings open in your browser.")
             }
             Button("Read the full privacy policy") {
-                NSWorkspace.shared.open(URL(string: "https://github.com/MattSenter/commandh/blob/main/PRIVACY.md")!)
+                NSWorkspace.shared.open(Self.privacyPolicyURL)
             }
             .buttonStyle(.link)
             .font(.system(size: 12))
         }
+    }
+
+    /// PRIVACY.md in the language the app is showing. Every app localization has
+    /// a translated PRIVACY.<lang>.md (scripts/check-localization.py checks).
+    private static var privacyPolicyURL: URL {
+        let language = Bundle.main.preferredLocalizations.first ?? "en"
+        let file = language == "en" ? "PRIVACY.md" : "PRIVACY.\(language).md"
+        return URL(string: "https://github.com/MattSenter/commandh/blob/main/\(file)")!
     }
 
     // MARK: About
@@ -247,7 +263,7 @@ struct SettingsView: View {
                     .frame(width: 64, height: 64)
                     .accessibilityHidden(true)
                 VStack(alignment: .leading, spacing: 3) {
-                    Text("CommandH").font(.system(size: 22, weight: .heavy))
+                    Text(verbatim: "CommandH").font(.system(size: 22, weight: .heavy))
                         .accessibilityAddTraits(.isHeader)
                     Text("Cmd+H that works on the last app, so you can finally see your desktop.")
                         .font(.system(size: 12)).foregroundStyle(.secondary)
@@ -279,7 +295,7 @@ struct SettingsView: View {
         card(Text("Version")) {
             Grid(alignment: .leading, horizontalSpacing: 16, verticalSpacing: 6) {
                 GridRow {
-                    Text("CommandH").foregroundStyle(.secondary)
+                    Text(verbatim: "CommandH").foregroundStyle(.secondary)
                     Text(Self.versionString).textSelection(.enabled)
                 }
                 GridRow {
@@ -290,18 +306,19 @@ struct SettingsView: View {
             .font(.system(size: 12).monospacedDigit())
             Button {
                 NSPasteboard.general.clearContents()
-                NSPasteboard.general.setString("CommandH \(Self.versionString), \(Self.systemString)", forType: .string)
+                // Always English: it is pasted into a support request.
+                NSPasteboard.general.setString("CommandH \(Self.versionNumber), \(Self.systemString)", forType: .string)
                 copiedVersion = true
                 Task { try? await Task.sleep(for: .seconds(2)); copiedVersion = false }
             } label: {
-                Label(copiedVersion ? "Copied" : "Copy Version Info",
+                Label(copiedVersion ? String(localized: "Copied") : String(localized: "Copy Version Info"),
                       systemImage: copiedVersion ? "checkmark" : "doc.on.doc")
             }
             .help("Copies the CommandH and system versions, handy for a support request.")
         }
     }
 
-    private func webButton(_ title: String, icon: String, url: String) -> some View {
+    private func webButton(_ title: LocalizedStringKey, icon: String, url: String) -> some View {
         Button {
             NSWorkspace.shared.open(URL(string: url)!)
         } label: {
@@ -310,11 +327,16 @@ struct SettingsView: View {
         .accessibilityAddTraits(.isLink)
     }
 
-    private static var versionString: String {
+    /// "1.0 (7)": the marketing version and build number.
+    private static var versionNumber: String {
         let info = Bundle.main.infoDictionary
         let version = info?["CFBundleShortVersionString"] as? String ?? "?"
         let build = info?["CFBundleVersion"] as? String ?? "?"
-        return "Version \(version) (\(build))"
+        return "\(version) (\(build))"
+    }
+
+    private static var versionString: String {
+        String(localized: "Version \(versionNumber)", comment: "Version row in About. The argument is the version and build, e.g. 1.0 (7).")
     }
 
     /// "macOS 26.0 (25A123)": the system half of what a support reply needs.
@@ -367,7 +389,7 @@ struct SettingsView: View {
         Toggle(isOn: isOn) { EmptyView() }.labelsHidden().tint(Brand.accent)
     }
 
-    private func caption(_ text: String) -> some View {
+    private func caption(_ text: LocalizedStringKey) -> some View {
         Text(text)
             .font(.system(size: 11.5))
             .foregroundStyle(.secondary)

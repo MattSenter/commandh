@@ -1,0 +1,1 @@
+ausblenden,Tastenkürzel,Kurzbefehl,Schreibtisch,Desktop,Menüleiste,Fenster,aufräumen,Fokus,Dock

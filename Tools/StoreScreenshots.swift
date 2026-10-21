@@ -3,12 +3,16 @@
 // app's own SettingsView.swift and MenuBarIcon.swift (with APP_STORE defined, like
 // the App Store build), so the settings slide shows the real settings view.
 //
-// Usage: StoreScreenshots <repo root>
+// Usage: StoreScreenshots <repo root> [app language]
 //
 // Each slide is drawn offscreen at 1440x900 points and written at 2x, 2880x1800,
 // one of Apple's accepted desktop sizes, as an opaque PNG. The shot list and the
-// language map come from screenshots.config.json; every word drawn on a slide comes
-// from fastlane/screenshots/captions.json. No Screen Recording permission needed.
+// language map come from screenshots.config.json; the captions come from
+// fastlane/screenshots/captions.json, and the words inside the settings window and
+// the menu from the app's own Localization/<lang>.lproj, which screenshots.sh puts
+// next to this binary. Each language renders in a child process launched with
+// -AppleLanguages, so those lookups resolve exactly as in the app.
+// No Screen Recording permission needed.
 
 import AppKit
 import SwiftUI
@@ -53,7 +57,7 @@ struct Captions {
     /// Store copy rules (fastlane/AGENTS.md): no em dashes, never "Mac" or "macOS".
     private static func check(_ text: String) throws {
         if text.contains("\u{2014}") { throw Failure("Em dash in caption: \(text)") }
-        if text.range(of: #"\bmac(os)?\b"#, options: [.regularExpression, .caseInsensitive]) != nil {
+        if text.range(of: #"(?<![a-z])mac(os)?(?![a-z])"#, options: [.regularExpression, .caseInsensitive]) != nil {
             throw Failure("Forbidden platform wording in caption: \(text)")
         }
     }
@@ -329,7 +333,7 @@ struct SettingsSlide: View {
             VStack(spacing: 0) {
                 // Window chrome around the app's real settings view.
                 ZStack {
-                    Text("CommandH Preferences").font(.system(size: 13, weight: .semibold)).foregroundStyle(.secondary)
+                    Text(String(localized: "CommandH Preferences")).font(.system(size: 13, weight: .semibold)).foregroundStyle(.secondary)
                     HStack(spacing: 8) {
                         Circle().fill(Color(.sRGB, red: 1.0, green: 0.37, blue: 0.34))
                         Circle().fill(Color(white: 0.82))
@@ -356,9 +360,13 @@ struct SettingsSlide: View {
 }
 
 /// The menu bar menu as the App Store build has it. NSMenu has no offscreen
-/// rendering, so this draws the same items in the system menu's style.
+/// rendering, so this draws the same items in the system menu's style, with the
+/// titles buildStatusMenu() uses.
 struct MenuBarSlide: View {
-    let eyebrow: String, headline: String, labels: [String]
+    let eyebrow: String, headline: String
+    private let labels = [String(localized: "Enabled"), String(localized: "Show in Menu Bar"),
+                          String(localized: "Open at Login"), String(localized: "Preferences…"),
+                          String(localized: "Quit CommandH")]
     var body: some View {
         Slide(eyebrow: eyebrow, headline: headline) {
             Screen(width: 1080, height: 560) {
@@ -372,7 +380,6 @@ struct MenuBarSlide: View {
     }
 
     private var menu: some View {
-        // labels: Enabled, Show in Menu Bar, Open at Login, Settings…, Quit CommandH
         VStack(alignment: .leading, spacing: 0) {
             item(labels[0], checked: true)
             divider
@@ -496,7 +503,7 @@ func slide(_ id: String, _ captions: Captions, _ locale: String) throws -> AnyVi
     case "hero": return AnyView(HeroSlide(eyebrow: eyebrow, headline: headline, labels: try captions.labels(id, locale)))
     case "before-after": return AnyView(BeforeAfterSlide(eyebrow: eyebrow, headline: headline, labels: try captions.labels(id, locale)))
     case "settings": return AnyView(SettingsSlide(eyebrow: eyebrow, headline: headline))
-    case "menu-bar": return AnyView(MenuBarSlide(eyebrow: eyebrow, headline: headline, labels: try captions.labels(id, locale)))
+    case "menu-bar": return AnyView(MenuBarSlide(eyebrow: eyebrow, headline: headline))
     case "privacy": return AnyView(PrivacySlide(eyebrow: eyebrow, headline: headline, labels: try captions.labels(id, locale)))
     default: throw Failure("Unknown shot \(id) in screenshots.config.json")
     }
@@ -508,10 +515,11 @@ struct StoreScreenshots {
     static func main() {
         let args = CommandLine.arguments
         guard args.count >= 2 else {
-            FileHandle.standardError.write(Data("usage: StoreScreenshots <repo root>\n".utf8))
+            FileHandle.standardError.write(Data("usage: StoreScreenshots <repo root> [app language]\n".utf8))
             exit(2)
         }
         let root = URL(fileURLWithPath: args[1])
+        let only = args.count >= 3 && !args[2].hasPrefix("-") ? args[2] : nil
         NSApplication.shared.setActivationPolicy(.prohibited)
         // SettingsView shows NSApp's icon; this tool has none of its own.
         NSApp.applicationIconImage = NSImage(contentsOf: root.appendingPathComponent("Resources/AppIcon-1024.png"))
@@ -522,7 +530,22 @@ struct StoreScreenshots {
         do {
             let config = try JSONDecoder().decode(Config.self, from: Data(contentsOf: root.appendingPathComponent("screenshots.config.json")))
             let captions = try Captions(url: root.appendingPathComponent("fastlane/screenshots/captions.json"))
-            for language in config.languages {
+            guard let only else {
+                // One child per language, so String(localized:) and SwiftUI resolve in it.
+                for language in config.languages {
+                    let child = Process()
+                    child.executableURL = URL(fileURLWithPath: args[0])
+                    child.arguments = [args[1], language.app, "-AppleLanguages", "(\(language.app))"]
+                    try child.run()
+                    child.waitUntilExit()
+                    if child.terminationStatus != 0 { throw Failure("Rendering \(language.app) failed") }
+                }
+                return
+            }
+            guard Bundle.main.preferredLocalizations.first == only else {
+                throw Failure("No \(only).lproj next to the binary (got \(Bundle.main.preferredLocalizations))")
+            }
+            for language in config.languages where language.app == only {
                 for locale in language.store {
                     // Render the whole locale into a temp folder, then swap it in, so a
                     // failure never leaves a half-updated set behind.

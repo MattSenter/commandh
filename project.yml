@@ -7,6 +7,7 @@
 name: CommandH
 options:
   bundleIdPrefix: com.mattsenter
+  developmentLanguage: en
   deploymentTarget:
     macOS: "14.0"
 settings:
@@ -30,6 +31,9 @@ targets:
       # A folder reference, so the screenshots keep their other-projects/ subfolder.
       - path: Resources/other-projects
         type: folder
+        buildPhase: resources
+      # Localization/<lang>.lproj/Localizable.strings become one variant group.
+      - path: Localization
         buildPhase: resources
     settings:
       base:

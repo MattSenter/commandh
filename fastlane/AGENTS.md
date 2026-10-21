@@ -12,3 +12,7 @@ No em dashes in any of that copy either.
 The `prepare_drafts` lane and CI refuse to run when either appears in `metadata/`.
 Technical identifiers required by fastlane, build tools, or APIs (`platform: "osx"`,
 `MAC_OS`, `APP_DESKTOP`) are configuration, not listing copy; keep them valid.
+
+The rule holds in every language: a translation never says "Mac" or "macOS" either
+(including CJK copy such as "Macの", which a plain `\b` regex misses).
+`scripts/check-localization.py` checks each locale's listing and captions.

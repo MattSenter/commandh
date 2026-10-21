@@ -11,6 +11,11 @@ on:
     paths:
       - 'Sources/**'
       - 'Resources/**'
+      - 'Localization/**'
+      - 'README*.md'
+      - 'PRIVACY*.md'
+      - 'screenshots.config.json'
+      - 'scripts/check-localization.py'
       - 'Tools/**'
       - 'Info.plist'
       - 'CommandH.entitlements'
@@ -40,6 +45,9 @@ jobs:
 
       - name: Build the direct-download app
         run: ./build.sh
+
+      - name: Every language complete (app strings, docs, App Store listing)
+        run: python3 scripts/check-localization.py
 
       - name: Build the App Store app
         run: |
@@ -80,8 +88,9 @@ jobs:
         run: bundle exec ruby fastlane/tests/prepare_drafts_test.rb
       - name: Listing copy rules
         # fastlane/AGENTS.md: never "Mac" or "macOS" in App Store copy, no em dashes.
+        # Letter boundaries, not \b, so "Macの" in CJK copy is caught too.
         run: |
-          if grep -rniE '\bmac(os)?\b|—' fastlane/metadata fastlane/screenshots/captions.json; then
+          if grep -rniE '(^|[^a-z])mac(os)?([^a-z]|$)|—' fastlane/metadata fastlane/screenshots/captions.json; then
             echo "::error::Forbidden wording or em dash in App Store copy (see fastlane/AGENTS.md)."
             exit 1
           fi

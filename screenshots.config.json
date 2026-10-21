@@ -1,7 +1,15 @@
 {
-  "_comment": "Read by scripts/screenshots.sh and Tools/StoreScreenshots.swift. CommandH is English only, so there is one language row; add a row (and captions) when the app gains a localization. No help shots: CommandH has no site yet.",
+  "_comment": "Read by scripts/screenshots.sh, Tools/StoreScreenshots.swift and scripts/check-localization.py. One row per app language (Localization/<app>.lproj), with the App Store locales its listing, captions and screenshots go to. Adding a row is what ships a language; the check then requires its strings, README/PRIVACY, listing and screenshots. No help shots: CommandH has no site yet.",
   "languages": [
-    { "app": "en", "store": ["en-US"] }
+    { "app": "en", "store": ["en-US"] },
+    { "app": "de", "store": ["de-DE"] },
+    { "app": "es", "store": ["es-ES", "es-MX"] },
+    { "app": "fr", "store": ["fr-FR", "fr-CA"] },
+    { "app": "ja", "store": ["ja"] },
+    { "app": "ko", "store": ["ko"] },
+    { "app": "pt-BR", "store": ["pt-BR"] },
+    { "app": "zh-Hans", "store": ["zh-Hans"] },
+    { "app": "zh-Hant", "store": ["zh-Hant"] }
   ],
   "store": {
     "outDir": "fastlane/screenshots/{store}",

@@ -48,7 +48,8 @@ end
 def check_listing_copy!
   Dir.glob(File.join(METADATA_PATH, "**", "*.txt")).each do |path|
     text = File.read(path)
-    UI.user_error!("Forbidden platform wording in #{path}") if text.match?(/\bmac(?:os)?\b/i)
+    # Letter boundaries, not \b, so "Macの" in CJK copy is caught too.
+    UI.user_error!("Forbidden platform wording in #{path}") if text.match?(/(?<![a-z])mac(?:os)?(?![a-z])/i)
     UI.user_error!("Em dash in #{path}") if text.include?("—")
   end
 end

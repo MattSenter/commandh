@@ -238,7 +238,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
         // Sizing is left to the window, so it opens at the minimum and can grow.
         hosting.sizingOptions = []
         let w = NSWindow(contentViewController: hosting)
-        w.title = "CommandH Preferences"
+        w.title = String(localized: "CommandH Preferences", comment: "Settings window title.")
         w.styleMask = [.titled, .closable, .miniaturizable, .resizable]
         w.setContentSize(SettingsView.minimumSize)
         w.contentMinSize = SettingsView.minimumSize
@@ -289,14 +289,14 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
     // Shown while CommandH is the active app (settings open, or standing in).
     private func buildMainMenu() {
         let appMenu = NSMenu()
-        appMenu.addItem(withTitle: "Preferences…", action: #selector(showSettings), keyEquivalent: ",").target = self
+        appMenu.addItem(withTitle: String(localized: "Preferences…", comment: "Menu item that opens the settings window."), action: #selector(showSettings), keyEquivalent: ",").target = self
         appMenu.addItem(.separator())
         // Cmd+H is an ordinary Hide; Cmd+W and Cmd+Q collapse to the menu bar.
-        appMenu.addItem(withTitle: "Hide CommandH", action: #selector(hideFromKeyboard), keyEquivalent: "h").target = self
-        appMenu.addItem(withTitle: "Close Window", action: #selector(collapseToTray), keyEquivalent: "w").target = self
-        appMenu.addItem(withTitle: "Close and Keep Running", action: #selector(collapseToTray), keyEquivalent: "q").target = self
+        appMenu.addItem(withTitle: String(localized: "Hide CommandH", comment: "App menu item (Cmd+H)."), action: #selector(hideFromKeyboard), keyEquivalent: "h").target = self
+        appMenu.addItem(withTitle: String(localized: "Close Window", comment: "App menu item (Cmd+W)."), action: #selector(collapseToTray), keyEquivalent: "w").target = self
+        appMenu.addItem(withTitle: String(localized: "Close and Keep Running", comment: "App menu item on Cmd+Q: closes the window but CommandH keeps running."), action: #selector(collapseToTray), keyEquivalent: "q").target = self
         appMenu.addItem(.separator())
-        appMenu.addItem(withTitle: "Quit CommandH", action: #selector(quitApp), keyEquivalent: "").target = self
+        appMenu.addItem(withTitle: String(localized: "Quit CommandH", comment: "Menu item that really quits the app."), action: #selector(quitApp), keyEquivalent: "").target = self
         let appItem = NSMenuItem()
         appItem.submenu = appMenu
         let main = NSMenu()
@@ -309,30 +309,30 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
         statusItem.button?.image = makeMenuBarIcon()
 
         let menu = NSMenu()
-        enabledItem = menu.addItem(withTitle: "Enabled", action: #selector(toggleEnabled), keyEquivalent: "")
+        enabledItem = menu.addItem(withTitle: String(localized: "Enabled", comment: "Menu bar menu checkbox and settings switch that turns CommandH on or off."), action: #selector(toggleEnabled), keyEquivalent: "")
         enabledItem.target = self
 
         #if !APP_STORE
         let methodMenu = NSMenu()
-        let hideAppItem = methodMenu.addItem(withTitle: "Hide the App (Dock icon appears)", action: #selector(chooseHideApp), keyEquivalent: "")
-        let showDesktopItem = methodMenu.addItem(withTitle: "Show Desktop (no Dock icon)", action: #selector(chooseShowDesktop), keyEquivalent: "")
+        let hideAppItem = methodMenu.addItem(withTitle: String(localized: "Hide the App (Dock icon appears)", comment: "Menu bar submenu choice: hide the last app; CommandH briefly shows a Dock icon."), action: #selector(chooseHideApp), keyEquivalent: "")
+        let showDesktopItem = methodMenu.addItem(withTitle: String(localized: "Show Desktop (no Dock icon)", comment: "Menu bar submenu choice: use the system Show Desktop instead. Show Desktop is the macOS feature name; use its official localized name."), action: #selector(chooseShowDesktop), keyEquivalent: "")
         hideAppItem.target = self
         showDesktopItem.target = self
         if !ShowDesktop.isAvailable { showDesktopItem.action = nil }
         self.hideAppItem = hideAppItem
         self.showDesktopItem = showDesktopItem
-        let methodItem = menu.addItem(withTitle: "When Cmd+H Can't Hide", action: nil, keyEquivalent: "")
+        let methodItem = menu.addItem(withTitle: String(localized: "When Cmd+H Can't Hide", comment: "Menu bar submenu title for choosing how the last app is handled."), action: nil, keyEquivalent: "")
         methodItem.submenu = methodMenu
         #endif
 
         menu.addItem(.separator())
-        menuBarItem = menu.addItem(withTitle: "Show in Menu Bar", action: #selector(toggleMenuBar), keyEquivalent: "")
+        menuBarItem = menu.addItem(withTitle: String(localized: "Show in Menu Bar", comment: "Menu bar menu checkbox that shows or hides the menu bar icon."), action: #selector(toggleMenuBar), keyEquivalent: "")
         menuBarItem.target = self
-        loginItem = menu.addItem(withTitle: "Open at Login", action: #selector(toggleLogin), keyEquivalent: "")
+        loginItem = menu.addItem(withTitle: String(localized: "Open at Login", comment: "Menu bar menu checkbox that starts CommandH at login."), action: #selector(toggleLogin), keyEquivalent: "")
         loginItem.target = self
-        menu.addItem(withTitle: "Preferences…", action: #selector(showSettings), keyEquivalent: ",").target = self
+        menu.addItem(withTitle: String(localized: "Preferences…"), action: #selector(showSettings), keyEquivalent: ",").target = self
         menu.addItem(.separator())
-        menu.addItem(withTitle: "Quit CommandH", action: #selector(quitApp), keyEquivalent: "q").target = self
+        menu.addItem(withTitle: String(localized: "Quit CommandH"), action: #selector(quitApp), keyEquivalent: "q").target = self
         statusItem.menu = menu
 
         statusItem.isVisible = showInMenuBar

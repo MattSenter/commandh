@@ -1,0 +1,209 @@
+/*
+  Localizable.strings (English, the source language)
+  CommandH
+
+  Keys are the English source strings. SwiftUI literals (Text, Button, ...)
+  and String(localized:) look them up in Bundle.main. %@ is a string argument.
+
+  Do not translate: CommandH, Matt Senter, Senternet, Senternet LLC, other app
+  names (Weatherling, Burly, Comoji, Premail, Highwire, StockCar, Orgabot,
+  BeeReady, SeedMatrix), Slack, :emoji:, Cmd+H, Cmd+Tab, or keyboard glyphs
+  such as ⌘. Never use an em dash in a translation.
+
+  When a string names a macOS feature or place (Dock, menu bar, Show Desktop,
+  Applications folder, login), use Apple's official localized name for it.
+
+  The Hiding pane, the sidebar, the window title and the menu bar menu appear
+  in the App Store screenshots: never add the words Mac or macOS to them.
+
+  Every key here must exist in every other .lproj, and every string the app
+  shows must be a key here: scripts/check-localization.py enforces both.
+*/
+
+/* ===== Menus and window title (main.swift) ===== */
+
+/* Settings window title. */
+"CommandH Preferences" = "CommandH Preferences";
+
+/* Menu item that opens the settings window (app menu and menu bar menu). */
+"Preferences…" = "Preferences…";
+
+/* App menu item (Cmd+H). */
+"Hide CommandH" = "Hide CommandH";
+
+/* App menu item (Cmd+W). */
+"Close Window" = "Close Window";
+
+/* App menu item on Cmd+Q: closes the window but CommandH keeps running. */
+"Close and Keep Running" = "Close and Keep Running";
+
+/* Menu item and settings button that really quits the app. */
+"Quit CommandH" = "Quit CommandH";
+
+/* Menu bar menu checkbox and settings switch that turns CommandH on or off. */
+"Enabled" = "Enabled";
+
+/* Menu bar submenu title for choosing how the last app is handled. */
+"When Cmd+H Can't Hide" = "When Cmd+H Can't Hide";
+
+/* Menu bar submenu choice: hide the last app; CommandH briefly shows a Dock icon. */
+"Hide the App (Dock icon appears)" = "Hide the App (Dock icon appears)";
+
+/* Menu bar submenu choice: use the system's Show Desktop instead. Show Desktop is the macOS feature name; use its official localized name. */
+"Show Desktop (no Dock icon)" = "Show Desktop (no Dock icon)";
+
+/* Menu bar menu checkbox that shows or hides the menu bar icon. Title case, like the other menu items. */
+"Show in Menu Bar" = "Show in Menu Bar";
+
+/* Menu bar menu checkbox that starts CommandH at login. Title case, like the other menu items. */
+"Open at Login" = "Open at Login";
+
+/* ===== Settings sidebar (SettingsView.swift) ===== */
+
+/* Settings sidebar tab and pane title. */
+"Hiding" = "Hiding";
+
+/* Settings sidebar tab and pane title. Also the label of the system version row in About. */
+"System" = "System";
+
+/* Settings sidebar tab and pane title. */
+"Privacy" = "Privacy";
+
+/* Settings sidebar tab and pane title listing the developer's other apps. */
+"Other Projects" = "Other Projects";
+
+/* Settings sidebar tab and pane title. */
+"About" = "About";
+
+/* Credit line in the sidebar and About. %@ is the developer's name, Matt Senter, which links to his site; place it where the language needs it. */
+"Built by %@" = "Built by %@";
+
+/* Copyright line in the sidebar. %@ is the company name, Senternet LLC, which links to its site. Keep it short: it must fit on one line. */
+"Copyright © 2026 %@" = "Copyright © 2026 %@";
+
+/* ===== Hiding pane ===== */
+
+/* Hiding pane intro. */
+"Makes Cmd+H work even when the app is the last one showing." = "Makes Cmd+H work even when the app is the last one showing.";
+
+/* Card title and picker label: what happens when only one app is visible on screen. */
+"When only one app is showing" = "When only one app is showing";
+
+/* App Store build only (shown in the store screenshots, so never say Mac or macOS). Explains how the last app gets hidden. */
+"Cmd+H hides the last app completely. While one app or none is showing, CommandH's icon appears in the Dock. That's what lets the last app hide." = "Cmd+H hides the last app completely. While one app or none is showing, CommandH's icon appears in the Dock. That's what lets the last app hide.";
+
+/* Radio choice: hide the last app. Sentence case. */
+"Hide the app" = "Hide the app";
+
+/* Explanation under the Hide the app choice. */
+"The app hides completely, like Cmd+H anywhere else. CommandH's icon appears in the Dock while one app or none is showing." = "The app hides completely, like Cmd+H anywhere else. CommandH's icon appears in the Dock while one app or none is showing.";
+
+/* Radio choice: use the system's Show Desktop. Show Desktop is the macOS feature name; use its official localized name. */
+"Show Desktop" = "Show Desktop";
+
+/* Explanation under the Show Desktop choice. */
+"Windows slide to the edges of the screen, and Cmd+H again brings them back. CommandH never appears in the Dock." = "Windows slide to the edges of the screen, and Cmd+H again brings them back. CommandH never appears in the Dock.";
+
+/* ===== System pane ===== */
+
+/* Settings switch label. Sentence case. */
+"Open at login" = "Open at login";
+
+/* Settings switch label. Sentence case. */
+"Show in menu bar" = "Show in menu bar";
+
+/* Shown under Show in menu bar while it is off. */
+"To get back to these settings, open CommandH from your Applications folder." = "To get back to these settings, open CommandH from your Applications folder.";
+
+/* Card title above the Quit CommandH button. */
+"Quit" = "Quit";
+
+/* Caption next to the Quit CommandH button. */
+"Closing this window keeps CommandH running." = "Closing this window keeps CommandH running.";
+
+/* ===== Privacy pane ===== */
+
+/* Privacy pane statement. */
+"CommandH works entirely on your computer. It only looks at which apps are running and whether each one is hidden, and that never leaves your computer or gets stored. No account, no analytics, and no permissions to grant." = "CommandH works entirely on your computer. It only looks at which apps are running and whether each one is hidden, and that never leaves your computer or gets stored. No account, no analytics, and no permissions to grant.";
+
+/* Card title in the Privacy pane. */
+"Network activity" = "Network activity";
+
+/* Network activity card text. */
+"None. CommandH never connects to the internet on its own. The links in these settings open in your browser." = "None. CommandH never connects to the internet on its own. The links in these settings open in your browser.";
+
+/* Link that opens the privacy policy in the browser. */
+"Read the full privacy policy" = "Read the full privacy policy";
+
+/* ===== About pane ===== */
+
+/* Tagline under the app name. Use mattsenter.com's translation of CommandH's tagline. */
+"Cmd+H that works on the last app, so you can finally see your desktop." = "Cmd+H that works on the last app, so you can finally see your desktop.";
+
+/* Card title above the version and system rows. */
+"Version" = "Version";
+
+/* Version row in About. %@ is the version and build, e.g. 1.0 (7). */
+"Version %@" = "Version %@";
+
+/* Button that copies the version info to the clipboard. */
+"Copy Version Info" = "Copy Version Info";
+
+/* Button label shown briefly after the version info was copied. */
+"Copied" = "Copied";
+
+/* Tooltip on Copy Version Info. */
+"Copies the CommandH and system versions, handy for a support request." = "Copies the CommandH and system versions, handy for a support request.";
+
+/* Card title above the Source Code and Report an Issue buttons. */
+"On the web" = "On the web";
+
+/* Button that opens the GitHub repository. */
+"Source Code" = "Source Code";
+
+/* Button that opens GitHub issues. */
+"Report an Issue" = "Report an Issue";
+
+/* Card title. */
+"About the developer" = "About the developer";
+
+/* About the developer card text. Matt Senter is the developer's name and Senternet his studio; do not translate either. */
+"CommandH is designed, built, and shipped by Matt Senter, an independent developer who makes every Senternet product end to end." = "CommandH is designed, built, and shipped by Matt Senter, an independent developer who makes every Senternet product end to end.";
+
+/* Button that switches to the Other Projects pane. */
+"See Other Projects" = "See Other Projects";
+
+/* ===== Other Projects pane (OtherProjectsView.swift) ===== */
+
+/* Subtitle in the Other Projects pane. */
+"From the same workshop." = "From the same workshop.";
+
+/* Intro paragraph in the Other Projects pane. Matt Senter and Senternet become links: keep both names exactly as written. */
+"CommandH is one of several products Matt Senter of Senternet designs, builds, and ships end to end. Here’s the rest of the lineup." = "CommandH is one of several products Matt Senter of Senternet designs, builds, and ships end to end. Here’s the rest of the lineup.";
+
+/* One-line summary of Weatherling, another app by the same developer. Use mattsenter.com's translation of its tagline. */
+"Rain, snow, and autumn leaves on your Mac desktop. Weather effects, not a weather app." = "Rain, snow, and autumn leaves on your Mac desktop. Weather effects, not a weather app.";
+
+/* One-line summary of Burly, another app by the same developer. Use mattsenter.com's translation of its tagline. */
+"Every link, in the right browser profile." = "Every link, in the right browser profile.";
+
+/* One-line summary of Comoji, another app by the same developer. Use mattsenter.com's translation of its tagline. */
+"Slack-style :emoji: autocomplete, everywhere on your Mac." = "Slack-style :emoji: autocomplete, everywhere on your Mac.";
+
+/* One-line summary of Premail, another app by the same developer. Use mattsenter.com's translation of its tagline. */
+"Your inbox, defended." = "Your inbox, defended.";
+
+/* One-line summary of Highwire, another product by the same developer. Use mattsenter.com's translation of its tagline. */
+"See beyond the headlines." = "See beyond the headlines.";
+
+/* One-line summary of StockCar, another app by the same developer. Use mattsenter.com's translation of its tagline. */
+"A podcast of your portfolio, not the market." = "A podcast of your portfolio, not the market.";
+
+/* One-line summary of Orgabot, another product by the same developer. Use mattsenter.com's translation of its tagline. */
+"Orchestrate the work, not just the agents." = "Orchestrate the work, not just the agents.";
+
+/* One-line summary of BeeReady, another product by the same developer. Use mattsenter.com's translation of its tagline. */
+"Lifesaving skills, one game at a time." = "Lifesaving skills, one game at a time.";
+
+/* One-line summary of SeedMatrix, another product by the same developer. Use mattsenter.com's translation of its tagline. */
+"Every variety, every trial, one clear comparison." = "Every variety, every trial, one clear comparison.";

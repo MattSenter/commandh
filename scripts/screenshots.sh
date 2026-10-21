@@ -4,7 +4,8 @@
 #
 # Compiles Tools/StoreScreenshots.swift with the app's own SettingsView.swift and
 # MenuBarIcon.swift, with APP_STORE defined like the App Store build, and runs it.
-# Shots and languages: screenshots.config.json. Words: fastlane/screenshots/captions.json.
+# Shots and languages: screenshots.config.json. Captions: fastlane/screenshots/captions.json;
+# the words inside the settings window and menu: Localization/<lang>.lproj.
 # Rendering is offscreen, so no Screen Recording permission is needed.
 set -euo pipefail
 cd "${0:A:h}/.."
@@ -19,6 +20,9 @@ mkdir -p build
 swiftc -O -swift-version 5 -parse-as-library -D APP_STORE -o build/StoreScreenshots \
   Tools/StoreScreenshots.swift Sources/SettingsView.swift Sources/MenuBarIcon.swift \
   Sources/BuiltByCredit.swift Sources/OtherProjectsView.swift Sources/OutboundLink.swift
+# The settings and menu slides use the app's strings, looked up next to the binary.
+rm -rf build/*.lproj(N)
+cp -R Localization/*.lproj build/
 build/StoreScreenshots "$PWD"
 
 # Apple accepts 2880x1800 for the desktop set; refuse anything else.

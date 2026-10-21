@@ -1,5 +1,7 @@
 # CommandH Privacy Policy
 
+**English** · [Deutsch](PRIVACY.de.md) · [Español](PRIVACY.es.md) · [Français](PRIVACY.fr.md) · [日本語](PRIVACY.ja.md) · [한국어](PRIVACY.ko.md) · [Português (Brasil)](PRIVACY.pt-BR.md) · [简体中文](PRIVACY.zh-Hans.md) · [繁體中文](PRIVACY.zh-Hant.md)
+
 Last updated: October 20, 2026
 
 CommandH collects no data. None.

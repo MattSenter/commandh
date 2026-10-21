@@ -1,0 +1,28 @@
+Pressione Command-H no último app visível e nada acontece. O seu computador se recusa a ocultar o único app que sobrou na tela, então a janela continua ali e você nunca chega à sua Mesa.
+
+O CommandH resolve isso. Com ele em execução, o Command-H funciona sempre do mesmo jeito, até no último app.
+
+NADA NOVO PARA APRENDER
+
+Continue usando o Command-H. Quando dois ou mais apps estão visíveis, o CommandH não interfere. Quando só sobra um, o CommandH entra em ação para que o Command-H oculte esse também. Traga um app de volta do jeito de sempre: clique no ícone dele no Dock ou alterne para ele com Command-Tab.
+
+COMO FUNCIONA
+
+O sistema só se recusa a ocultar um app quando nenhum outro app comum ficaria visível. Enquanto houver um app visível ou nenhum, o CommandH se torna por um instante um app comum, com uma janela minúscula e quase invisível. Assim, o seu último app deixa de ser o último e é ocultado normalmente. O ícone do CommandH aparece no Dock durante esse tempo e some assim que um segundo app fica visível.
+
+PRIVADO E LEVE
+
+- Nenhuma permissão para conceder: sem Acessibilidade, Gravação de Tela ou Monitoramento de Entrada
+- Nunca lê a sua tela nem o que você digita
+- Sem acesso à rede, sem conta, sem análises, sem coleta de dados
+- Roda no App Sandbox
+- Gratuito, sem anúncios e sem compras dentro do app
+
+CONFIGURE E ESQUEÇA
+
+- Ligue ou desligue o CommandH sem encerrá-lo
+- Mostre o ícone dele na barra de menus, ou use sem ícone nenhum
+- Abra ao iniciar sessão para que ele esteja sempre pronto
+- Fechar a janela de ajustes, ou pressionar Command-Q, mantém o CommandH em execução, então uma tecla pressionada sem querer nunca o desliga. Escolha Encerrar CommandH para encerrar de verdade.
+
+O CommandH é gratuito e de código aberto, e sempre será.

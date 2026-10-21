@@ -12,17 +12,21 @@ struct BuiltByCredit: View {
     }
 
     var body: some View {
+        // The name's place in the sentence depends on the language.
+        let parts = String(localized: "Built by %@", comment: "Credit line. The argument is the developer's name, Matt Senter, which links to his site.")
+            .components(separatedBy: "%@")
         HStack(spacing: 0) {
-            Text("Built by ")
+            Text(verbatim: parts[0])
             // Its own button so it gets the pointing-hand cursor.
             Button {
                 if let url = Self.url(content: content) { NSWorkspace.shared.open(url) }
             } label: {
-                Text("Matt Senter").underline().foregroundStyle(Brand.accent)
+                Text(verbatim: "Matt Senter").underline().foregroundStyle(Brand.accent)
             }
             .buttonStyle(.plain)
             .pointingHandCursor()
             .accessibilityAddTraits(.isLink)
+            if parts.count > 1 { Text(verbatim: parts[1]) }
         }
         .font(.system(size: 11))
         .foregroundStyle(.secondary)
@@ -42,10 +46,11 @@ struct CopyrightLine: View {
     }
 
     private static var text: AttributedString {
-        let line = AttributedString("Copyright © 2026 ")
+        let parts = String(localized: "Copyright © 2026 %@", comment: "Copyright line. The argument is the company name, Senternet LLC, which links to its site.")
+            .components(separatedBy: "%@")
         var company = AttributedString("Senternet LLC")
         company.link = OutboundLink.url("https://www.senter.net/from-commandh", campaign: "built-by", content: "settings")
-        return line + company
+        return AttributedString(parts[0]) + company + AttributedString(parts.count > 1 ? parts[1] : "")
     }
 }
 

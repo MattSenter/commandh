@@ -4,7 +4,9 @@ import SwiftUI
 /// The rest of the Senternet lineup. Which products appear comes from
 /// `senternet/registry/products.json` (every product with `appearsInPortfolio`),
 /// in the order chosen for CommandH; names and summaries are verbatim from
-/// mattsenter.com's `projects.data.ts`. Refresh this list when the lineup changes.
+/// mattsenter.com's `projects.data.ts`, and each summary's translations from that
+/// site's `projects/locales/` (Localization/*.lproj). Refresh this list when the
+/// lineup changes.
 struct OtherProjectsView: View {
     private struct Project: Identifiable {
         let name: String
@@ -16,32 +18,32 @@ struct OtherProjectsView: View {
 
     private static let projects: [Project] = [
         Project(name: "Weatherling",
-                summary: "Rain, snow, and autumn leaves on your Mac desktop. Weather effects, not a weather app.",
+                summary: String(localized: "Rain, snow, and autumn leaves on your Mac desktop. Weather effects, not a weather app."),
                 url: "https://www.weatherling.app/from-commandh", image: "weatherling"),
         Project(name: "Burly",
-                summary: "Every link, in the right browser profile.",
+                summary: String(localized: "Every link, in the right browser profile."),
                 url: "https://www.burly.click/from-commandh", image: "burly"),
         Project(name: "Comoji",
-                summary: "Slack-style :emoji: autocomplete, everywhere on your Mac.",
+                summary: String(localized: "Slack-style :emoji: autocomplete, everywhere on your Mac."),
                 url: "https://www.comoji.io/from-commandh", image: "comoji"),
         Project(name: "Premail",
-                summary: "Your inbox, defended.",
+                summary: String(localized: "Your inbox, defended."),
                 url: "https://www.premail.pro/from-commandh", image: "premail"),
         Project(name: "Highwire",
-                summary: "See beyond the headlines.",
+                summary: String(localized: "See beyond the headlines."),
                 url: "https://www.highwire.news/from-commandh", image: "highwire"),
         Project(name: "StockCar",
-                summary: "A podcast of your portfolio, not the market.",
+                summary: String(localized: "A podcast of your portfolio, not the market."),
                 url: "https://www.stockcar.app/from-commandh", image: "stockcar"),
         Project(name: "Orgabot",
-                summary: "Orchestrate the work, not just the agents.",
+                summary: String(localized: "Orchestrate the work, not just the agents."),
                 url: "https://www.orga.bot/from-commandh", image: "orgabot"),
         // External-owned: no lander, so the root.
         Project(name: "BeeReady",
-                summary: "Lifesaving skills, one game at a time.",
+                summary: String(localized: "Lifesaving skills, one game at a time."),
                 url: "https://www.beeready.buzz", image: "beeready"),
         Project(name: "SeedMatrix",
-                summary: "Every variety, every trial, one clear comparison.",
+                summary: String(localized: "Every variety, every trial, one clear comparison."),
                 url: "https://www.seedmatrix.com", image: "seedmatrix"),
     ]
 
@@ -68,7 +70,7 @@ struct OtherProjectsView: View {
 
     /// The intro with Matt Senter and Senternet linked to their landers.
     private static var intro: AttributedString {
-        var text = AttributedString("CommandH is one of several products Matt Senter of Senternet designs, builds, and ships end to end. Here’s the rest of the lineup.")
+        var text = AttributedString(String(localized: "CommandH is one of several products Matt Senter of Senternet designs, builds, and ships end to end. Here’s the rest of the lineup."))
         for (name, site) in [("Matt Senter", "https://www.mattsenter.com/from-commandh"),
                              ("Senternet", "https://www.senter.net/from-commandh")] {
             if let range = text.range(of: name), let url = taggedURL(site) {

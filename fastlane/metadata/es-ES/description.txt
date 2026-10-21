@@ -1,0 +1,28 @@
+Pulsa Command-H en la última app que se ve y no pasa nada. El sistema se niega a ocultar la única app que queda en pantalla, así que la ventana sigue ahí y nunca llegas a ver el escritorio.
+
+CommandH lo soluciona. Con él en marcha, Command-H funciona siempre igual, incluso con la última app.
+
+NADA NUEVO QUE APRENDER
+
+Sigue usando Command-H. Cuando se ven dos o más apps, CommandH no interviene. Cuando solo queda una, CommandH entra en acción para que Command-H también la oculte. Recupera una app como siempre: haz clic en su icono del Dock o cambia a ella con Command-Tab.
+
+CÓMO FUNCIONA
+
+El sistema solo se niega a ocultar una app cuando no quedaría ninguna otra app normal a la vista. Mientras se ve una sola app o ninguna, CommandH se convierte un momento en una app normal con una ventana diminuta y casi invisible. Así tu última app deja de ser la última y se oculta con normalidad. Durante ese tiempo, el icono de CommandH aparece en el Dock, y desaparece en cuanto se ve una segunda app.
+
+PRIVADO Y LIGERO
+
+- Sin permisos que conceder: ni Accesibilidad, ni Grabación de pantalla, ni Monitorización de entrada
+- Nunca lee tu pantalla ni tus pulsaciones de teclas
+- Sin acceso a la red, sin cuenta, sin analíticas, sin recopilar datos
+- Se ejecuta en el App Sandbox
+- Gratis, sin anuncios y sin compras dentro de la app
+
+CONFIGÚRALO Y OLVÍDATE
+
+- Activa o desactiva CommandH sin salir de él
+- Muestra su icono en la barra de menús o úsalo sin ningún icono
+- Ábrelo al iniciar sesión para que esté siempre listo
+- Cerrar la ventana de ajustes, o pulsar Command-Q, deja CommandH en ejecución, así que una pulsación accidental nunca lo apaga. Elige Salir de CommandH para salir de verdad.
+
+CommandH es gratis y de código abierto, y siempre lo será.

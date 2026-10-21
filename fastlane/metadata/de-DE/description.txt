@@ -1,0 +1,28 @@
+Drück Command-H bei der letzten sichtbaren App, und nichts passiert. Dein Computer weigert sich, die einzige App auszublenden, die noch auf dem Bildschirm ist. Das Fenster bleibt, wo es ist, und du kommst nie zu deinem Schreibtisch.
+
+CommandH behebt das. Solange es läuft, funktioniert Command-H jedes Mal gleich, auch bei der letzten App.
+
+NICHTS NEUES ZU LERNEN
+
+Verwende einfach weiter Command-H. Sind zwei oder mehr Apps sichtbar, hält sich CommandH heraus. Ist nur noch eine übrig, springt CommandH ein, damit Command-H auch diese ausblendet. Eine App holst du wie gewohnt zurück: Klicke auf ihr Symbol im Dock oder wechsle mit Command-Tab zu ihr.
+
+SO FUNKTIONIERT ES
+
+Das System verweigert das Ausblenden einer App nur, wenn danach keine andere reguläre App mehr sichtbar wäre. Solange eine oder keine App sichtbar ist, wird CommandH kurzzeitig selbst zu einer regulären App mit einem winzigen, fast unsichtbaren Fenster. Deine letzte App ist dann nicht mehr die letzte und lässt sich ganz normal ausblenden. In dieser Zeit erscheint das Symbol von CommandH im Dock und verschwindet wieder, sobald eine zweite App sichtbar ist.
+
+PRIVAT UND SCHLANK
+
+- Keine Berechtigungen nötig: keine Bedienungshilfen, keine Bildschirmaufnahme, keine Eingabeüberwachung
+- Liest nie deinen Bildschirm oder deine Tastatureingaben
+- Kein Netzwerkzugriff, kein Konto, keine Analysen, keine Datenerfassung
+- Läuft in der App-Sandbox
+- Kostenlos, ohne Werbung und ohne In-App-Käufe
+
+EINMAL EINRICHTEN, FERTIG
+
+- CommandH ein- oder ausschalten, ohne es zu beenden
+- Symbol in der Menüleiste anzeigen oder ganz ohne Symbol laufen lassen
+- Bei der Anmeldung öffnen, damit es immer bereit ist
+- Das Schließen des Einstellungsfensters oder Command-Q lässt CommandH weiterlaufen, damit ein versehentlicher Tastendruck es nie ausschaltet. Wähle „CommandH beenden“, um es wirklich zu beenden.
+
+CommandH ist Open Source und kostenlos, und das bleibt auch so.

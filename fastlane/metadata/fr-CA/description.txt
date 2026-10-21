@@ -1,0 +1,28 @@
+Vous appuyez sur Commande + H dans la dernière app affichée et rien ne se passe. Votre ordinateur refuse de masquer la seule app restée à l’écran : la fenêtre ne bouge pas et vous n’atteignez jamais votre bureau.
+
+CommandH règle ce problème. Tant qu’il est ouvert, Commande + H fonctionne de la même façon à chaque fois, même sur la dernière app.
+
+RIEN DE NOUVEAU À APPRENDRE
+
+Continuez d’utiliser Commande + H. Quand au moins deux apps sont affichées, CommandH se fait oublier. Quand il n’en reste qu’une, CommandH intervient pour que Commande + H la masque aussi. Pour faire revenir une app, procédez comme d’habitude : cliquez sur son icône dans le Dock ou passez-y avec Commande + Tab.
+
+COMMENT ÇA MARCHE
+
+Le système ne refuse de masquer une app que lorsqu’il ne resterait plus aucune autre app ordinaire à l’écran. Tant qu’une seule app ou aucune n’est affichée, CommandH devient brièvement une app ordinaire, avec une minuscule fenêtre presque invisible. Votre dernière app n’est alors plus la dernière, et elle se masque normalement. Pendant ce temps, l’icône de CommandH apparaît dans le Dock, puis disparaît dès qu’une deuxième app est affichée.
+
+CONFIDENTIEL ET LÉGER
+
+- Aucune autorisation à accorder : ni Accessibilité, ni Enregistrement de l’écran, ni Surveillance de l’entrée
+- Ne lit jamais votre écran ni vos frappes au clavier
+- Aucun accès réseau, aucun compte, aucune statistique d’utilisation, aucune donnée collectée
+- S’exécute dans l’App Sandbox
+- Gratuit, sans publicité et sans achat intégré
+
+RÉGLEZ-LE ET OUBLIEZ-LE
+
+- Activez ou désactivez CommandH sans le quitter
+- Affichez son icône dans la barre des menus, ou utilisez-le sans aucune icône
+- Ouvrez-le avec la session pour qu’il soit toujours prêt
+- Fermer la fenêtre des réglages, ou appuyer sur Commande + Q, laisse CommandH ouvert : une frappe accidentelle ne le désactive jamais. Choisissez Quitter CommandH pour le quitter vraiment.
+
+CommandH est open source et gratuit, et le restera toujours.

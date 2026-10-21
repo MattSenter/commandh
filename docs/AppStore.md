@@ -63,19 +63,27 @@ macOS track of `/senternet-private-github-action-ios-release`.
 
 ## The listing
 
-- Text: `fastlane/metadata/` (en-US only; the app is English only). No `release_notes.txt`
-  for 1.0, because Apple does not accept What's New on a first version. Add it for 1.1.
-- URLs point at the GitHub repo, its issues and `PRIVACY.md` until CommandH has a site.
+- Text: `fastlane/metadata/<store locale>/`, one folder per App Store locale in
+  `screenshots.config.json` (en-US, de-DE, es-ES, es-MX, fr-FR, fr-CA, ja, ko, pt-BR, zh-Hans,
+  zh-Hant). No `release_notes.txt` for 1.0, because Apple does not accept What's New on a first
+  version. Add it for 1.1, in every locale.
+- URLs point at the GitHub repo, its issues and `PRIVACY.md` until CommandH has a site. Each
+  locale's privacy and marketing URLs point at that language's `PRIVACY.<lang>.md` and
+  `README.<lang>.md`.
+- `python3 scripts/check-localization.py` (also in CI) fails if any language is missing a
+  listing file, goes over Apple's limits, or still has English text.
 - Never "Mac" or "macOS", no em dashes: `fastlane/AGENTS.md`. Enforced by CI and the lanes.
 
 ## Screenshots
 
-`scripts/screenshots.sh` renders `fastlane/screenshots/en-US/` (five 2880x1800 PNGs) offscreen
-from `Tools/StoreScreenshots.swift`, which compiles in the app's real `SettingsView` and menu
-bar icon. Shots: `screenshots.config.json`. Every word on them: `fastlane/screenshots/captions.json`.
-Rerun after any settings UI change. The menu slide draws the App Store menu's items in the
-system style, because NSMenu cannot render offscreen; keep its labels in sync with
-`buildStatusMenu()`.
+`scripts/screenshots.sh` renders `fastlane/screenshots/<store locale>/` (five 2880x1800 PNGs per
+locale) offscreen from `Tools/StoreScreenshots.swift`, which compiles in the app's real
+`SettingsView` and menu bar icon. Shots and languages: `screenshots.config.json`. Captions:
+`fastlane/screenshots/captions.json`. The words inside the settings window and the menu come from
+`Localization/<lang>.lproj`, the same strings the app ships, so each language renders in its own
+child process. Rerun after any settings UI or translation change. The menu slide draws the App
+Store menu's items in the system style, because NSMenu cannot render offscreen; keep its item
+list in sync with `buildStatusMenu()`.
 
 Upload just the screenshots to an editable version: `bundle exec fastlane mac upload_screenshots version:1.0`.
 

@@ -1,0 +1,209 @@
+/*
+  Localizable.strings (Traditional Chinese, Taiwan)
+  CommandH
+
+  Keys are the English source strings. SwiftUI literals (Text, Button, ...)
+  and String(localized:) look them up in Bundle.main. %@ is a string argument.
+
+  Do not translate: CommandH, Matt Senter, Senternet, Senternet LLC, other app
+  names (Weatherling, Burly, Comoji, Premail, Highwire, StockCar, Orgabot,
+  BeeReady, SeedMatrix), Slack, :emoji:, Cmd+H, Cmd+Tab, or keyboard glyphs
+  such as ⌘. Never use an em dash in a translation.
+
+  When a string names a macOS feature or place (Dock, menu bar, Show Desktop,
+  Applications folder, login), use Apple's official localized name for it.
+
+  The Hiding pane, the sidebar, the window title and the menu bar menu appear
+  in the App Store screenshots: never add the words Mac or macOS to them.
+
+  Every key here must exist in every other .lproj, and every string the app
+  shows must be a key here: scripts/check-localization.py enforces both.
+*/
+
+/* ===== Menus and window title (main.swift) ===== */
+
+/* Settings window title. */
+"CommandH Preferences" = "CommandH 設定";
+
+/* Menu item that opens the settings window (app menu and menu bar menu). */
+"Preferences…" = "設定…";
+
+/* App menu item (Cmd+H). */
+"Hide CommandH" = "隱藏 CommandH";
+
+/* App menu item (Cmd+W). */
+"Close Window" = "關閉視窗";
+
+/* App menu item on Cmd+Q: closes the window but CommandH keeps running. */
+"Close and Keep Running" = "關閉並保持執行";
+
+/* Menu item and settings button that really quits the app. */
+"Quit CommandH" = "結束 CommandH";
+
+/* Menu bar menu checkbox and settings switch that turns CommandH on or off. */
+"Enabled" = "啟用";
+
+/* Menu bar submenu title for choosing how the last app is handled. */
+"When Cmd+H Can't Hide" = "Cmd+H 無法隱藏時";
+
+/* Menu bar submenu choice: hide the last app; CommandH briefly shows a Dock icon. */
+"Hide the App (Dock icon appears)" = "隱藏應用程式（Dock 會出現圖像）";
+
+/* Menu bar submenu choice: use the system's Show Desktop instead. Show Desktop is the macOS feature name; use its official localized name. */
+"Show Desktop (no Dock icon)" = "顯示桌面（不出現 Dock 圖像）";
+
+/* Menu bar menu checkbox that shows or hides the menu bar icon. Title case, like the other menu items. */
+"Show in Menu Bar" = "在選單列中顯示";
+
+/* Menu bar menu checkbox that starts CommandH at login. Title case, like the other menu items. */
+"Open at Login" = "登入時開啟";
+
+/* ===== Settings sidebar (SettingsView.swift) ===== */
+
+/* Settings sidebar tab and pane title. */
+"Hiding" = "隱藏";
+
+/* Settings sidebar tab and pane title. Also the label of the system version row in About. */
+"System" = "系統";
+
+/* Settings sidebar tab and pane title. */
+"Privacy" = "隱私";
+
+/* Settings sidebar tab and pane title listing the developer's other apps. */
+"Other Projects" = "其他專案";
+
+/* Settings sidebar tab and pane title. */
+"About" = "關於";
+
+/* Credit line in the sidebar and About. %@ is the developer's name, Matt Senter, which links to his site; place it where the language needs it. */
+"Built by %@" = "開發者：%@";
+
+/* Copyright line in the sidebar. %@ is the company name, Senternet LLC, which links to its site. Keep it short: it must fit on one line. */
+"Copyright © 2026 %@" = "版權所有 © 2026 %@";
+
+/* ===== Hiding pane ===== */
+
+/* Hiding pane intro. */
+"Makes Cmd+H work even when the app is the last one showing." = "就算是畫面上最後一個應用程式，Cmd+H 也照樣能隱藏。";
+
+/* Card title and picker label: what happens when only one app is visible on screen. */
+"When only one app is showing" = "只剩一個應用程式顯示時";
+
+/* App Store build only (shown in the store screenshots, so never say Mac or macOS). Explains how the last app gets hidden. */
+"Cmd+H hides the last app completely. While one app or none is showing, CommandH's icon appears in the Dock. That's what lets the last app hide." = "Cmd+H 會完整隱藏最後一個應用程式。當只有一個或沒有應用程式顯示時，CommandH 的圖像會出現在 Dock 中，最後一個應用程式正是因此才能隱藏。";
+
+/* Radio choice: hide the last app. Sentence case. */
+"Hide the app" = "隱藏應用程式";
+
+/* Explanation under the Hide the app choice. */
+"The app hides completely, like Cmd+H anywhere else. CommandH's icon appears in the Dock while one app or none is showing." = "應用程式會完整隱藏，和平常按 Cmd+H 一樣。當只有一個或沒有應用程式顯示時，CommandH 的圖像會出現在 Dock 中。";
+
+/* Radio choice: use the system's Show Desktop. Show Desktop is the macOS feature name; use its official localized name. */
+"Show Desktop" = "顯示桌面";
+
+/* Explanation under the Show Desktop choice. */
+"Windows slide to the edges of the screen, and Cmd+H again brings them back. CommandH never appears in the Dock." = "視窗會滑到螢幕邊緣，再按一次 Cmd+H 即可讓它們回來。CommandH 不會出現在 Dock 中。";
+
+/* ===== System pane ===== */
+
+/* Settings switch label. Sentence case. */
+"Open at login" = "登入時開啟";
+
+/* Settings switch label. Sentence case. */
+"Show in menu bar" = "在選單列中顯示";
+
+/* Shown under Show in menu bar while it is off. */
+"To get back to these settings, open CommandH from your Applications folder." = "若要回到這些設定，請從「應用程式」檔案夾開啟 CommandH。";
+
+/* Card title above the Quit CommandH button. */
+"Quit" = "結束";
+
+/* Caption next to the Quit CommandH button. */
+"Closing this window keeps CommandH running." = "關閉此視窗後，CommandH 仍會繼續執行。";
+
+/* ===== Privacy pane ===== */
+
+/* Privacy pane statement. */
+"CommandH works entirely on your computer. It only looks at which apps are running and whether each one is hidden, and that never leaves your computer or gets stored. No account, no analytics, and no permissions to grant." = "CommandH 完全在你的電腦上運作。它只會查看哪些應用程式正在執行，以及各自是否已隱藏，這些資訊絕不會離開你的電腦，也不會被儲存。不需要帳號，沒有分析功能，也不必授予任何權限。";
+
+/* Card title in the Privacy pane. */
+"Network activity" = "網路活動";
+
+/* Network activity card text. */
+"None. CommandH never connects to the internet on its own. The links in these settings open in your browser." = "無。CommandH 絕不會自行連上網際網路。這些設定中的連結會在你的瀏覽器中開啟。";
+
+/* Link that opens the privacy policy in the browser. */
+"Read the full privacy policy" = "閱讀完整隱私權政策";
+
+/* ===== About pane ===== */
+
+/* Tagline under the app name. Use mattsenter.com's translation of CommandH's tagline. */
+"Cmd+H that works on the last app, so you can finally see your desktop." = "讓 Cmd+H 連最後一個應用程式也能隱藏，終於看得到你的桌面。";
+
+/* Card title above the version and system rows. */
+"Version" = "版本";
+
+/* Version row in About. %@ is the version and build, e.g. 1.0 (7). */
+"Version %@" = "版本 %@";
+
+/* Button that copies the version info to the clipboard. */
+"Copy Version Info" = "複製版本資訊";
+
+/* Button label shown briefly after the version info was copied. */
+"Copied" = "已複製";
+
+/* Tooltip on Copy Version Info. */
+"Copies the CommandH and system versions, handy for a support request." = "複製 CommandH 和系統的版本資訊，尋求協助時很方便。";
+
+/* Card title above the Source Code and Report an Issue buttons. */
+"On the web" = "線上資源";
+
+/* Button that opens the GitHub repository. */
+"Source Code" = "原始碼";
+
+/* Button that opens GitHub issues. */
+"Report an Issue" = "回報問題";
+
+/* Card title. */
+"About the developer" = "關於開發者";
+
+/* About the developer card text. Matt Senter is the developer's name and Senternet his studio; do not translate either. */
+"CommandH is designed, built, and shipped by Matt Senter, an independent developer who makes every Senternet product end to end." = "CommandH 由 Matt Senter 設計、開發並發布。他是一位獨立開發者，每款 Senternet 產品都由他從頭到尾一手打造。";
+
+/* Button that switches to the Other Projects pane. */
+"See Other Projects" = "查看其他專案";
+
+/* ===== Other Projects pane (OtherProjectsView.swift) ===== */
+
+/* Subtitle in the Other Projects pane. */
+"From the same workshop." = "出自同一工坊。";
+
+/* Intro paragraph in the Other Projects pane. Matt Senter and Senternet become links: keep both names exactly as written. */
+"CommandH is one of several products Matt Senter of Senternet designs, builds, and ships end to end. Here’s the rest of the lineup." = "CommandH 是 Senternet 的 Matt Senter 從設計、開發到發布一手打造的幾款產品之一。以下是其餘產品。";
+
+/* One-line summary of Weatherling, another app by the same developer. Use mattsenter.com's translation of its tagline. */
+"Rain, snow, and autumn leaves on your Mac desktop. Weather effects, not a weather app." = "讓 Mac 桌面飄起雨、雪和秋葉。是天氣特效，不是天氣應用程式。";
+
+/* One-line summary of Burly, another app by the same developer. Use mattsenter.com's translation of its tagline. */
+"Every link, in the right browser profile." = "每個連結，都在對的瀏覽器設定檔中開啟。";
+
+/* One-line summary of Comoji, another app by the same developer. Use mattsenter.com's translation of its tagline. */
+"Slack-style :emoji: autocomplete, everywhere on your Mac." = "Slack 風格的 :emoji: 自動完成，在 Mac 上隨處可用。";
+
+/* One-line summary of Premail, another app by the same developer. Use mattsenter.com's translation of its tagline. */
+"Your inbox, defended." = "守護你的收件匣。";
+
+/* One-line summary of Highwire, another product by the same developer. Use mattsenter.com's translation of its tagline. */
+"See beyond the headlines." = "看透頭條背後。";
+
+/* One-line summary of StockCar, another app by the same developer. Use mattsenter.com's translation of its tagline. */
+"A podcast of your portfolio, not the market." = "你的投資組合 Podcast，而不是大盤的。";
+
+/* One-line summary of Orgabot, another product by the same developer. Use mattsenter.com's translation of its tagline. */
+"Orchestrate the work, not just the agents." = "統籌整份工作，而不只是 AI 代理。";
+
+/* One-line summary of BeeReady, another product by the same developer. Use mattsenter.com's translation of its tagline. */
+"Lifesaving skills, one game at a time." = "一局一局，學會救命技能。";
+
+/* One-line summary of SeedMatrix, another product by the same developer. Use mattsenter.com's translation of its tagline. */
+"Every variety, every trial, one clear comparison." = "每個品種，每項試驗，一目瞭然的比較。";

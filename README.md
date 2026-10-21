@@ -8,6 +8,10 @@
   Make <b>Cmd+H</b> hide the last app on your Mac, so you can actually see your desktop.
 </p>
 
+<p align="center">
+  <b>English</b> · <a href="README.de.md">Deutsch</a> · <a href="README.es.md">Español</a> · <a href="README.fr.md">Français</a> · <a href="README.ja.md">日本語</a> · <a href="README.ko.md">한국어</a> · <a href="README.pt-BR.md">Português (Brasil)</a> · <a href="README.zh-Hans.md">简体中文</a> · <a href="README.zh-Hant.md">繁體中文</a>
+</p>
+
 ---
 
 macOS has an odd rule: **you can't hide the last visible app.** When every other app is already hidden, pressing Cmd+H on the one that's left does nothing. The window stays put and you never get to your desktop.
@@ -180,7 +184,10 @@ The whole app is under 500 lines of Swift in [`Sources/`](Sources).
 ./build.sh            # builds build/CommandH.app (ad-hoc signed)
 ./build.sh --install  # also copies it to /Applications and opens it
 swift Tools/make-icon.swift   # regenerates the app icon in Resources/
+python3 scripts/check-localization.py   # checks every language is complete
 ```
+
+CommandH ships in English, German, Spanish, French, Japanese, Korean, Brazilian Portuguese, and Simplified and Traditional Chinese. A new string the app shows goes in `Localization/en.lproj/Localizable.strings` and every other `.lproj`, and a change to this README or `PRIVACY.md` goes in each translation too.
 
 | Path | What's there |
 |---|---|
@@ -189,6 +196,9 @@ swift Tools/make-icon.swift   # regenerates the app icon in Resources/
 | `Sources/OtherProjectsView.swift`, `Resources/other-projects/` | The Other Projects pane and its screenshots |
 | `Sources/BuiltByCredit.swift`, `Sources/OutboundLink.swift` | The sidebar credit and copyright, and the tagged outbound links |
 | `Sources/MenuBarIcon.swift` | The menu bar icon, drawn in code |
+| `Localization/<lang>.lproj/` | The app's strings in each language (English is the source) |
+| `README.<lang>.md`, `PRIVACY.<lang>.md` | Translated docs |
+| `scripts/check-localization.py` | Fails if any language is missing a string, doc, listing file or screenshot |
 | `Tools/make-icon.swift` | Renders the app icon |
 | `scripts/release.sh` | Developer ID signing and notarization for releases |
 | `project.yml`, `fastlane/` | The Mac App Store build (sandboxed, without Show Desktop). See [docs/AppStore.md](docs/AppStore.md) |
