@@ -233,10 +233,17 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
     // MARK: Settings window
 
     private lazy var settingsWindow: NSWindow = {
-        let view = SettingsView(onQuit: { [weak self] in self?.quitApp() })
-        let w = NSWindow(contentViewController: NSHostingController(rootView: view))
-        w.title = "CommandH Settings"
-        w.styleMask = [.titled, .closable]
+        let view = SettingsView(onQuit: { [weak self] in self?.quitApp() }).toggleStyle(.switch)
+        let hosting = NSHostingController(rootView: view)
+        // Sizing is left to the window, so it opens at the minimum and can grow.
+        hosting.sizingOptions = []
+        let w = NSWindow(contentViewController: hosting)
+        w.title = "CommandH Preferences"
+        w.styleMask = [.titled, .closable, .miniaturizable, .resizable]
+        w.setContentSize(SettingsView.minimumSize)
+        w.contentMinSize = SettingsView.minimumSize
+        w.titlebarAppearsTransparent = true
+        w.backgroundColor = .windowBackgroundColor
         w.isReleasedWhenClosed = false
         w.delegate = self
         w.center()
@@ -282,7 +289,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
     // Shown while CommandH is the active app (settings open, or standing in).
     private func buildMainMenu() {
         let appMenu = NSMenu()
-        appMenu.addItem(withTitle: "Settings…", action: #selector(showSettings), keyEquivalent: ",").target = self
+        appMenu.addItem(withTitle: "Preferences…", action: #selector(showSettings), keyEquivalent: ",").target = self
         appMenu.addItem(.separator())
         // Cmd+H is an ordinary Hide; Cmd+W and Cmd+Q collapse to the menu bar.
         appMenu.addItem(withTitle: "Hide CommandH", action: #selector(hideFromKeyboard), keyEquivalent: "h").target = self
@@ -323,7 +330,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
         menuBarItem.target = self
         loginItem = menu.addItem(withTitle: "Open at Login", action: #selector(toggleLogin), keyEquivalent: "")
         loginItem.target = self
-        menu.addItem(withTitle: "Settings…", action: #selector(showSettings), keyEquivalent: ",").target = self
+        menu.addItem(withTitle: "Preferences…", action: #selector(showSettings), keyEquivalent: ",").target = self
         menu.addItem(.separator())
         menu.addItem(withTitle: "Quit CommandH", action: #selector(quitApp), keyEquivalent: "q").target = self
         statusItem.menu = menu

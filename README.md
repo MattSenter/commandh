@@ -47,7 +47,7 @@ CommandH is currently installed by building it from source. It takes about a min
    ./build.sh --install
    ```
    This builds `CommandH.app`, copies it to your Applications folder, and opens it.
-3. The settings window appears. Turn on **Open at login** so CommandH is always ready.
+3. The Preferences window appears. Under **System**, turn on **Open at login** so CommandH is always ready.
 
 That's it. Hide apps the way you normally do. When you get down to the last one, Cmd+H now hides it too.
 
@@ -73,20 +73,20 @@ To bring a hidden app back, click its Dock icon or switch to it with Cmd+Tab, as
 
 ## Settings
 
-Open the settings window by opening CommandH from your Applications folder (or Spotlight, or Launchpad), by choosing **Settings…** from the menu bar icon, or by clicking CommandH's Dock icon while it's showing.
+Open the Preferences window by opening CommandH from your Applications folder (or Spotlight, or Launchpad), by choosing **Preferences…** from the menu bar icon, or by clicking CommandH's Dock icon while it's showing. The sidebar has five panes: **Hiding**, **System**, **Privacy**, **Other Projects** (more apps from the same developer), and **About** (version info and links).
 
 <p align="center">
-  <img src="docs/images/settings-light.png" width="440" alt="CommandH settings window in light mode">
-  <img src="docs/images/settings-dark.png" width="440" alt="CommandH settings window in dark mode">
+  <img src="docs/images/settings-light.png" width="440" alt="CommandH Preferences window in light mode">
+  <img src="docs/images/settings-dark.png" width="440" alt="CommandH Preferences window in dark mode">
 </p>
 
-| Setting | What it does |
-|---|---|
-| **Enabled** | Turns CommandH on or off without quitting it. When off, Cmd+H behaves like stock macOS. |
-| **When only one app is showing** | Chooses **Hide the app** or **Show Desktop**. See [the comparison above](#two-ways-to-handle-the-last-app). |
-| **Show in menu bar** | Shows or removes the ⌘H icon in your menu bar. With it off, CommandH runs invisibly. Open CommandH from your Applications folder to get back to this window. |
-| **Open at login** | Starts CommandH automatically when you log in. It starts quietly, without opening this window. |
-| **Quit CommandH** | Actually quits the app. Closing the window (or pressing Cmd+Q) only closes the window and leaves CommandH running. |
+| Setting | Pane | What it does |
+|---|---|---|
+| **Enabled** | Hiding | Turns CommandH on or off without quitting it. When off, Cmd+H behaves like stock macOS. |
+| **When only one app is showing** | Hiding | Chooses **Hide the app** or **Show Desktop**. See [the comparison above](#two-ways-to-handle-the-last-app). |
+| **Show in menu bar** | System | Shows or removes the ⌘H icon in your menu bar. With it off, CommandH runs invisibly. Open CommandH from your Applications folder to get back to this window. |
+| **Open at login** | System | Starts CommandH automatically when you log in. It starts quietly, without opening this window. |
+| **Quit CommandH** | System | Actually quits the app. Closing the window (or pressing Cmd+Q) only closes the window and leaves CommandH running. |
 
 Settings are saved automatically and apply right away.
 
@@ -102,19 +102,19 @@ Click the ⌘H icon in your menu bar for quick access to the same settings.
 - **When Cmd+H Can't Hide**: pick **Hide the App** or **Show Desktop**.
 - **Show in Menu Bar**: uncheck to remove the icon. You can also hold Cmd and drag the icon out of the menu bar.
 - **Open at Login**: start CommandH when you log in.
-- **Settings…**: open the settings window.
+- **Preferences…**: open the Preferences window.
 - **Quit CommandH**: quit the app.
 
 ## Keyboard shortcuts
 
-While the CommandH settings window is in front:
+While the CommandH Preferences window is in front:
 
 | Shortcut | What it does |
 |---|---|
-| Cmd+W | Closes the settings window. CommandH keeps running. |
+| Cmd+W | Closes the Preferences window. CommandH keeps running. |
 | Cmd+Q | Also closes the window and keeps CommandH running, so a stray Cmd+Q never turns it off. Use **Quit CommandH** to quit for real. |
 | Cmd+H | Hides CommandH like any other app. |
-| Cmd+, | Opens settings. |
+| Cmd+, | Opens Preferences. |
 
 ## Troubleshooting
 
@@ -134,7 +134,7 @@ That's how macOS's Show Desktop works. Press Cmd+H again or click a window edge 
 Show Desktop relies on an internal macOS feature. If a future version of macOS removes it, CommandH grays the option out rather than misbehave. **Hide the app** keeps working.
 
 **I turned off the menu bar icon and can't find CommandH.**
-Open CommandH from your Applications folder. The settings window appears and you can turn the icon back on.
+Open CommandH from your Applications folder. The Preferences window appears, and you can turn the icon back on under **System**.
 
 **Open at login doesn't stay on.**
 macOS only allows apps in a stable location to open at login. Make sure CommandH is in your Applications folder (`./build.sh --install` puts it there), then turn the setting on again.
@@ -166,7 +166,7 @@ The whole app is under 500 lines of Swift in [`Sources/`](Sources).
 
 ## Uninstall
 
-1. Choose **Quit CommandH** from the menu bar icon or the settings window.
+1. Choose **Quit CommandH** from the menu bar icon or the **System** pane of the Preferences window.
 2. If **Open at login** was on, turn it off first, or remove CommandH in System Settings > General > Login Items.
 3. Drag `/Applications/CommandH.app` to the Trash.
 4. Optionally remove its settings:
@@ -185,7 +185,9 @@ swift Tools/make-icon.swift   # regenerates the app icon in Resources/
 | Path | What's there |
 |---|---|
 | `Sources/main.swift` | App delegate, the two hiding methods, menus |
-| `Sources/SettingsView.swift` | The SwiftUI settings window |
+| `Sources/SettingsView.swift` | The SwiftUI Preferences window: sidebar and panes |
+| `Sources/OtherProjectsView.swift`, `Resources/other-projects/` | The Other Projects pane and its screenshots |
+| `Sources/BuiltByCredit.swift`, `Sources/OutboundLink.swift` | The sidebar credit and copyright, and the tagged outbound links |
 | `Sources/MenuBarIcon.swift` | The menu bar icon, drawn in code |
 | `Tools/make-icon.swift` | Renders the app icon |
 | `scripts/release.sh` | Developer ID signing and notarization for releases |

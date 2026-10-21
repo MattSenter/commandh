@@ -15,6 +15,7 @@ plutil -replace CFBundleShortVersionString -string "$VERSION" "$APP/Contents/Inf
 plutil -replace CFBundleVersion -string "$BUILD" "$APP/Contents/Info.plist"
 mkdir -p "$APP/Contents/Resources"
 cp Resources/AppIcon.icns "$APP/Contents/Resources/AppIcon.icns"
+cp -R Resources/other-projects "$APP/Contents/Resources/other-projects"
 swiftc -O -swift-version 5 -o "$APP/Contents/MacOS/CommandH" Sources/*.swift
 codesign --force --sign - "$APP"
 echo "Built $APP"

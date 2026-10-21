@@ -27,6 +27,10 @@ targets:
       - path: Sources
       - path: Resources/AppIcon.icns
         buildPhase: resources
+      # A folder reference, so the screenshots keep their other-projects/ subfolder.
+      - path: Resources/other-projects
+        type: folder
+        buildPhase: resources
     settings:
       base:
         PRODUCT_NAME: CommandH

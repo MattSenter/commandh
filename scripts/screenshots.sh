@@ -17,7 +17,8 @@ esac
 
 mkdir -p build
 swiftc -O -swift-version 5 -parse-as-library -D APP_STORE -o build/StoreScreenshots \
-  Tools/StoreScreenshots.swift Sources/SettingsView.swift Sources/MenuBarIcon.swift
+  Tools/StoreScreenshots.swift Sources/SettingsView.swift Sources/MenuBarIcon.swift \
+  Sources/BuiltByCredit.swift Sources/OtherProjectsView.swift Sources/OutboundLink.swift
 build/StoreScreenshots "$PWD"
 
 # Apple accepts 2880x1800 for the desktop set; refuse anything else.

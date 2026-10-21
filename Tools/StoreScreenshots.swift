@@ -309,20 +309,16 @@ struct BeforeAfterSlide: View {
 /// draw every switch in its gray, inactive-window state.
 struct ActiveSwitch: ToggleStyle {
     func makeBody(configuration: Configuration) -> some View {
-        HStack {
-            configuration.label
-            Spacer()
-            Capsule()
-                .fill(configuration.isOn ? Color.accentColor : Color(white: 0.85))
-                .overlay(Capsule().strokeBorder(.black.opacity(0.06), lineWidth: 0.5))
-                .frame(width: 32, height: 19)
-                .overlay(alignment: configuration.isOn ? .trailing : .leading) {
-                    Circle().fill(.white)
-                        .shadow(color: .black.opacity(0.25), radius: 0.8, y: 0.5)
-                        .frame(width: 17, height: 17)
-                        .padding(1)
-                }
-        }
+        Capsule()
+            .fill(configuration.isOn ? Brand.accent : Color(white: 0.85))
+            .overlay(Capsule().strokeBorder(.black.opacity(0.06), lineWidth: 0.5))
+            .frame(width: 32, height: 19)
+            .overlay(alignment: configuration.isOn ? .trailing : .leading) {
+                Circle().fill(.white)
+                    .shadow(color: .black.opacity(0.25), radius: 0.8, y: 0.5)
+                    .frame(width: 17, height: 17)
+                    .padding(1)
+            }
     }
 }
 
@@ -333,7 +329,7 @@ struct SettingsSlide: View {
             VStack(spacing: 0) {
                 // Window chrome around the app's real settings view.
                 ZStack {
-                    Text("CommandH Settings").font(.system(size: 13, weight: .semibold)).foregroundStyle(.secondary)
+                    Text("CommandH Preferences").font(.system(size: 13, weight: .semibold)).foregroundStyle(.secondary)
                     HStack(spacing: 8) {
                         Circle().fill(Color(.sRGB, red: 1.0, green: 0.37, blue: 0.34))
                         Circle().fill(Color(white: 0.82))
@@ -347,13 +343,13 @@ struct SettingsSlide: View {
                 SettingsView(onQuit: {})
                     .toggleStyle(ActiveSwitch())
             }
-            .frame(width: 440)
+            .frame(width: SettingsView.minimumSize.width)
             .background(Color(nsColor: .windowBackgroundColor))
             .clipShape(RoundedRectangle(cornerRadius: 12))
             .overlay(RoundedRectangle(cornerRadius: 12).strokeBorder(.black.opacity(0.25), lineWidth: 1))
             .shadow(color: .black.opacity(0.5), radius: 30, y: 16)
             .environment(\.colorScheme, .light)
-            .scaleEffect(1.18)
+            .scaleEffect(0.82)
             .padding(.bottom, 30)
         }
     }
