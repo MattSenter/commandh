@@ -49,6 +49,10 @@ macOS track of `/senternet-private-github-action-ios-release`.
    gh secret set APPLE_INSTALLER_CERTIFICATE --repo $REPO --body "$(base64 -i mac_installer_distribution.p12)"
    gh secret set APPLE_INSTALLER_CERTIFICATE_PASSWORD --repo $REPO   # prompts
    ```
+   To run the lanes locally, export `APP_STORE_CONNECT_API_KEY_ID` and
+   `APP_STORE_CONNECT_API_ISSUER_ID` in your shell; the lanes read the `.p8` from
+   `APP_STORE_CONNECT_API_KEY_PATH` (default `~/Downloads/AuthKey_<KEY_ID>.p8`). Keep the real
+   values out of this repo: it is public.
 
 ## Shipping 1.0
 
