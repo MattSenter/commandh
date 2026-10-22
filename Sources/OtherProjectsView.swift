@@ -17,6 +17,10 @@ struct OtherProjectsView: View {
     }
 
     private static let projects: [Project] = [
+        // No site: the GitHub repo is its root, like CommandH's.
+        Project(name: "Despacer",
+                summary: String(localized: "Copy long commands from Claude Code and Codex, and paste them in one piece."),
+                url: "https://github.com/MattSenter/despacer", image: "despacer"),
         Project(name: "Weatherling",
                 summary: String(localized: "Rain, snow, and autumn leaves on your Mac desktop. Weather effects, not a weather app."),
                 url: "https://www.weatherling.app/from-commandh", image: "weatherling"),

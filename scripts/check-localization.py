@@ -50,7 +50,7 @@ MAC = re.compile(r"(?<![A-Za-z])mac(?:os)?(?![A-Za-z])", re.IGNORECASE)
 FORMAT = re.compile(r"%(?:\d+\$)?[@dDuUxXoOfeEgGcCsSpaAF%]")
 # Names that must survive translation untouched wherever the English has them.
 PROTECTED = ["CommandH", "Matt Senter", "Senternet", "Cmd+H", "Cmd+Tab", "Slack", ":emoji:",
-             "Weatherling", "Burly", "Comoji", "Premail", "Highwire", "StockCar", "Orgabot",
+             "Despacer", "Weatherling", "Burly", "Comoji", "Premail", "Highwire", "StockCar", "Orgabot",
              "BeeReady", "SeedMatrix", "Dock"]
 # Where Apple's own localization renames one of those: Simplified Chinese macOS
 # calls the Dock 程序坞.

@@ -6,9 +6,9 @@
   and String(localized:) look them up in Bundle.main. %@ is a string argument.
 
   Do not translate: CommandH, Matt Senter, Senternet, Senternet LLC, other app
-  names (Weatherling, Burly, Comoji, Premail, Highwire, StockCar, Orgabot,
-  BeeReady, SeedMatrix), Slack, :emoji:, Cmd+H, Cmd+Tab, or keyboard glyphs
-  such as ⌘. Never use an em dash in a translation.
+  names (Despacer, Weatherling, Burly, Comoji, Premail, Highwire, StockCar,
+  Orgabot, BeeReady, SeedMatrix), Claude Code, Codex, Slack, :emoji:, Cmd+H,
+  Cmd+Tab, or keyboard glyphs such as ⌘. Never use an em dash in a translation.
 
   When a string names a macOS feature or place (Dock, menu bar, Show Desktop,
   Applications folder, login), use Apple's official localized name for it.
@@ -180,6 +180,9 @@
 
 /* Intro paragraph in the Other Projects pane. Matt Senter and Senternet become links: keep both names exactly as written. */
 "CommandH is one of several products Matt Senter of Senternet designs, builds, and ships end to end. Here’s the rest of the lineup." = "CommandH 是 Senternet 的 Matt Senter 从设计、开发到发布一手打造的几款产品之一。以下是其余产品。";
+
+/* One-line summary of Despacer, another app by the same developer. Keep Claude Code and Codex exactly as written. */
+"Copy long commands from Claude Code and Codex, and paste them in one piece." = "从 Claude Code 和 Codex 复制长命令，粘贴时依然完整。";
 
 /* One-line summary of Weatherling, another app by the same developer. Use mattsenter.com's translation of its tagline. */
 "Rain, snow, and autumn leaves on your Mac desktop. Weather effects, not a weather app." = "在你的 Mac 桌面上下雨、下雪、飘落秋叶。是天气特效，不是天气应用。";
