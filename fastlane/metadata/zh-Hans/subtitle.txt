@@ -1,1 +1,1 @@
-让 Command-H 始终有效
+让 Cmd+H 始终有效

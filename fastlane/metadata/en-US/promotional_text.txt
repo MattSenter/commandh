@@ -1,1 +1,1 @@
-Command-H now hides the last app on screen too, so you can actually see your desktop. Free, private, and no permissions to grant.
+Command-H hides the last app on screen, so you can actually see your desktop. Free, private, and no permissions to grant.

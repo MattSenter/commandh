@@ -26,3 +26,5 @@ CommandH 解決了這個問題。只要它在執行，Command-H 每次的表現�
 - 關閉設定視窗或按 Command-Q，CommandH 都會繼續執行，不小心按錯鍵也不會把它關掉。要真正結束，請選擇「結束 CommandH」。
 
 CommandH 是開放原始碼的免費軟體，而且永遠如此。
+
+使用條款：https://github.com/MattSenter/commandh/blob/main/TERMS.zh-Hant.md

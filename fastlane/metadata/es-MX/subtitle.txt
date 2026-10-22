@@ -1,1 +1,1 @@
-Command-H funciona siempre
+Haz que Cmd+H funcione siempre

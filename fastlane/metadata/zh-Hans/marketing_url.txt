@@ -1,1 +1,1 @@
-https://github.com/MattSenter/commandh/blob/main/README.zh-Hans.md
+https://www.mattsenter.com/zh/projects/commandh

@@ -1,1 +1,1 @@
-Commande + H marche toujours
+Pour que Cmd+H marche toujours

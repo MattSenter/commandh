@@ -26,3 +26,5 @@ CommandH가 이 문제를 해결합니다. CommandH가 실행 중이면 Command-
 - 설정 윈도우를 닫거나 Command-Q를 눌러도 CommandH는 계속 실행되므로, 실수로 키를 눌러도 꺼지지 않습니다. 완전히 종료하려면 CommandH 종료를 선택하세요.
 
 CommandH는 오픈 소스이자 무료이며, 앞으로도 그렇습니다.
+
+이용약관: https://github.com/MattSenter/commandh/blob/main/TERMS.ko.md

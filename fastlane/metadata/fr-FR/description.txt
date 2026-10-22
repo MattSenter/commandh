@@ -26,3 +26,5 @@ RÉGLEZ-LE ET OUBLIEZ-LE
 - Fermer la fenêtre des réglages, ou appuyer sur Commande + Q, laisse CommandH ouvert : une frappe accidentelle ne le désactive jamais. Choisissez Quitter CommandH pour le quitter vraiment.
 
 CommandH est open source et gratuit, et le restera toujours.
+
+Conditions d’utilisation : https://github.com/MattSenter/commandh/blob/main/TERMS.fr.md

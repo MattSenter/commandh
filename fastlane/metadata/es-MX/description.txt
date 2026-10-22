@@ -26,3 +26,5 @@ CONFIGÚRALO Y OLVÍDATE
 - Cerrar la ventana de ajustes, o pulsar Command-Q, deja CommandH en ejecución, así que una pulsación accidental nunca lo apaga. Elige Salir de CommandH para salir de verdad.
 
 CommandH es gratis y de código abierto, y siempre lo será.
+
+Condiciones de uso: https://github.com/MattSenter/commandh/blob/main/TERMS.es.md

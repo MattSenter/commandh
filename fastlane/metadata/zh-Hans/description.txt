@@ -26,3 +26,5 @@ CommandH 解决了这个问题。只要它在运行，Command-H 每次都会以�
 - 关闭设置窗口或按 Command-Q 时，CommandH 会继续运行，误按也不会把它关掉。要真正退出，请选择“退出 CommandH”。
 
 CommandH 开源且免费，将来也永远如此。
+
+使用条款：https://github.com/MattSenter/commandh/blob/main/TERMS.zh-Hans.md

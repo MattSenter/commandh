@@ -26,3 +26,5 @@ CONFIGURE E ESQUEÇA
 - Fechar a janela de ajustes, ou pressionar Command-Q, mantém o CommandH em execução, então uma tecla pressionada sem querer nunca o desliga. Escolha Encerrar CommandH para encerrar de verdade.
 
 O CommandH é gratuito e de código aberto, e sempre será.
+
+Termos de Uso: https://github.com/MattSenter/commandh/blob/main/TERMS.pt-BR.md

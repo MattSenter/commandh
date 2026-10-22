@@ -13,7 +13,7 @@ requires every piece of it:
            arguments, protected names kept, no em dash, no "Mac"/"macOS" a source
            string didn't have, and not just the English copied over.
            Info.plist's CFBundleLocalizations lists exactly those languages.
-  Docs     README.<lang>.md and PRIVACY.<lang>.md exist and are translated, every
+  Docs     README.<lang>.md, PRIVACY.<lang>.md and TERMS.<lang>.md exist and are translated, every
            README carries the full language bar, and every relative link and
            in-page anchor resolves. No em dashes (the docs are user facing).
   Store    fastlane/metadata/<store locale>/ has every listing file within Apple's
@@ -38,6 +38,10 @@ CONFIG = json.loads((ROOT / "screenshots.config.json").read_text())
 LANGUAGES = {row["app"]: row["store"] for row in CONFIG["languages"]}
 SHOTS = [shot["id"] for shot in CONFIG["store"]["shots"]]
 GITHUB = "https://github.com/MattSenter/commandh"
+# The listing's marketing page. mattsenter.com has no ko or zh-Hant pages, so those
+# languages link the English one.
+SITE = "https://www.mattsenter.com"
+SITE_PREFIX = {"de": "/de", "es": "/es", "fr": "/fr", "ja": "/ja", "pt-BR": "/pt", "zh-Hans": "/zh"}
 
 EM_DASH = "—"
 # "Mac" or "macOS" as a word. ASCII-letter boundaries, because \b never fires
@@ -59,6 +63,7 @@ MAY_MATCH_ENGLISH = {"Version", "Version %@", "System", "Copyright © 2026 %@", 
 LISTING_LIMITS = {"name.txt": 30, "subtitle.txt": 30, "keywords.txt": 100,
                   "promotional_text.txt": 170, "description.txt": 4000}
 LISTING_URLS = ["privacy_url.txt", "support_url.txt", "marketing_url.txt"]
+DOCS = ("README", "PRIVACY", "TERMS")
 
 problems = []
 
@@ -194,10 +199,10 @@ def check_markdown(path):
 
 
 def check_docs(langs):
-    english = {stem: (ROOT / doc_name(stem, "en")).read_text() for stem in ("README", "PRIVACY")}
+    english = {stem: (ROOT / doc_name(stem, "en")).read_text() for stem in DOCS}
     bar = [doc_name("README", lang) for lang in LANGUAGES]
     for lang in langs:
-        for stem in ("README", "PRIVACY"):
+        for stem in DOCS:
             path = ROOT / doc_name(stem, lang)
             if not path.exists():
                 problem(f"Missing {path.name}")
@@ -236,8 +241,12 @@ def check_store(langs, screenshots):
                     problem(f"fastlane/metadata/{store}/{file} contains an em dash")
                 if lang != "en" and file != "keywords.txt" and text == (english / file).read_text().strip():
                     problem(f"fastlane/metadata/{store}/{file} is the English text")
+                # Apple wants a Terms of Use link; the description's last line carries it.
+                terms = f"{GITHUB}/blob/main/{doc_name('TERMS', lang)}"
+                if file == "description.txt" and not (text.splitlines() or [""])[-1].endswith(terms):
+                    problem(f"fastlane/metadata/{store}/{file} must end with a Terms of Use link to {terms}")
             expected = {"privacy_url.txt": f"{GITHUB}/blob/main/{doc_name('PRIVACY', lang)}",
-                        "marketing_url.txt": GITHUB if lang == "en" else f"{GITHUB}/blob/main/{doc_name('README', lang)}",
+                        "marketing_url.txt": f"{SITE}{SITE_PREFIX.get(lang, '')}/projects/commandh",
                         "support_url.txt": f"{GITHUB}/issues"}
             for file in LISTING_URLS:
                 path = folder / file

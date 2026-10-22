@@ -26,3 +26,5 @@ SET IT AND FORGET IT
 - Closing the settings window, or pressing Command-Q, keeps CommandH running, so a stray keystroke never turns it off. Choose Quit CommandH to quit for real.
 
 CommandH is open source and free, and always will be.
+
+Terms of Use: https://github.com/MattSenter/commandh/blob/main/TERMS.md

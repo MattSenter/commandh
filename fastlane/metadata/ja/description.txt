@@ -26,3 +26,5 @@ CommandHがこれを解決します。CommandHを実行しておけば、最後�
 ・設定ウインドウを閉じても、Command-Qを押しても、CommandHは実行され続けるので、うっかりキーを押してオフになることはありません。本当に終了するには「CommandHを終了」を選びます。
 
 CommandHはオープンソースで無料です。これからもずっと変わりません。
+
+利用規約：https://github.com/MattSenter/commandh/blob/main/TERMS.ja.md
