@@ -4,7 +4,8 @@
 # `platform :mac` form.
 #
 # Lanes, one signing story:
-#   mac beta               -> pilot   -> TestFlight for internal testers (push to main)
+#   mac beta               -> pilot   -> TestFlight for internal testers (manual run)
+#   mac beta_review        -> submit a build to the external group's Beta App Review (manual)
 #   mac release            -> deliver -> submit to the App Store (push a v* tag)
 #   mac prepare_drafts     -> stage the listing and optional TestFlight build, no submission
 #   mac upload_screenshots -> refresh only the screenshots of an editable version
@@ -151,6 +152,48 @@ def beta_changelog
   subject.gsub(/\s*—\s*/, ", ")[0, 4000]
 end
 
+# External TestFlight groups a build goes to when it is submitted for Beta App
+# Review. External testing is what needs Beta App Review; internal testers get
+# every build without it.
+EXTERNAL_BETA_GROUPS = ["VIPs"].freeze
+
+# Attach a build to the EXTERNAL beta groups and submit it for Beta App Review:
+# the given build number, or the newest build when none is given. Only the first
+# build of a version usually gets a human review; later builds of the same version
+# are often approved automatically. Apple allows two submissions per app per day,
+# which is why this is a manual lane.
+def submit_for_beta_review!(api_key, build_number = nil)
+  app = find_app!(api_key)
+
+  groups = app.get_beta_groups.select { |g| !g.is_internal_group && EXTERNAL_BETA_GROUPS.include?(g.name) }
+  missing = EXTERNAL_BETA_GROUPS - groups.map(&:name)
+  UI.user_error!("No external TestFlight group named #{missing.join(', ')} in App Store Connect.") unless missing.empty?
+
+  # get_builds, not Build.all: Build.all follows every page, which with limit 1
+  # and no build number is one request per build ever uploaded. CommandH has
+  # only a macOS app, so the newest build is the newest macOS build.
+  build = Spaceship::ConnectAPI.get_builds(
+    filter: { app: app.id, version: build_number }, # a nil build_number drops out of the filter
+    sort: "-uploadedDate",
+    limit: 1
+  ).to_models.first
+  UI.user_error!(build_number ? "Build #{build_number} not found in App Store Connect." : "No builds in App Store Connect.") if build.nil?
+  build = Spaceship::ConnectAPI::Build.get(build_id: build.id) # with build_beta_detail included
+
+  build.add_beta_groups(beta_groups: groups)
+  if build.ready_for_beta_submission?
+    begin
+      build.post_beta_app_review_submission
+    rescue Spaceship::UnexpectedResponse => e
+      raise unless e.message.include?("Submission limit has been reached")
+      UI.user_error!("Apple's limit of two Beta App Review submissions per day is reached. Build #{build.app_version} (#{build.version}) is attached to #{groups.map(&:name).join(', ')}; run this again tomorrow.")
+    end
+    UI.success("Build #{build.app_version} (#{build.version}) submitted for Beta App Review, groups: #{groups.map(&:name).join(', ')}.")
+  else
+    UI.message("Build #{build.app_version} (#{build.version}) is #{build.build_beta_detail.external_build_state}; not submitting again.")
+  end
+end
+
 # Every signing target in the macOS build: bundle id => Xcode target name.
 MAC_TARGETS = {
   BUNDLE_ID => "CommandH",
@@ -219,7 +262,14 @@ platform :mac do
     )
   end
 
-  desc "Build the native macOS app and upload it to TestFlight for internal testers (runs on a push to main)"
+  desc "Submit a TestFlight build to the external group's Beta App Review (build:N, or the newest build)"
+  lane :beta_review do |options|
+    build_number = options[:build].to_s.strip
+    UI.user_error!("build must be a build number such as 5.") unless build_number.empty? || build_number.match?(/\A[0-9]+\z/)
+    submit_for_beta_review!(asc_api_key, build_number.empty? ? nil : build_number)
+  end
+
+  desc "Build the native macOS app and upload it to TestFlight for internal testers (manual run of macOS Release)"
   lane :beta do
     api_key = asc_api_key
     # Must be set BEFORE the build: version_xcargs bakes CURRENT_PROJECT_VERSION

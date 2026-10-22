@@ -1,0 +1,38 @@
+name: Submit for Beta Review
+
+# Manual: attach a TestFlight build to the external "VIPs" group and submit it for
+# Beta App Review (fastlane mac beta_review). TestFlight builds come from a manual
+# run of macOS Release and go to internal testers only, because Apple allows two
+# Beta App Review submissions per app per day.
+on:
+  workflow_dispatch:
+    inputs:
+      build:
+        description: 'Build number to submit (e.g. 5). Leave empty for the newest build.'
+        required: false
+        type: string
+
+permissions:
+  contents: read
+
+concurrency:
+  group: commandh-app-store
+  cancel-in-progress: false
+
+jobs:
+  beta-review:
+    runs-on: macos-15
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.3'
+          bundler-cache: true
+      - name: Submit for Beta App Review
+        env:
+          BUILD: ${{ inputs.build }}
+          APP_STORE_CONNECT_API_KEY_ID: ${{ secrets.APP_STORE_CONNECT_API_KEY_ID }}
+          APP_STORE_CONNECT_API_ISSUER_ID: ${{ secrets.APP_STORE_CONNECT_API_ISSUER_ID }}
+          APP_STORE_CONNECT_API_KEY_P8: ${{ secrets.APP_STORE_CONNECT_API_KEY_P8 }}
+        run: bundle exec fastlane mac beta_review "build:$BUILD"

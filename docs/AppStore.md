@@ -19,7 +19,8 @@ macOS track of `/senternet-private-github-action-ios-release`.
 | Trigger | Workflow | Lane | Result |
 |---|---|---|---|
 | PR or push to `main` | `ci.yml` | none | Both builds, entitlement and private-API checks, listing copy rules |
-| Push to `main` (app paths) | `macos-release.yml` | `mac beta` | TestFlight, internal testers |
+| Manual | `macos-release.yml` | `mac beta` | TestFlight, internal testers |
+| Manual | `beta-review.yml` | `mac beta_review` | A build (default: newest) to the external `VIPs` group and Beta App Review. Apple allows two submissions a day |
 | Push tag `v1.0` | `macos-release.yml` | `mac release` | Listing + screenshots uploaded, submitted with automatic release, then `main` bumped to 1.1 |
 | Manual | `prepare-app-store-drafts.yml` | `mac prepare_drafts` | Editable version staged, never submitted |
 
@@ -56,7 +57,8 @@ macOS track of `/senternet-private-github-action-ios-release`.
 
 ## Shipping 1.0
 
-1. Push to `main`; wait for the TestFlight build and try it.
+1. Run **macOS Release** on `main` (`gh workflow run macos-release.yml --ref main`); wait for the TestFlight build and try it.
+   Optional: run **Submit for Beta Review** to send it to external testers.
 2. Optional: run **Prepare App Store Drafts** with version `1.0` to review the listing in App
    Store Connect first.
 3. `git tag v1.0 && git push origin v1.0`.
