@@ -59,6 +59,8 @@ struct OtherProjectsView: View {
                     .font(.system(size: 12))
                     .foregroundStyle(.secondary)
                     .fixedSize(horizontal: false, vertical: true)
+                    .accessibilityOpenLinkAction("Matt Senter", url: Self.taggedURL(Self.introLinks[0].site))
+                    .accessibilityOpenLinkAction("Senternet", url: Self.taggedURL(Self.introLinks[1].site))
             }
 
             LazyVGrid(columns: columns, spacing: 14) {
@@ -68,11 +70,13 @@ struct OtherProjectsView: View {
         }
     }
 
+    private static let introLinks = [(name: "Matt Senter", site: "https://www.mattsenter.com/from-commandh"),
+                                     (name: "Senternet", site: "https://www.senter.net/from-commandh")]
+
     /// The intro with Matt Senter and Senternet linked to their landers.
     private static var intro: AttributedString {
         var text = AttributedString(String(localized: "CommandH is one of several products Matt Senter of Senternet designs, builds, and ships end to end. Here’s the rest of the lineup."))
-        for (name, site) in [("Matt Senter", "https://www.mattsenter.com/from-commandh"),
-                             ("Senternet", "https://www.senter.net/from-commandh")] {
+        for (name, site) in introLinks {
             if let range = text.range(of: name), let url = taggedURL(site) {
                 text[range].link = url
                 text[range].foregroundColor = Brand.accent

@@ -241,6 +241,14 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
         w.ignoresMouseEvents = true
         w.isReleasedWhenClosed = false
         w.collectionBehavior = [.canJoinAllSpaces, .stationary, .ignoresCycle]
+        // VoiceOver lands here after the last app hides. Without this it says
+        // only "In window, content is empty".
+        w.setAccessibilityTitle("CommandH")
+        let note = NSView()
+        note.setAccessibilityElement(true)
+        note.setAccessibilityRole(.staticText)
+        note.setAccessibilityValue(String(localized: "CommandH stands in here so the last app can hide. Press Cmd+Tab to switch apps.", comment: "Spoken by VoiceOver only, in CommandH's invisible stand-in window after the last app hides. Cmd+Tab is the key combination; keep it as is."))
+        w.contentView = note
         return w
     }()
 

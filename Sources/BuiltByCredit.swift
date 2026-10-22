@@ -43,13 +43,17 @@ struct CopyrightLine: View {
             .tint(Brand.accent)
             .lineLimit(1)
             .minimumScaleFactor(0.85)
+            // VoiceOver reads a link inside Text as plain words, so offer it as an action.
+            .accessibilityOpenLinkAction("Senternet LLC", url: Self.url)
     }
+
+    private static let url = OutboundLink.url("https://www.senter.net/from-commandh", campaign: "built-by", content: "settings")
 
     private static var text: AttributedString {
         let parts = String(localized: "Copyright © 2026 %@", comment: "Copyright line. The argument is the company name, Senternet LLC, which links to its site.")
             .components(separatedBy: "%@")
         var company = AttributedString("Senternet LLC")
-        company.link = OutboundLink.url("https://www.senter.net/from-commandh", campaign: "built-by", content: "settings")
+        company.link = url
         return AttributedString(parts[0]) + company + AttributedString(parts.count > 1 ? parts[1] : "")
     }
 }
@@ -60,6 +64,14 @@ extension View {
     func pointingHandCursor() -> some View {
         onHover { inside in
             if inside { NSCursor.pointingHand.push() } else { NSCursor.pop() }
+        }
+    }
+
+    /// A VoiceOver action, "Open <name>", for a link inside a Text. VoiceOver
+    /// reads such links as plain words and can't follow them.
+    func accessibilityOpenLinkAction(_ name: String, url: URL?) -> some View {
+        accessibilityAction(named: Text(String(localized: "Open \(name)", comment: "VoiceOver action that opens a link in the text. The argument is the link's name, such as Senternet LLC or Matt Senter."))) {
+            if let url { NSWorkspace.shared.open(url) }
         }
     }
 }

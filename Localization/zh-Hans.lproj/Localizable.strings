@@ -207,3 +207,9 @@
 
 /* One-line summary of SeedMatrix, another product by the same developer. Use mattsenter.com's translation of its tagline. */
 "Every variety, every trial, one clear comparison." = "每个品种、每次试验，一份清晰的对比。";
+
+/* Spoken by VoiceOver only, in CommandH's invisible stand-in window after the last app hides. Cmd+Tab is the key combination. */
+"CommandH stands in here so the last app can hide. Press Cmd+Tab to switch apps." = "CommandH 在此临时顶替，让最后一个 App 可以隐藏。按 Cmd+Tab 切换 App。";
+
+/* VoiceOver action that opens a link in the text. The argument is the link's name, such as Senternet LLC or Matt Senter. */
+"Open %@" = "打开%@";
