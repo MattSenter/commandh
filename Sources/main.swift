@@ -132,6 +132,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
                      NSWorkspace.didTerminateApplicationNotification] {
             center.addObserver(self, selector: #selector(update), name: name, object: nil)
         }
+        NotificationCenter.default.addObserver(self, selector: #selector(didResignActive), name: NSApplication.didResignActiveNotification, object: nil)
         // The settings window and the menu both write to UserDefaults.
         NotificationCenter.default.addObserver(self, selector: #selector(settingsChanged), name: UserDefaults.didChangeNotification, object: nil)
         update()
@@ -217,6 +218,19 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
             hotKey.unregister()
         }
         standInLog.notice("update front=\(front?.localizedName ?? "-", privacy: .public) visible=\(visible.map { $0.localizedName ?? "?" }.joined(separator: ","), privacy: .public) standIn=\(standIn) policy=\(NSApp.activationPolicy().rawValue) hidden=\(NSApp.isHidden) active=\(NSApp.isActive) placeholderVisible=\(self.placeholder.isVisible) onScreen=\(self.placeholder.occlusionState.contains(.visible))") // DEBUG-STANDIN
+    }
+
+    /// After the last app is hidden, CommandH is the active app. Once the user
+    /// switches away, it would sit second in Cmd+Tab, the slot a single Cmd+Tab
+    /// lands on, and cost an extra keystroke to skip. Leaving and rejoining the
+    /// regular apps puts it at the far end of the switcher instead.
+    @objc private func didResignActive() {
+        guard standingIn && !settingsOpen else { return }
+        DispatchQueue.main.async {
+            guard self.standingIn && !self.settingsOpen && !NSApp.isActive else { return }
+            NSApp.setActivationPolicy(.accessory)
+            DispatchQueue.main.async { self.update() }
+        }
     }
 
     private lazy var placeholder: NSWindow = {
