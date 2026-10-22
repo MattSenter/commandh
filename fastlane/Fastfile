@@ -322,7 +322,9 @@ platform :mac do
       use_live_version: false,
       skip_app_version_update: false,
       submit_for_review: false,
-      automatic_release: false,
+      # deliver writes the release type on every run, so false here would reset the
+      # draft to "Manually release this version". Match the release lane instead.
+      automatic_release: true,
       run_precheck_before_submit: false,
       precheck_include_in_app_purchases: false,
       skip_binary_upload: true,

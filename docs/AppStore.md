@@ -22,7 +22,7 @@ macOS track of `/senternet-private-github-action-ios-release`.
 | Manual | `macos-release.yml` | `mac beta` | TestFlight, internal testers |
 | Manual | `beta-review.yml` | `mac beta_review` | A build (default: newest) to the external `VIPs` group and Beta App Review. Apple allows two submissions a day |
 | Push tag `v1.0` | `macos-release.yml` | `mac release` | Listing + screenshots uploaded, submitted with automatic release, then `main` bumped to 1.1 |
-| Manual | `prepare-app-store-drafts.yml` | `mac prepare_drafts` | Editable version staged, never submitted |
+| Manual | `prepare-app-store-drafts.yml` | `mac prepare_drafts` | Editable version staged with automatic release, never submitted |
 
 ## One-time setup (before the first run)
 

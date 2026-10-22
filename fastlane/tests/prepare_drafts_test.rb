@@ -83,9 +83,10 @@ prepare.call(version: '1.30')
 check($uploads.map { |o| o[:platform] } == %w[osx], 'macOS platform required')
 check($uploads.all? { |o| o[:metadata_path] == METADATA_PATH && o[:overwrite_screenshots] }, 'Listing paths missing')
 $uploads.each do |o|
-  %i[submit_for_review automatic_release edit_live use_live_version skip_metadata skip_screenshots].each do |key|
+  %i[submit_for_review edit_live use_live_version skip_metadata skip_screenshots].each do |key|
     check(o[key] == false, "Unsafe option #{key}")
   end
+  check(o[:automatic_release] == true, 'Drafts must keep automatic release')
   check(o[:skip_binary_upload] && o[:force], 'Must upload noninteractively without a build')
   check(o[:app_version] == '1.30', 'Wrong marketing version')
   folder = 'screenshots'
