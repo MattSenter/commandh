@@ -35,6 +35,7 @@ CommandH 是一款小巧、免费、开源的菜单栏 App，专门解决这个�
 - [卸载](#卸载)
 - [构建与贡献](#构建与贡献)
 - [支持本项目](#支持本项目)
+- [其他项目](#其他项目)
 
 ## 安装
 
@@ -199,6 +200,21 @@ CommandH 现在免费，将来也永远免费。如果它帮你省去了每天�
 </p>
 
 打赏只是一份谢意，不会解锁任何东西，因为本来就没有什么需要解锁。
+
+## 其他项目
+
+CommandH 是 [Senternet](https://www.senter.net/?utm_source=github&utm_medium=readme&utm_campaign=commandh&utm_content=other-projects) 的 [Matt Senter](https://www.mattsenter.com/?utm_source=github&utm_medium=readme&utm_campaign=commandh&utm_content=other-projects) 从设计、开发到发布一手打造的几款产品之一。以下是其余产品。
+
+- **[Despacer](https://github.com/MattSenter/despacer)**：从 Claude Code 和 Codex 复制长命令，粘贴时依然完整。
+- **[Weatherling](https://www.weatherling.app/?utm_source=github&utm_medium=readme&utm_campaign=commandh&utm_content=other-projects)**：在你的 Mac 桌面上下雨、下雪、飘落秋叶。是天气特效，不是天气应用。
+- **[Burly](https://www.burly.click/?utm_source=github&utm_medium=readme&utm_campaign=commandh&utm_content=other-projects)**：每个链接，都进正确的浏览器配置文件。
+- **[Comoji](https://www.comoji.io/?utm_source=github&utm_medium=readme&utm_campaign=commandh&utm_content=other-projects)**：Slack 风格的 :emoji: 自动补全，用在整台 Mac 上。
+- **[Premail](https://www.premail.pro/?utm_source=github&utm_medium=readme&utm_campaign=commandh&utm_content=other-projects)**：守住你的收件箱。
+- **[Highwire](https://www.highwire.news/?utm_source=github&utm_medium=readme&utm_campaign=commandh&utm_content=other-projects)**：看穿标题之外。
+- **[StockCar](https://www.stockcar.app/?utm_source=github&utm_medium=readme&utm_campaign=commandh&utm_content=other-projects)**：一档关于你持仓的播客，而不是关于大盘。
+- **[Orgabot](https://www.orga.bot/?utm_source=github&utm_medium=readme&utm_campaign=commandh&utm_content=other-projects)**：编排的是工作，而不只是智能体。
+- **[BeeReady](https://www.beeready.buzz/?utm_source=github&utm_medium=readme&utm_campaign=commandh&utm_content=other-projects)**：救命的本事，一场比赛一场比赛地教。
+- **[SeedMatrix](https://www.seedmatrix.com/?utm_source=github&utm_medium=readme&utm_campaign=commandh&utm_content=other-projects)**：每个品种、每次试验，一份清晰的对比。
 
 ## 许可证
 

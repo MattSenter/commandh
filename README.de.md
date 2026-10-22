@@ -35,6 +35,7 @@ CommandH ist eine winzige, kostenlose Open-Source-App für die Menüleiste, die 
 - [Deinstallieren](#deinstallieren)
 - [Kompilieren und mitwirken](#kompilieren-und-mitwirken)
 - [Das Projekt unterstützen](#das-projekt-unterstützen)
+- [Weitere Projekte](#weitere-projekte)
 
 ## Installation
 
@@ -199,6 +200,21 @@ CommandH ist kostenlos und wird es immer bleiben. Wenn es dir einen kleinen täg
 </p>
 
 Ein Trinkgeld ist ein Dankeschön. Es schaltet nichts frei, denn es gibt nichts freizuschalten.
+
+## Weitere Projekte
+
+CommandH ist eines von mehreren Produkten, die [Matt Senter](https://www.mattsenter.com/?utm_source=github&utm_medium=readme&utm_campaign=commandh&utm_content=other-projects) von [Senternet](https://www.senter.net/?utm_source=github&utm_medium=readme&utm_campaign=commandh&utm_content=other-projects) von Anfang bis Ende entwirft, entwickelt und veröffentlicht. Hier ist der Rest der Reihe.
+
+- **[Despacer](https://github.com/MattSenter/despacer)**: Lange Befehle aus Claude Code und Codex kopieren und in einem Stück einsetzen.
+- **[Weatherling](https://www.weatherling.app/?utm_source=github&utm_medium=readme&utm_campaign=commandh&utm_content=other-projects)**: Regen, Schnee und Herbstlaub auf deinem Mac-Desktop. Wettereffekte, keine Wetter-App.
+- **[Burly](https://www.burly.click/?utm_source=github&utm_medium=readme&utm_campaign=commandh&utm_content=other-projects)**: Jeder Link im richtigen Browserprofil.
+- **[Comoji](https://www.comoji.io/?utm_source=github&utm_medium=readme&utm_campaign=commandh&utm_content=other-projects)**: :emoji:-Autovervollständigung wie in Slack, überall auf deinem Mac.
+- **[Premail](https://www.premail.pro/?utm_source=github&utm_medium=readme&utm_campaign=commandh&utm_content=other-projects)**: Dein Posteingang, verteidigt.
+- **[Highwire](https://www.highwire.news/?utm_source=github&utm_medium=readme&utm_campaign=commandh&utm_content=other-projects)**: Hinter die Schlagzeilen sehen.
+- **[StockCar](https://www.stockcar.app/?utm_source=github&utm_medium=readme&utm_campaign=commandh&utm_content=other-projects)**: Ein Podcast über dein Depot, nicht über den Markt.
+- **[Orgabot](https://www.orga.bot/?utm_source=github&utm_medium=readme&utm_campaign=commandh&utm_content=other-projects)**: Die Arbeit orchestrieren, nicht nur die Agenten.
+- **[BeeReady](https://www.beeready.buzz/?utm_source=github&utm_medium=readme&utm_campaign=commandh&utm_content=other-projects)**: Lebensrettende Handgriffe, ein Spiel nach dem anderen.
+- **[SeedMatrix](https://www.seedmatrix.com/?utm_source=github&utm_medium=readme&utm_campaign=commandh&utm_content=other-projects)**: Jede Sorte, jeder Versuch, ein klarer Vergleich.
 
 ## Lizenz
 

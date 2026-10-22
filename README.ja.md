@@ -35,6 +35,7 @@ CommandHは、この問題を解決する小さな無料のオープンソース
 - [アンインストール](#アンインストール)
 - [ビルドと貢献](#ビルドと貢献)
 - [プロジェクトを支援する](#プロジェクトを支援する)
+- [その他のプロジェクト](#その他のプロジェクト)
 
 ## インストール
 
@@ -199,6 +200,21 @@ CommandHは無料で、これからもずっと無料です。毎日のちょっ
 </p>
 
 チップはお礼の気持ちです。解除される機能はありません。そもそも解除するものがないからです。
+
+## その他のプロジェクト
+
+CommandHは、[Senternet](https://www.senter.net/?utm_source=github&utm_medium=readme&utm_campaign=commandh&utm_content=other-projects)の[Matt Senter](https://www.mattsenter.com/?utm_source=github&utm_medium=readme&utm_campaign=commandh&utm_content=other-projects)が設計から開発、リリースまで一貫して手がけるプロダクトのひとつです。ほかのラインナップはこちらです。
+
+- **[Despacer](https://github.com/MattSenter/despacer)**: Claude CodeとCodexの長いコマンドをコピーして、ひとつながりのままペースト。
+- **[Weatherling](https://www.weatherling.app/?utm_source=github&utm_medium=readme&utm_campaign=commandh&utm_content=other-projects)**: Mac のデスクトップに雨、雪、秋の落ち葉を。天気予報アプリではなく、天気エフェクトです。
+- **[Burly](https://www.burly.click/?utm_source=github&utm_medium=readme&utm_campaign=commandh&utm_content=other-projects)**: すべてのリンクを、正しいブラウザプロファイルへ。
+- **[Comoji](https://www.comoji.io/?utm_source=github&utm_medium=readme&utm_campaign=commandh&utm_content=other-projects)**: Slack 風の :emoji: 補完を、Mac のどこでも。
+- **[Premail](https://www.premail.pro/?utm_source=github&utm_medium=readme&utm_campaign=commandh&utm_content=other-projects)**: 受信トレイを、守る。
+- **[Highwire](https://www.highwire.news/?utm_source=github&utm_medium=readme&utm_campaign=commandh&utm_content=other-projects)**: 見出しの向こう側を見る。
+- **[StockCar](https://www.stockcar.app/?utm_source=github&utm_medium=readme&utm_campaign=commandh&utm_content=other-projects)**: 市場ではなく、あなたのポートフォリオのポッドキャスト。
+- **[Orgabot](https://www.orga.bot/?utm_source=github&utm_medium=readme&utm_campaign=commandh&utm_content=other-projects)**: エージェントだけでなく、仕事そのものを束ねる。
+- **[BeeReady](https://www.beeready.buzz/?utm_source=github&utm_medium=readme&utm_campaign=commandh&utm_content=other-projects)**: 命を救う技術を、一試合ずつ。
+- **[SeedMatrix](https://www.seedmatrix.com/?utm_source=github&utm_medium=readme&utm_campaign=commandh&utm_content=other-projects)**: すべての品種、すべての試験を、ひとつの明快な比較に。
 
 ## ライセンス
 
