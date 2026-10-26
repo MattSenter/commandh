@@ -132,7 +132,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
                      NSWorkspace.didTerminateApplicationNotification] {
             center.addObserver(self, selector: #selector(update), name: name, object: nil)
         }
-        NotificationCenter.default.addObserver(self, selector: #selector(didResignActive), name: NSApplication.didResignActiveNotification, object: nil)
+        center.addObserver(self, selector: #selector(otherAppActivated), name: NSWorkspace.didActivateApplicationNotification, object: nil)
         // The settings window and the menu both write to UserDefaults.
         NotificationCenter.default.addObserver(self, selector: #selector(settingsChanged), name: UserDefaults.didChangeNotification, object: nil)
         update()
@@ -224,8 +224,15 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
     /// switches away, it would sit second in Cmd+Tab, the slot a single Cmd+Tab
     /// lands on, and cost an extra keystroke to skip. Leaving and rejoining the
     /// regular apps puts it at the far end of the switcher instead.
-    @objc private func didResignActive() {
-        guard standingIn && !settingsOpen else { return }
+    ///
+    /// Only when a regular app takes over. A menu bar app's panel (Weatherling,
+    /// say) is not a visible app, so leaving then would make macOS unhide the
+    /// last app, which steals focus and closes the panel.
+    @objc private func otherAppActivated(_ note: Notification) {
+        guard standingIn && !settingsOpen,
+              let activated = note.userInfo?[NSWorkspace.applicationUserInfoKey] as? NSRunningApplication,
+              activated.processIdentifier != ProcessInfo.processInfo.processIdentifier,
+              activated.activationPolicy == .regular else { return }
         DispatchQueue.main.async {
             guard self.standingIn && !self.settingsOpen && !NSApp.isActive else { return }
             NSApp.setActivationPolicy(.accessory)
