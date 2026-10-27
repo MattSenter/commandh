@@ -99,6 +99,8 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
     private var isQuitting = false
     private var settingsOpen = false
     private var standingIn = false
+    /// The regular app most recently activated, CommandH included.
+    private var lastActiveRegularApp: pid_t?
 
     private let defaults = UserDefaults.standard
 
@@ -179,12 +181,28 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
         refreshMenu()
     }
 
-    /// Regular apps other than CommandH that are not hidden.
+    /// Regular apps other than CommandH that are not hidden and have a window on
+    /// screen. A regular app with no windows (a tray app that keeps its Dock
+    /// icon, like premail) still counts for macOS's rule, but it can't take focus
+    /// after a hide: macOS hands focus to Finder or another hidden app instead and
+    /// unhides it. So it must not keep CommandH from standing in.
     private var visibleOtherApps: [NSRunningApplication] {
         let me = ProcessInfo.processInfo.processIdentifier
+        let withWindows = Self.pidsWithOnScreenWindows()
         return NSWorkspace.shared.runningApplications.filter {
             $0.activationPolicy == .regular && !$0.isHidden && !$0.isTerminated && $0.processIdentifier != me
+                && withWindows.contains($0.processIdentifier)
         }
+    }
+
+    /// Owners of normal (layer 0) windows on screen. Owner and layer need no
+    /// Screen Recording permission; only window titles do.
+    private static func pidsWithOnScreenWindows() -> Set<pid_t> {
+        guard let list = CGWindowListCopyWindowInfo([.optionOnScreenOnly, .excludeDesktopElements], kCGNullWindowID) as? [[CFString: Any]] else { return [] }
+        return Set(list.compactMap { info in
+            guard info[kCGWindowLayer] as? Int == 0 else { return nil }
+            return (info[kCGWindowOwnerPID] as? Int).map(pid_t.init)
+        })
     }
 
     @objc private func update() {
@@ -228,11 +246,20 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
     /// Only when a regular app takes over. A menu bar app's panel (Weatherling,
     /// say) is not a visible app, so leaving then would make macOS unhide the
     /// last app, which steals focus and closes the panel.
+    ///
+    /// And only when the switch is away from CommandH. Hiding the second to last
+    /// app activates the last one while CommandH was never active; moving it to
+    /// the far end then puts the hidden app ahead of it, and hiding the last app
+    /// unhides that one instead of landing on CommandH.
     @objc private func otherAppActivated(_ note: Notification) {
-        guard standingIn && !settingsOpen,
-              let activated = note.userInfo?[NSWorkspace.applicationUserInfoKey] as? NSRunningApplication,
-              activated.processIdentifier != ProcessInfo.processInfo.processIdentifier,
+        guard let activated = note.userInfo?[NSWorkspace.applicationUserInfoKey] as? NSRunningApplication,
               activated.activationPolicy == .regular else { return }
+        let me = ProcessInfo.processInfo.processIdentifier
+        let previous = lastActiveRegularApp
+        lastActiveRegularApp = activated.processIdentifier
+        guard standingIn && !settingsOpen,
+              previous == me,
+              activated.processIdentifier != me else { return }
         DispatchQueue.main.async {
             guard self.standingIn && !self.settingsOpen && !NSApp.isActive else { return }
             NSApp.setActivationPolicy(.accessory)
