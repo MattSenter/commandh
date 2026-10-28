@@ -101,6 +101,9 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
     private var standingIn = false
     /// The regular app most recently activated, CommandH included.
     private var lastActiveRegularApp: pid_t?
+    /// Focus moved from CommandH to another regular app, but CommandH has not
+    /// resigned active yet.
+    private var reorderPending = false
 
     private let defaults = UserDefaults.standard
 
@@ -135,6 +138,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
             center.addObserver(self, selector: #selector(update), name: name, object: nil)
         }
         center.addObserver(self, selector: #selector(otherAppActivated), name: NSWorkspace.didActivateApplicationNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(didResignActive), name: NSApplication.didResignActiveNotification, object: nil)
         // The settings window and the menu both write to UserDefaults.
         NotificationCenter.default.addObserver(self, selector: #selector(settingsChanged), name: UserDefaults.didChangeNotification, object: nil)
         update()
@@ -257,9 +261,27 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
         let me = ProcessInfo.processInfo.processIdentifier
         let previous = lastActiveRegularApp
         lastActiveRegularApp = activated.processIdentifier
+        reorderPending = false
         guard standingIn && !settingsOpen,
               previous == me,
               activated.processIdentifier != me else { return }
+        // This notification usually lands before CommandH itself resigns
+        // active, and the flip is ignored while it is still active. Wait for
+        // the resign in that case.
+        if NSApp.isActive {
+            reorderPending = true
+        } else {
+            moveToEndOfSwitcher()
+        }
+    }
+
+    @objc private func didResignActive() {
+        guard reorderPending else { return }
+        reorderPending = false
+        moveToEndOfSwitcher()
+    }
+
+    private func moveToEndOfSwitcher() {
         DispatchQueue.main.async {
             guard self.standingIn && !self.settingsOpen && !NSApp.isActive else { return }
             NSApp.setActivationPolicy(.accessory)
