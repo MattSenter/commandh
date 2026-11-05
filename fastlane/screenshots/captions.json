@@ -153,30 +153,30 @@
       "zh-Hant": "隱私至上"
     },
     "headline": {
-      "en-US": "No permissions. No data. Free.",
-      "de-DE": "Keine Berechtigungen. Keine Daten. Gratis.",
-      "es-ES": "Sin permisos. Sin datos. Gratis.",
-      "es-MX": "Sin permisos. Sin datos. Gratis.",
-      "fr-FR": "Aucune autorisation. Aucune donnée. Gratuit.",
-      "fr-CA": "Aucune autorisation. Aucune donnée. Gratuit.",
-      "ja": "権限なし。データ収集なし。無料。",
-      "ko": "권한도, 데이터도 없이. 무료로.",
-      "pt-BR": "Sem permissões. Sem dados. Grátis.",
-      "zh-Hans": "无需权限，不碰数据，完全免费",
-      "zh-Hant": "不要權限。不收資料。免費。"
+      "en-US": "No permissions. No data collection.",
+      "de-DE": "Keine Berechtigungen. Keine Datenerfassung.",
+      "es-ES": "Sin permisos. Sin recopilar datos.",
+      "es-MX": "Sin permisos. Sin recopilar datos.",
+      "fr-FR": "Aucune autorisation. Aucune collecte de données.",
+      "fr-CA": "Aucune autorisation. Aucune collecte de données.",
+      "ja": "権限なし。データ収集なし。",
+      "ko": "권한 요청도, 데이터 수집도 없습니다.",
+      "pt-BR": "Sem permissões. Sem coleta de dados.",
+      "zh-Hans": "无需权限，不收集数据",
+      "zh-Hant": "不需權限。不收集資料。"
     },
     "labels": {
-      "en-US": ["No permissions", "No Accessibility, Screen Recording, or Input Monitoring access to grant.", "Nothing leaves", "No network access, no account, no analytics. It never reads your screen or keys.", "Free for good", "No ads, no subscription, nothing to buy. Open source."],
-      "de-DE": ["Keine Berechtigungen", "Kein Zugriff auf Bedienungshilfen, Bildschirmaufnahme oder Eingabeüberwachung nötig.", "Alles bleibt lokal", "Kein Netzwerkzugriff, kein Konto, keine Analysen. Liest nie Bildschirm oder Tasten.", "Für immer kostenlos", "Keine Werbung, kein Abo, nichts zu kaufen. Open Source."],
-      "es-ES": ["Sin permisos", "Sin acceso que conceder a Accesibilidad, Grabación de pantalla ni Monitorización de entrada.", "Nada sale de tu equipo", "Sin acceso a la red, sin cuenta, sin analíticas. Nunca lee tu pantalla ni tus teclas.", "Gratis para siempre", "Sin anuncios, sin suscripción, nada que comprar. Código abierto."],
-      "es-MX": ["Sin permisos", "Sin acceso que conceder a Accesibilidad, Grabación de pantalla ni Monitorización de entrada.", "Nada sale de tu equipo", "Sin acceso a la red, sin cuenta, sin analíticas. Nunca lee tu pantalla ni tus teclas.", "Gratis para siempre", "Sin anuncios, sin suscripción, nada que comprar. Código abierto."],
-      "fr-FR": ["Aucune autorisation", "Aucun accès Accessibilité, Enregistrement de l’écran ou Surveillance de l’entrée à accorder.", "Rien ne sort", "Aucun accès réseau, aucun compte, aucune statistique. Il ne lit jamais votre écran ni vos touches.", "Gratuit pour de bon", "Sans pub, sans abonnement, rien à acheter. Open source."],
-      "fr-CA": ["Aucune autorisation", "Aucun accès Accessibilité, Enregistrement de l’écran ou Surveillance de l’entrée à accorder.", "Rien ne sort", "Aucun accès réseau, aucun compte, aucune statistique. Il ne lit jamais votre écran ni vos touches.", "Gratuit pour de bon", "Sans pub, sans abonnement, rien à acheter. Open source."],
-      "ja": ["権限は不要", "アクセシビリティ、画面収録、入力監視の許可は必要ありません。", "何も送信しません", "ネットワーク通信なし、アカウントなし、分析なし。画面やキー入力も読み取りません。", "ずっと無料", "広告なし、サブスクリプションなし、購入するものもありません。オープンソースです。"],
-      "ko": ["권한 필요 없음", "손쉬운 사용, 화면 기록, 입력 모니터링 권한을 허용할 필요가 없습니다.", "밖으로 나가는 정보 없음", "네트워크 접근, 계정, 분석이 없습니다. 화면이나 키 입력을 읽지 않습니다.", "언제까지나 무료", "광고도, 구독도, 구입할 것도 없습니다. 오픈 소스입니다."],
-      "pt-BR": ["Sem permissões", "Nenhum acesso de Acessibilidade, Gravação de Tela ou Monitoramento de Entrada para conceder.", "Nada sai daqui", "Sem acesso à rede, sem conta, sem análises. Nunca lê a sua tela nem as suas teclas.", "Grátis para sempre", "Sem anúncios, sem assinatura, nada para comprar. Código aberto."],
-      "zh-Hans": ["无需权限", "无需授予“辅助功能”“屏幕录制”或“输入监控”权限。", "数据不外流", "不访问网络，无需账户，没有分析统计。从不读取你的屏幕或按键。", "永久免费", "没有广告，没有订阅，无需购买任何东西。开源。"],
-      "zh-Hant": ["不需任何權限", "不必授予「輔助使用」、「螢幕錄製」或「輸入監控」權限。", "資料不外流", "不連網、不需帳號、不做分析。絕不讀取你的螢幕或按鍵。", "永久免費", "沒有廣告、沒有訂閱，也沒有東西要買。開放原始碼。"]
+      "en-US": ["No permissions", "No Accessibility, Screen Recording, or Input Monitoring access to grant.", "Nothing leaves", "No network access, no account, no analytics. It never reads your screen or keys.", "One shortcut", "Press Command-H to hide the last app and reveal your desktop."],
+      "de-DE": ["Keine Berechtigungen", "Kein Zugriff auf Bedienungshilfen, Bildschirmaufnahme oder Eingabeüberwachung nötig.", "Alles bleibt lokal", "Kein Netzwerkzugriff, kein Konto, keine Analysen. Liest nie Bildschirm oder Tasten.", "Ein Tastenkürzel", "Drücke Command-H, um die letzte App auszublenden und den Schreibtisch zu sehen."],
+      "es-ES": ["Sin permisos", "Sin acceso que conceder a Accesibilidad, Grabación de pantalla ni Monitorización de entrada.", "Nada sale de tu equipo", "Sin acceso a la red, sin cuenta, sin analíticas. Nunca lee tu pantalla ni tus teclas.", "Un solo atajo", "Pulsa Command-H para ocultar la última app y ver tu escritorio."],
+      "es-MX": ["Sin permisos", "Sin acceso que conceder a Accesibilidad, Grabación de pantalla ni Monitorización de entrada.", "Nada sale de tu equipo", "Sin acceso a la red, sin cuenta, sin analíticas. Nunca lee tu pantalla ni tus teclas.", "Un solo atajo", "Pulsa Command-H para ocultar la última app y ver tu escritorio."],
+      "fr-FR": ["Aucune autorisation", "Aucun accès Accessibilité, Enregistrement de l’écran ou Surveillance de l’entrée à accorder.", "Rien ne sort", "Aucun accès réseau, aucun compte, aucune statistique. Il ne lit jamais votre écran ni vos touches.", "Un seul raccourci", "Appuyez sur Commande + H pour masquer la dernière app et voir votre bureau."],
+      "fr-CA": ["Aucune autorisation", "Aucun accès Accessibilité, Enregistrement de l’écran ou Surveillance de l’entrée à accorder.", "Rien ne sort", "Aucun accès réseau, aucun compte, aucune statistique. Il ne lit jamais votre écran ni vos touches.", "Un seul raccourci", "Appuyez sur Commande + H pour masquer la dernière app et voir votre bureau."],
+      "ja": ["権限は不要", "アクセシビリティ、画面収録、入力監視の許可は必要ありません。", "何も送信しません", "ネットワーク通信なし、アカウントなし、分析なし。画面やキー入力も読み取りません。", "ショートカットひとつで", "Command-Hで最後のアプリを非表示にして、デスクトップを表示できます。"],
+      "ko": ["권한 필요 없음", "손쉬운 사용, 화면 기록, 입력 모니터링 권한을 허용할 필요가 없습니다.", "밖으로 나가는 정보 없음", "네트워크 접근, 계정, 분석이 없습니다. 화면이나 키 입력을 읽지 않습니다.", "단축키 하나로", "Command-H를 눌러 마지막 앱을 가리고 데스크탑을 확인하세요."],
+      "pt-BR": ["Sem permissões", "Nenhum acesso de Acessibilidade, Gravação de Tela ou Monitoramento de Entrada para conceder.", "Nada sai daqui", "Sem acesso à rede, sem conta, sem análises. Nunca lê a sua tela nem as suas teclas.", "Um só atalho", "Pressione Command-H para ocultar o último app e ver a sua Mesa."],
+      "zh-Hans": ["无需权限", "无需授予“辅助功能”“屏幕录制”或“输入监控”权限。", "数据不外流", "不访问网络，无需账户，没有分析统计。从不读取你的屏幕或按键。", "一个快捷键", "按下 Command-H，隐藏最后一个 App，显示桌面。"],
+      "zh-Hant": ["不需任何權限", "不必授予「輔助使用」、「螢幕錄製」或「輸入監控」權限。", "資料不外流", "不連網、不需帳號、不做分析。絕不讀取你的螢幕或按鍵。", "一個快捷鍵", "按下 Command-H，隱藏最後一個應用程式，顯示桌面。"]
     }
   }
 }

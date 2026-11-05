@@ -47,6 +47,13 @@ EM_DASH = "—"
 # "Mac" or "macOS" as a word. ASCII-letter boundaries, because \b never fires
 # between "Mac" and a CJK character ("Macの").
 MAC = re.compile(r"(?<![A-Za-z])mac(?:os)?(?![A-Za-z])", re.IGNORECASE)
+# App Review rejected pricing in screenshots; keep it in descriptions only.
+PRICE_COPY = re.compile(
+    r"\b(?:free|gratis|gratuit\w*|grátis|kostenlos\w*|subscription\w*|discount\w*)\b"
+    r"|無料|免费|免費|무료|nothing to buy", re.IGNORECASE)
+OPEN_SOURCE_COPY = re.compile(
+    r"open[ -]source|quellcode|código abiert[oa]|código aberto|code source"
+    r"|オープンソース|오픈 소스|开源|開放原始碼", re.IGNORECASE)
 FORMAT = re.compile(r"%(?:\d+\$)?[@dDuUxXoOfeEgGcCsSpaAF%]")
 # Names that must survive translation untouched wherever the English has them.
 PROTECTED = ["CommandH", "Matt Senter", "Senternet", "Cmd+H", "Cmd+Tab", "Slack", ":emoji:",
@@ -239,6 +246,10 @@ def check_store(langs, screenshots):
                     problem(f"fastlane/metadata/{store}/{file} says Mac or macOS (fastlane/AGENTS.md)")
                 if EM_DASH in text:
                     problem(f"fastlane/metadata/{store}/{file} contains an em dash")
+                if file != "description.txt" and PRICE_COPY.search(text):
+                    problem(f"fastlane/metadata/{store}/{file} contains pricing copy")
+                if OPEN_SOURCE_COPY.search(text):
+                    problem(f"fastlane/metadata/{store}/{file} mentions open source")
                 if lang != "en" and file != "keywords.txt" and text == (english / file).read_text().strip():
                     problem(f"fastlane/metadata/{store}/{file} is the English text")
                 # Apple wants a Terms of Use link; the description's last line carries it.
@@ -260,6 +271,9 @@ def check_store(langs, screenshots):
                     if field.startswith("_"):
                         continue
                     value = by_locale.get(store)
+                    caption_text = " ".join(value) if isinstance(value, list) else (value or "")
+                    if PRICE_COPY.search(caption_text) or OPEN_SOURCE_COPY.search(caption_text):
+                        problem(f"captions.json: {shot}.{field} for {store} contains pricing or open-source copy")
                     if value is None:
                         problem(f"captions.json: no {shot}.{field} for {store}")
                     elif field == "labels" and len(value) != len(by_locale["en-US"]):

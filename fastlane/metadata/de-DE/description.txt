@@ -25,6 +25,4 @@ EINMAL EINRICHTEN, FERTIG
 - Bei der Anmeldung öffnen, damit es immer bereit ist
 - Das Schließen des Einstellungsfensters oder Command-Q lässt CommandH weiterlaufen, damit ein versehentlicher Tastendruck es nie ausschaltet. Wähle „CommandH beenden“, um es wirklich zu beenden.
 
-CommandH ist Open Source und kostenlos, und das bleibt auch so.
-
 Nutzungsbedingungen: https://github.com/MattSenter/commandh/blob/main/TERMS.de.md

@@ -422,7 +422,7 @@ struct PrivacySlide: View {
             HStack(spacing: 36) {
                 card("hand.raised.fill", labels[0], labels[1])
                 card("wifi.slash", labels[2], labels[3])
-                card("gift.fill", labels[4], labels[5])
+                card("command", labels[4], labels[5])
             }
             .padding(.bottom, 40)
         }
