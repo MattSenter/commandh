@@ -207,7 +207,7 @@ CommandHは、[Senternet](https://www.senter.net/?utm_source=github&utm_medium=r
 
 - **[Despacer](https://github.com/MattSenter/despacer)**: Claude CodeとCodexの長いコマンドをコピーして、ひとつながりのままペースト。
 - **[Weatherling](https://www.weatherling.app/?utm_source=github&utm_medium=readme&utm_campaign=commandh&utm_content=other-projects)**: Mac のデスクトップに雨、雪、秋の落ち葉を。天気予報アプリではなく、天気エフェクトです。
-- **[Burly](https://www.burly.click/?utm_source=github&utm_medium=readme&utm_campaign=commandh&utm_content=other-projects)**: すべてのリンクを、正しいブラウザプロファイルへ。
+- **[Burly](https://www.burly.link/?utm_source=github&utm_medium=readme&utm_campaign=commandh&utm_content=other-projects)**: すべてのリンクを、正しいブラウザプロファイルへ。
 - **[Comoji](https://www.comoji.io/?utm_source=github&utm_medium=readme&utm_campaign=commandh&utm_content=other-projects)**: Slack 風の :emoji: 補完を、Mac のどこでも。
 - **[Premail](https://www.premail.pro/?utm_source=github&utm_medium=readme&utm_campaign=commandh&utm_content=other-projects)**: 受信トレイを、守る。
 - **[Highwire](https://www.highwire.news/?utm_source=github&utm_medium=readme&utm_campaign=commandh&utm_content=other-projects)**: 見出しの向こう側を見る。

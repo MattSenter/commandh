@@ -26,7 +26,7 @@ struct OtherProjectsView: View {
                 url: "https://www.weatherling.app/from-commandh", image: "weatherling"),
         Project(name: "Burly",
                 summary: String(localized: "Every link, in the right browser profile."),
-                url: "https://www.burly.click/from-commandh", image: "burly"),
+                url: "https://www.burly.link/from-commandh", image: "burly"),
         Project(name: "Comoji",
                 summary: String(localized: "Slack-style :emoji: autocomplete, everywhere on your Mac."),
                 url: "https://www.comoji.io/from-commandh", image: "comoji"),

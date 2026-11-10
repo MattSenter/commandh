@@ -207,7 +207,7 @@ CommandH는 [Senternet](https://www.senter.net/?utm_source=github&utm_medium=rea
 
 - **[Despacer](https://github.com/MattSenter/despacer)**: Claude Code와 Codex의 긴 명령어를 복사해서 한 줄 그대로 붙여넣으세요.
 - **[Weatherling](https://www.weatherling.app/?utm_source=github&utm_medium=readme&utm_campaign=commandh&utm_content=other-projects)**: Mac 데스크탑 위로 내리는 비, 눈, 낙엽. 날씨 앱이 아니라 날씨 효과입니다.
-- **[Burly](https://www.burly.click/?utm_source=github&utm_medium=readme&utm_campaign=commandh&utm_content=other-projects)**: 모든 링크를 알맞은 브라우저 프로필로.
+- **[Burly](https://www.burly.link/?utm_source=github&utm_medium=readme&utm_campaign=commandh&utm_content=other-projects)**: 모든 링크를 알맞은 브라우저 프로필로.
 - **[Comoji](https://www.comoji.io/?utm_source=github&utm_medium=readme&utm_campaign=commandh&utm_content=other-projects)**: Slack 스타일 :emoji: 자동 완성을 Mac 어디서나.
 - **[Premail](https://www.premail.pro/?utm_source=github&utm_medium=readme&utm_campaign=commandh&utm_content=other-projects)**: 받은 편지함을 지킵니다.
 - **[Highwire](https://www.highwire.news/?utm_source=github&utm_medium=readme&utm_campaign=commandh&utm_content=other-projects)**: 헤드라인 너머를 보세요.

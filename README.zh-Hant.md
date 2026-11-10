@@ -207,7 +207,7 @@ CommandH 是 [Senternet](https://www.senter.net/?utm_source=github&utm_medium=re
 
 - **[Despacer](https://github.com/MattSenter/despacer)**：從 Claude Code 和 Codex 拷貝長指令，貼上時依然完整。
 - **[Weatherling](https://www.weatherling.app/?utm_source=github&utm_medium=readme&utm_campaign=commandh&utm_content=other-projects)**：讓 Mac 桌面飄起雨、雪和秋葉。是天氣特效，不是天氣應用程式。
-- **[Burly](https://www.burly.click/?utm_source=github&utm_medium=readme&utm_campaign=commandh&utm_content=other-projects)**：每個連結，都在對的瀏覽器設定檔中開啟。
+- **[Burly](https://www.burly.link/?utm_source=github&utm_medium=readme&utm_campaign=commandh&utm_content=other-projects)**：每個連結，都在對的瀏覽器設定檔中開啟。
 - **[Comoji](https://www.comoji.io/?utm_source=github&utm_medium=readme&utm_campaign=commandh&utm_content=other-projects)**：Slack 風格的 :emoji: 自動完成，在 Mac 上隨處可用。
 - **[Premail](https://www.premail.pro/?utm_source=github&utm_medium=readme&utm_campaign=commandh&utm_content=other-projects)**：守護你的收件匣。
 - **[Highwire](https://www.highwire.news/?utm_source=github&utm_medium=readme&utm_campaign=commandh&utm_content=other-projects)**：看透頭條背後。

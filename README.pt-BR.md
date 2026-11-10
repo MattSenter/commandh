@@ -207,7 +207,7 @@ O CommandH é um dos vários produtos que [Matt Senter](https://www.mattsenter.c
 
 - **[Despacer](https://github.com/MattSenter/despacer)**: Copie comandos longos do Claude Code e do Codex, e cole-os inteiros, de uma vez só.
 - **[Weatherling](https://www.weatherling.app/?utm_source=github&utm_medium=readme&utm_campaign=commandh&utm_content=other-projects)**: Chuva, neve e folhas de outono na área de trabalho do Mac. Efeitos de clima, não um app de previsão.
-- **[Burly](https://www.burly.click/?utm_source=github&utm_medium=readme&utm_campaign=commandh&utm_content=other-projects)**: Cada link, no perfil de navegador certo.
+- **[Burly](https://www.burly.link/?utm_source=github&utm_medium=readme&utm_campaign=commandh&utm_content=other-projects)**: Cada link, no perfil de navegador certo.
 - **[Comoji](https://www.comoji.io/?utm_source=github&utm_medium=readme&utm_campaign=commandh&utm_content=other-projects)**: Autocompletar de :emoji: no estilo Slack, em todo o seu Mac.
 - **[Premail](https://www.premail.pro/?utm_source=github&utm_medium=readme&utm_campaign=commandh&utm_content=other-projects)**: Sua caixa de entrada, defendida.
 - **[Highwire](https://www.highwire.news/?utm_source=github&utm_medium=readme&utm_campaign=commandh&utm_content=other-projects)**: Enxergar além das manchetes.
