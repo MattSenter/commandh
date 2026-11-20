@@ -63,22 +63,41 @@ macOS track of `/senternet-private-github-action-ios-release`.
    Store Connect first.
 3. `git tag v1.0 && git push origin v1.0`.
 
+1.0 went live on 2026-11-20: https://apps.apple.com/app/id6825789142.
+
+## Shipping an update
+
+1. Rewrite `fastlane/metadata/<store locale>/release_notes.txt` in every locale, and update
+   `description.txt` and the READMEs if the version adds or changes a feature.
+2. Rerun `scripts/screenshots.sh` if the settings window, the menu or any string changed.
+3. `python3 scripts/check-localization.py`.
+4. `git tag v1.1 && git push origin v1.1` (same lane as 1.0: listing, screenshots, submit).
+
+Name, subtitle and keywords can only change with a new version, so listing fixes ride along
+with the next release. Promotional text is the one field that can change at any time.
+
 ## The listing
 
 - Text: `fastlane/metadata/<store locale>/`, one folder per App Store locale in
   `screenshots.config.json` (en-US, de-DE, es-ES, es-MX, fr-FR, fr-CA, ja, ko, pt-BR, zh-Hans,
   zh-Hant). `release_notes.txt` is What's New: rewrite it for each version, in every locale
   (1.0 had none, because Apple does not accept What's New on a first version).
-- URLs point at the GitHub repo, its issues and `PRIVACY.md` until CommandH has a site. Each
-  locale's privacy and marketing URLs point at that language's `PRIVACY.<lang>.md` and
-  `README.<lang>.md`.
+- Search fields: the subtitle carries the phrase people search for ("show desktop"), and
+  `keywords.txt` never repeats a word from the name or subtitle, because Apple indexes each word
+  once. Details in `fastlane/AGENTS.md`.
+- URLs: support is the GitHub issues page, privacy is that language's `PRIVACY.<lang>.md`, and
+  marketing is that language's CommandH page on mattsenter.com (English where the site has no
+  translation). `scripts/check-localization.py` pins all three.
+- Finding the app: App Store search treats "CommandH" as a misspelling and rewrites it, so a
+  search for the name does not find the app. Always link `https://apps.apple.com/app/id6825789142`
+  and never tell anyone to search for it.
 - `python3 scripts/check-localization.py` (also in CI) fails if any language is missing a
   listing file, goes over Apple's limits, or still has English text.
 - Never "Mac" or "macOS", no em dashes: `fastlane/AGENTS.md`. Enforced by CI and the lanes.
 
 ## Screenshots
 
-`scripts/screenshots.sh` renders `fastlane/screenshots/<store locale>/` (five 2880x1800 PNGs per
+`scripts/screenshots.sh` renders `fastlane/screenshots/<store locale>/` (six 2880x1800 PNGs per
 locale) offscreen from `Tools/StoreScreenshots.swift`, which compiles in the app's real
 `SettingsView` and menu bar icon. Shots and languages: `screenshots.config.json`. Captions:
 `fastlane/screenshots/captions.json`. The words inside the settings window and the menu come from
@@ -87,7 +106,12 @@ child process. Rerun after any settings UI or translation change. The menu slide
 Store menu's items in the system style, because NSMenu cannot render offscreen; keep its item
 list in sync with `buildStatusMenu()`.
 
-Upload just the screenshots to an editable version: `bundle exec fastlane mac upload_screenshots version:1.0`.
+Order (the `store.shots` list): before-after, hero, bring-back, privacy, settings, menu-bar.
+Search results show the first shot, so the before/after slide leads: it is the only one that
+explains the problem and the fix at a glance. The bring-back slide's Dock is drawn from
+placeholder squares; never put a real app's icon in a screenshot.
+
+Upload just the screenshots to an editable version: `bundle exec fastlane mac upload_screenshots version:1.1`.
 
 ## Private review contact
 

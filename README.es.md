@@ -39,7 +39,9 @@ CommandH es una pequeña app de la barra de menús, gratuita y de código abiert
 
 ## Instalación
 
-Por ahora, CommandH se instala compilándolo desde el código fuente. Se tarda más o menos un minuto.
+CommandH está en el [Mac App Store](https://apps.apple.com/app/id6825789142). Esa versión siempre usa **Ocultar la app**; **Mostrar escritorio** solo está en la versión que compilas tú.
+
+Para compilarlo desde el código fuente, que lleva más o menos un minuto:
 
 1. Instala las herramientas de línea de comandos de Apple si no las tienes:
    ```sh
@@ -93,6 +95,7 @@ Abre la ventana de ajustes abriendo CommandH desde tu carpeta Aplicaciones (o de
 | **Mostrar en la barra de menús** | Sistema | Muestra o quita el icono ⌘H de tu barra de menús. Si lo desactivas, CommandH funciona de forma invisible. Abre CommandH desde tu carpeta Aplicaciones para volver a esta ventana. |
 | **Abrir al iniciar sesión** | Sistema | Inicia CommandH automáticamente al iniciar sesión. Se inicia en silencio, sin abrir esta ventana. |
 | **Salir de CommandH** | Sistema | Sale de la app de verdad. Cerrar la ventana (o pulsar Cmd+Q) solo cierra la ventana y deja CommandH en ejecución. |
+| **Valorar CommandH** | Acerca de | Solo en la versión del Mac App Store. Abre el App Store para que puedas valorar o reseñar CommandH. |
 
 Los ajustes se guardan automáticamente y se aplican al instante.
 

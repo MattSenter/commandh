@@ -21,3 +21,22 @@ No pricing references in screenshot captions or promotional text, including "fre
 discounts, subscriptions, or "nothing to buy", in any language. App Review rejected
 the privacy screenshot for this. Keep pricing claims in description.txt only.
 Do not mention open source in the listing or screenshots either (user preference).
+
+# Search fields
+
+Apple indexes the name, the subtitle and `keywords.txt`, each word once. The description and
+promotional text are not indexed, so write those for people, not for search.
+
+- `keywords.txt` never repeats a word from `name.txt` or `subtitle.txt`, in any locale, and
+  never repeats a word within itself. Commas, no spaces after them.
+- The subtitle states the result people search for ("show desktop"), not how the app works.
+- "command" stays in the keyword field: "CommandH" is one token, so the word is not indexed
+  from the name.
+- These three fields only change with a new version.
+
+# Release notes
+
+`release_notes.txt` is required in every locale (`scripts/check-localization.py`). Rewrite it
+for each version, and name panes and buttons exactly as that language's
+`Localization/<lang>.lproj` does.
+

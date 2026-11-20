@@ -20,6 +20,7 @@ PRIVAT UND SCHLANK
 
 EINMAL EINRICHTEN, FERTIG
 
+- Apps ohne eigenen Befehl „Ausblenden“ hinzufügen, und Command-H blendet auch sie aus
 - CommandH ein- oder ausschalten, ohne es zu beenden
 - Symbol in der Menüleiste anzeigen oder ganz ohne Symbol laufen lassen
 - Bei der Anmeldung öffnen, damit es immer bereit ist

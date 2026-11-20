@@ -39,7 +39,9 @@ CommandH ist eine winzige, kostenlose Open-Source-App für die Menüleiste, die 
 
 ## Installation
 
-CommandH wird derzeit installiert, indem du es aus dem Quellcode kompilierst. Das dauert etwa eine Minute.
+CommandH gibt es im [Mac App Store](https://apps.apple.com/app/id6825789142). Diese Version verwendet immer **App ausblenden**; **Schreibtisch anzeigen** gibt es nur in der selbst gebauten Version.
+
+So baust du CommandH aus dem Quellcode, das dauert etwa eine Minute:
 
 1. Installiere Apples Befehlszeilentools, falls du sie noch nicht hast:
    ```sh
@@ -93,6 +95,7 @@ Du öffnest das Einstellungsfenster, indem du CommandH aus deinem Ordner „Prog
 | **In der Menüleiste anzeigen** | System | Zeigt das ⌘H-Symbol in deiner Menüleiste an oder entfernt es. Ist die Option aus, läuft CommandH unsichtbar. Öffne CommandH aus deinem Ordner „Programme“, um zu diesem Fenster zurückzukehren. |
 | **Bei der Anmeldung öffnen** | System | Startet CommandH automatisch, wenn du dich anmeldest. Es startet still, ohne dieses Fenster zu öffnen. |
 | **CommandH beenden** | System | Beendet die App wirklich. Das Schließen des Fensters (oder Cmd+Q) schließt nur das Fenster, CommandH läuft weiter. |
+| **CommandH bewerten** | Über | Nur in der Version aus dem Mac App Store. Öffnet den App Store, damit du CommandH bewerten oder rezensieren kannst. |
 
 Einstellungen werden automatisch gesichert und gelten sofort.
 

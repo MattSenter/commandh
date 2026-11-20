@@ -20,6 +20,7 @@ PRIVATE AND LIGHTWEIGHT
 
 SET IT AND FORGET IT
 
+- Add apps that have no Hide command of their own, and Command-H hides them too
 - Turn CommandH on or off without quitting it
 - Show its icon in the menu bar, or run with no icon at all
 - Open at login so it's always ready

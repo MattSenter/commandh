@@ -20,6 +20,7 @@ CONFIDENTIEL ET LÉGER
 
 RÉGLEZ-LE ET OUBLIEZ-LE
 
+- Ajoutez les apps qui n’ont pas de commande Masquer, et Commande + H les masque aussi
 - Activez ou désactivez CommandH sans le quitter
 - Affichez son icône dans la barre des menus, ou utilisez-le sans aucune icône
 - Ouvrez-le avec la session pour qu’il soit toujours prêt

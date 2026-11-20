@@ -39,7 +39,9 @@ CommandH is a tiny, free, open source menu bar app that fixes this. With it runn
 
 ## Install
 
-CommandH is currently installed by building it from source. It takes about a minute.
+CommandH is on the [Mac App Store](https://apps.apple.com/app/id6825789142). That version always uses **Hide the app**; **Show Desktop** is only in the version you build yourself.
+
+To build it from source, which takes about a minute:
 
 1. Install Apple's command line tools if you don't have them:
    ```sh
@@ -93,6 +95,7 @@ Open the Preferences window by opening CommandH from your Applications folder (o
 | **Show in menu bar** | System | Shows or removes the ⌘H icon in your menu bar. With it off, CommandH runs invisibly. Open CommandH from your Applications folder to get back to this window. |
 | **Open at login** | System | Starts CommandH automatically when you log in. It starts quietly, without opening this window. |
 | **Quit CommandH** | System | Actually quits the app. Closing the window (or pressing Cmd+Q) only closes the window and leaves CommandH running. |
+| **Rate CommandH** | About | Mac App Store version only. Opens the App Store so you can rate or review CommandH. |
 
 Settings are saved automatically and apply right away.
 

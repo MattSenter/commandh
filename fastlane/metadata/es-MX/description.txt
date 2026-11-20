@@ -20,6 +20,7 @@ PRIVADO Y LIGERO
 
 CONFIGÚRALO Y OLVÍDATE
 
+- Añade las apps que no tienen el comando Ocultar, y Command-H también las oculta
 - Activa o desactiva CommandH sin salir de él
 - Muestra su icono en la barra de menús o úsalo sin ningún icono
 - Ábrelo al iniciar sesión para que esté siempre listo
