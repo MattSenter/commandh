@@ -176,6 +176,9 @@
 /* Button that opens GitHub issues. */
 "Report an Issue" = "Problem melden";
 
+/* App Store build only. Button that opens the App Store on CommandH's rating and review form. */
+"Rate CommandH" = "CommandH bewerten";
+
 /* Card title. */
 "About the developer" = "Über den Entwickler";
 

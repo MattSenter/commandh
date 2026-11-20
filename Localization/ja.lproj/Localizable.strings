@@ -176,6 +176,9 @@
 /* Button that opens GitHub issues. */
 "Report an Issue" = "問題を報告";
 
+/* App Store build only. Button that opens the App Store on CommandH's rating and review form. */
+"Rate CommandH" = "CommandHを評価";
+
 /* Card title. */
 "About the developer" = "開発者について";
 

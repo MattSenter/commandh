@@ -378,6 +378,12 @@ struct SettingsView: View {
                               url: "https://github.com/MattSenter/commandh")
                     webButton("Report an Issue", icon: "exclamationmark.bubble",
                               url: "https://github.com/MattSenter/commandh/issues")
+                    #if APP_STORE
+                    // Opens the App Store app on CommandH's review form. A link the
+                    // user clicks, like the others here: CommandH itself stays offline.
+                    webButton("Rate CommandH", icon: "star",
+                              url: "macappstore://apps.apple.com/app/id6825789142?action=write-review")
+                    #endif
                     Spacer()
                 }
             }
