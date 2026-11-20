@@ -1,0 +1,3 @@
+Novedad: algunas apps no tienen el comando Ocultar, así que Command-H nunca funcionó en ellas. Añádelas en Ocultación, dentro de Ajustes, y CommandH las oculta por ti.
+
+También nuevo: el botón Valorar CommandH en Acerca de.

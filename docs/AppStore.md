@@ -67,8 +67,8 @@ macOS track of `/senternet-private-github-action-ios-release`.
 
 - Text: `fastlane/metadata/<store locale>/`, one folder per App Store locale in
   `screenshots.config.json` (en-US, de-DE, es-ES, es-MX, fr-FR, fr-CA, ja, ko, pt-BR, zh-Hans,
-  zh-Hant). No `release_notes.txt` for 1.0, because Apple does not accept What's New on a first
-  version. Add it for 1.1, in every locale.
+  zh-Hant). `release_notes.txt` is What's New: rewrite it for each version, in every locale
+  (1.0 had none, because Apple does not accept What's New on a first version).
 - URLs point at the GitHub repo, its issues and `PRIVACY.md` until CommandH has a site. Each
   locale's privacy and marketing URLs point at that language's `PRIVACY.<lang>.md` and
   `README.<lang>.md`.

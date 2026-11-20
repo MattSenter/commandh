@@ -1,1 +1,1 @@
-Haz que Cmd+H funcione siempre
+Mostrar escritorio con Cmd+H

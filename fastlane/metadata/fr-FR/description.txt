@@ -25,4 +25,6 @@ RÉGLEZ-LE ET OUBLIEZ-LE
 - Ouvrez-le avec la session pour qu’il soit toujours prêt
 - Fermer la fenêtre des réglages, ou appuyer sur Commande + Q, laisse CommandH ouvert : une frappe accidentelle ne le désactive jamais. Choisissez Quitter CommandH pour le quitter vraiment.
 
+Installez CommandH, appuyez sur Commande + H et retrouvez votre bureau.
+
 Conditions d’utilisation : https://github.com/MattSenter/commandh/blob/main/TERMS.fr.md

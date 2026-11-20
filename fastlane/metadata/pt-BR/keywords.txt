@@ -1,1 +1,1 @@
-ocultar,esconder,atalho,teclado,mesa,área de trabalho,barra de menus,janelas,foco,limpar,dock
+ocultar,esconder,janelas,atalho,teclado,mesa,barra de menus,dock,foco,limpar,command,minimizar

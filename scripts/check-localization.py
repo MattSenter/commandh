@@ -68,7 +68,8 @@ MAY_MATCH_ENGLISH = {"Version", "Version %@", "System", "Copyright © 2026 %@", 
 
 # App Store Connect field limits, in characters.
 LISTING_LIMITS = {"name.txt": 30, "subtitle.txt": 30, "keywords.txt": 100,
-                  "promotional_text.txt": 170, "description.txt": 4000}
+                  "promotional_text.txt": 170, "description.txt": 4000,
+                  "release_notes.txt": 4000}
 LISTING_URLS = ["privacy_url.txt", "support_url.txt", "marketing_url.txt"]
 DOCS = ("README", "PRIVACY", "TERMS")
 

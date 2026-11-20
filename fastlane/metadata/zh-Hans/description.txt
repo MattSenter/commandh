@@ -25,4 +25,6 @@ CommandH 解决了这个问题。只要它在运行，Command-H 每次都会以�
 - 登录时打开，随时待命
 - 关闭设置窗口或按 Command-Q 时，CommandH 会继续运行，误按也不会把它关掉。要真正退出，请选择“退出 CommandH”。
 
+安装 CommandH，按下 Command-H，桌面一目了然。
+
 使用条款：https://github.com/MattSenter/commandh/blob/main/TERMS.zh-Hans.md

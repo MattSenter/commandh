@@ -25,4 +25,6 @@ CommandH 解決了這個問題。只要它在執行，Command-H 每次的表現�
 - 登入時開啟，隨時待命
 - 關閉設定視窗或按 Command-Q，CommandH 都會繼續執行，不小心按錯鍵也不會把它關掉。要真正結束，請選擇「結束 CommandH」。
 
+安裝 CommandH，按下 Command-H，桌面一目瞭然。
+
 使用條款：https://github.com/MattSenter/commandh/blob/main/TERMS.zh-Hant.md

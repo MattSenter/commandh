@@ -273,6 +273,67 @@ struct HeroSlide: View {
     }
 }
 
+/// A restored placeholder window and the two familiar ways to return to it.
+struct BringBackSlide: View {
+    let eyebrow: String, headline: String, labels: [String]
+    var body: some View {
+        Slide(eyebrow: eyebrow, headline: headline) {
+            Screen(width: 1080, height: 560) {
+                VStack(spacing: 28) {
+                    AppWindow(width: 520, height: 250)
+                    HStack(alignment: .bottom, spacing: 40) {
+                        VStack(spacing: 18) {
+                            dock
+                            Pill(text: labels[0], systemImage: "cursorarrow", tint: Color.black.opacity(0.35))
+                        }
+                        .frame(width: 480)
+                        VStack(spacing: 18) {
+                            HStack(spacing: 18) {
+                                Keycap(label: "⌘", size: 72)
+                                Keycap(label: "⇥", size: 72)
+                            }
+                            .frame(height: 94)
+                            Pill(text: labels[1], systemImage: "keyboard", tint: Color.black.opacity(0.35))
+                        }
+                        .frame(width: 480)
+                    }
+                }
+                .padding(.top, 54)
+            }
+            .padding(.bottom, 36)
+        }
+    }
+
+    private var dock: some View {
+        HStack(alignment: .top, spacing: 16) {
+            ForEach(0..<5) { index in
+                VStack(spacing: 6) {
+                    RoundedRectangle(cornerRadius: 12)
+                        .fill(index == 2 ? Palette.orange : Color.white.opacity(0.35))
+                        .frame(width: 54, height: 54)
+                        .overlay(RoundedRectangle(cornerRadius: 12)
+                            .strokeBorder(.white.opacity(index == 2 ? 0.95 : 0.25), lineWidth: 2))
+                        .overlay(alignment: .bottomTrailing) {
+                            if index == 2 {
+                                Image(systemName: "cursorarrow.click")
+                                    .font(.system(size: 30, weight: .semibold))
+                                    .foregroundStyle(.white)
+                                    .shadow(color: .black.opacity(0.8), radius: 2)
+                                    .offset(x: 12, y: 10)
+                            }
+                        }
+                    Circle().fill(.white).frame(width: 5, height: 5)
+                        .opacity(index == 2 ? 1 : 0)
+                }
+            }
+        }
+        .padding(.horizontal, 18)
+        .padding(.vertical, 12)
+        .background(RoundedRectangle(cornerRadius: 20).fill(.white.opacity(0.18)))
+        .overlay(RoundedRectangle(cornerRadius: 20).strokeBorder(.white.opacity(0.25), lineWidth: 1))
+    }
+}
+
 struct BeforeAfterSlide: View {
     let eyebrow: String, headline: String, labels: [String]
     var body: some View {
@@ -346,6 +407,9 @@ struct SettingsSlide: View {
                 .frame(height: 30)
                 SettingsView(onQuit: {})
                     .toggleStyle(ActiveSwitch())
+                    // Frame the content area of the real pane, omitting its unused lower space.
+                    .frame(height: 470, alignment: .top)
+                    .clipped()
             }
             .frame(width: SettingsView.minimumSize.width)
             .background(Color(nsColor: .windowBackgroundColor))
@@ -353,7 +417,8 @@ struct SettingsSlide: View {
             .overlay(RoundedRectangle(cornerRadius: 12).strokeBorder(.black.opacity(0.25), lineWidth: 1))
             .shadow(color: .black.opacity(0.5), radius: 30, y: 16)
             .environment(\.colorScheme, .light)
-            .scaleEffect(0.82)
+            .scaleEffect(1.15)
+            .frame(height: 575)
             .padding(.bottom, 30)
         }
     }
@@ -369,12 +434,14 @@ struct MenuBarSlide: View {
                           String(localized: "Quit CommandH")]
     var body: some View {
         Slide(eyebrow: eyebrow, headline: headline) {
-            Screen(width: 1080, height: 560) {
+            Screen(width: 600, height: 310) {
                 HStack {
                     Spacer()
                     menu.padding(.trailing, 92).padding(.top, 34)
                 }
             }
+            .scaleEffect(1.8)
+            .frame(width: 1080, height: 558)
             .padding(.bottom, 36)
         }
     }
@@ -394,7 +461,6 @@ struct MenuBarSlide: View {
         .background(RoundedRectangle(cornerRadius: 10).fill(Color(white: 0.17).opacity(0.97)))
         .overlay(RoundedRectangle(cornerRadius: 10).strokeBorder(.white.opacity(0.18), lineWidth: 1))
         .shadow(color: .black.opacity(0.45), radius: 20, y: 10)
-        .scaleEffect(1.25, anchor: .topTrailing)
     }
 
     private var divider: some View {
@@ -502,6 +568,7 @@ func slide(_ id: String, _ captions: Captions, _ locale: String) throws -> AnyVi
     switch id {
     case "hero": return AnyView(HeroSlide(eyebrow: eyebrow, headline: headline, labels: try captions.labels(id, locale)))
     case "before-after": return AnyView(BeforeAfterSlide(eyebrow: eyebrow, headline: headline, labels: try captions.labels(id, locale)))
+    case "bring-back": return AnyView(BringBackSlide(eyebrow: eyebrow, headline: headline, labels: try captions.labels(id, locale)))
     case "settings": return AnyView(SettingsSlide(eyebrow: eyebrow, headline: headline))
     case "menu-bar": return AnyView(MenuBarSlide(eyebrow: eyebrow, headline: headline))
     case "privacy": return AnyView(PrivacySlide(eyebrow: eyebrow, headline: headline, labels: try captions.labels(id, locale)))

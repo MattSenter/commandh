@@ -1,1 +1,1 @@
-Pour que Cmd+H marche toujours
+Afficher le bureau avec Cmd+H

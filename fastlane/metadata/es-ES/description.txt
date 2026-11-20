@@ -25,4 +25,6 @@ CONFIGÚRALO Y OLVÍDATE
 - Ábrelo al iniciar sesión para que esté siempre listo
 - Cerrar la ventana de ajustes, o pulsar Command-Q, deja CommandH en ejecución, así que una pulsación accidental nunca lo apaga. Elige Salir de CommandH para salir de verdad.
 
+Instala CommandH, pulsa Command-H y mira tu escritorio.
+
 Condiciones de uso: https://github.com/MattSenter/commandh/blob/main/TERMS.es.md

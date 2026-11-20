@@ -25,4 +25,6 @@ SET IT AND FORGET IT
 - Open at login so it's always ready
 - Closing the settings window, or pressing Command-Q, keeps CommandH running, so a stray keystroke never turns it off. Choose Quit CommandH to quit for real.
 
+Install CommandH, press Command-H, and see your desktop.
+
 Terms of Use: https://github.com/MattSenter/commandh/blob/main/TERMS.md

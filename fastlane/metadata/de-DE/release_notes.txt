@@ -1,0 +1,3 @@
+Neu: Manche Apps haben keinen Befehl „Ausblenden“, deshalb hat Command-H dort nie funktioniert. Füge diese Apps in den Einstellungen unter „Ausblenden“ hinzu, und CommandH blendet sie für dich aus.
+
+Außerdem neu: die Taste „CommandH bewerten“ im Bereich „Über“.

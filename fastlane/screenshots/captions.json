@@ -82,6 +82,47 @@
       "zh-Hant": ["沒有 CommandH", "毫無反應", "有了 CommandH", "已隱藏"]
     }
   },
+  "bring-back": {
+    "eyebrow": {
+      "en-US": "Nothing lost",
+      "de-DE": "Nichts verloren",
+      "es-ES": "Nada se pierde",
+      "es-MX": "Nada se pierde",
+      "fr-FR": "Rien de perdu",
+      "fr-CA": "Rien de perdu",
+      "ja": "何も失われません",
+      "ko": "그대로 있습니다",
+      "pt-BR": "Nada se perde",
+      "zh-Hans": "一切都在",
+      "zh-Hant": "一切都在"
+    },
+    "headline": {
+      "en-US": "Back with a click or Command-Tab",
+      "de-DE": "Zurück per Klick oder Command-Tab",
+      "es-ES": "Vuelve con un clic o Command-Tab",
+      "es-MX": "Vuelve con un clic o Command-Tab",
+      "fr-FR": "De retour avec un clic ou Commande + Tab",
+      "fr-CA": "De retour avec un clic ou Commande + Tab",
+      "ja": "クリックかCommand-Tabで元どおり",
+      "ko": "클릭 또는 Command-Tab으로 돌아오기",
+      "pt-BR": "De volta com um clique ou Command-Tab",
+      "zh-Hans": "点击或按 Command-Tab，随时回来",
+      "zh-Hant": "點一下或按 Command-Tab，隨時回來"
+    },
+    "labels": {
+      "en-US": ["Click its Dock icon", "or press Command-Tab"],
+      "de-DE": ["Klicke auf das Dock-Symbol", "oder drücke Command-Tab"],
+      "es-ES": ["Haz clic en su icono del Dock", "o pulsa Command-Tab"],
+      "es-MX": ["Haz clic en su ícono del Dock", "o presiona Command-Tab"],
+      "fr-FR": ["Cliquez sur son icône dans le Dock", "ou appuyez sur Commande + Tab"],
+      "fr-CA": ["Cliquez sur son icône dans le Dock", "ou appuyez sur Commande + Tab"],
+      "ja": ["Dockのアイコンをクリック", "またはCommand-Tabを押す"],
+      "ko": ["Dock 아이콘 클릭", "또는 Command-Tab 누르기"],
+      "pt-BR": ["Clique no ícone do app no Dock", "ou pressione Command-Tab"],
+      "zh-Hans": ["点击程序坞中的图标", "或按 Command-Tab"],
+      "zh-Hant": ["點選 Dock 中的圖像", "或按 Command-Tab"]
+    }
+  },
   "settings": {
     "eyebrow": {
       "en-US": "Settings",

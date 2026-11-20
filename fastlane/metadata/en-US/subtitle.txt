@@ -1,1 +1,1 @@
-Make Cmd+H always work
+Show your desktop with Cmd+H

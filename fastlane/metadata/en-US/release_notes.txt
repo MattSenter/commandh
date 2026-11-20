@@ -1,0 +1,3 @@
+New: some apps have no Hide command, so Command-H never worked in them. Add those apps under Hiding in Preferences and CommandH hides them for you.
+
+Also new: a Rate CommandH button in About.

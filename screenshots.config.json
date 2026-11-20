@@ -15,11 +15,12 @@
     "outDir": "fastlane/screenshots/{store}",
     "devices": ["mac"],
     "shots": [
-      { "id": "hero" },
       { "id": "before-after" },
+      { "id": "hero" },
+      { "id": "bring-back" },
+      { "id": "privacy" },
       { "id": "settings" },
-      { "id": "menu-bar" },
-      { "id": "privacy" }
+      { "id": "menu-bar" }
     ]
   }
 }
