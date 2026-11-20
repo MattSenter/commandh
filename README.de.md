@@ -89,6 +89,7 @@ Du öffnest das Einstellungsfenster, indem du CommandH aus deinem Ordner „Prog
 |---|---|---|
 | **Aktiviert** | Ausblenden | Schaltet CommandH ein oder aus, ohne es zu beenden. Wenn sie aus ist, verhält sich Cmd+H wie im normalen macOS. |
 | **Wenn nur eine App sichtbar ist** | Ausblenden | Wählt zwischen **App ausblenden** und **Schreibtisch anzeigen**. Siehe [den Vergleich oben](#zwei-wege-für-die-letzte-app). |
+| **Apps ohne Ausblenden-Befehl** | Ausblenden | Listet Apps auf, in denen Cmd+H nichts bewirkt, weil sie keinen Ausblenden-Befehl haben. Wähle **Geöffnete App hinzufügen**, um eine hinzuzufügen, und CommandH blendet sie aus, wenn du Cmd+H drückst. |
 | **In der Menüleiste anzeigen** | System | Zeigt das ⌘H-Symbol in deiner Menüleiste an oder entfernt es. Ist die Option aus, läuft CommandH unsichtbar. Öffne CommandH aus deinem Ordner „Programme“, um zu diesem Fenster zurückzukehren. |
 | **Bei der Anmeldung öffnen** | System | Startet CommandH automatisch, wenn du dich anmeldest. Es startet still, ohne dieses Fenster zu öffnen. |
 | **CommandH beenden** | System | Beendet die App wirklich. Das Schließen des Fensters (oder Cmd+Q) schließt nur das Fenster, CommandH läuft weiter. |
@@ -147,6 +148,9 @@ macOS erlaubt das Öffnen bei der Anmeldung nur für Apps an einem festen Ort. S
 **Nachdem ich meine letzte App ausgeblendet habe, steht in der Menüleiste „CommandH“.**
 Im Modus **App ausblenden** wird CommandH zur aktiven App, nachdem die letzte App ausgeblendet wurde, deshalb erscheint sein Name in der Menüleiste. Klicke auf eine beliebige App oder auf den Schreibtisch, um weiterzumachen.
 
+**Cmd+H bewirkt in einer bestimmten App nichts.**
+Manche Apps (CapCut zum Beispiel) haben keinen Ausblenden-Befehl, sodass Cmd+H dort noch nie funktioniert hat. Öffne die App und füge sie im Bereich **Ausblenden** unter **Apps ohne Ausblenden-Befehl** hinzu.
+
 ## So funktioniert es
 
 Bevor wir CommandH geschrieben haben, haben wir jeden Weg getestet, den wir finden konnten, um die letzte sichtbare App direkt auszublenden. Alle scheitern:
@@ -165,7 +169,9 @@ Alle landen bei derselben Prüfung in macOS, und diese Prüfung zählt nur **reg
 
 **Schreibtisch anzeigen** geht einen anderen Weg. Solange die App im Vordergrund die einzige sichtbare ist, registriert CommandH Cmd+H als globalen Kurzbefehl (der wieder freigegeben wird, sobald das nicht mehr zutrifft) und löst die in macOS eingebaute Funktion „Schreibtisch anzeigen“ aus. Außerhalb dieses einen Falls geht Cmd+H direkt an deine Apps.
 
-Keine der beiden Methoden braucht eine Berechtigung, und CommandH liest nie deinen Bildschirm oder deine Tastatureingaben. Der globale Kurzbefehl existiert nur im Modus „Schreibtisch anzeigen“ und nur, solange eine App sichtbar ist.
+**Apps ohne Ausblenden-Befehl** nutzen denselben Kurzbefehl. Solange eine App aus deiner Liste im Vordergrund ist, registriert CommandH Cmd+H und blendet die App selbst aus. Ist sie die letzte sichtbare App, übernimmt die oben gewählte Methode.
+
+Keine der beiden Methoden braucht eine Berechtigung, und CommandH liest nie deinen Bildschirm oder deine Tastatureingaben. Der globale Kurzbefehl existiert nur, solange im Modus „Schreibtisch anzeigen“ eine App sichtbar ist oder solange eine App aus deiner Liste im Vordergrund ist.
 
 Die ganze App besteht aus weniger als 500 Zeilen Swift in [`Sources/`](Sources).
 

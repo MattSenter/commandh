@@ -104,6 +104,18 @@
 /* Explanation under the Show Desktop choice. */
 "Windows slide to the edges of the screen, and Cmd+H again brings them back. CommandH never appears in the Dock." = "ウインドウが画面の端に移動し、もう一度Cmd+Hを押すと元に戻ります。CommandHがDockに表示されることはありません。";
 
+/* Card title in the Hiding pane: the list of apps that have no Hide menu command, which CommandH hides itself. Hide is the standard app menu command; use its official localized name. */
+"Apps without a Hide command" = "「非表示」コマンドのないアプリ";
+
+/* Explanation under that card title. */
+"In some apps Cmd+H does nothing, because they have no Hide command. Add one here and CommandH hides it when you press Cmd+H." = "「非表示」コマンドがなく、Cmd+Hを押しても何も起きないアプリがあります。ここに追加すると、Cmd+Hを押したときにCommandHがそのアプリを非表示にします。";
+
+/* Menu button that lists the apps running now, to add one to that list. */
+"Add a Running App" = "起動中のアプリを追加";
+
+/* Button that removes an app from that list. %@ is the app's name. */
+"Remove %@" = "%@を削除";
+
 /* ===== System pane ===== */
 
 /* Settings switch label. Sentence case. */

@@ -104,6 +104,18 @@
 /* Explanation under the Show Desktop choice. */
 "Windows slide to the edges of the screen, and Cmd+H again brings them back. CommandH never appears in the Dock." = "윈도우가 화면 가장자리로 밀려나고, Cmd+H를 다시 누르면 돌아옵니다. CommandH는 Dock에 나타나지 않습니다.";
 
+/* Card title in the Hiding pane: the list of apps that have no Hide menu command, which CommandH hides itself. Hide is the standard app menu command; use its official localized name. */
+"Apps without a Hide command" = "가리기 명령이 없는 앱";
+
+/* Explanation under that card title. */
+"In some apps Cmd+H does nothing, because they have no Hide command. Add one here and CommandH hides it when you press Cmd+H." = "일부 앱은 가리기 명령이 없어서 Cmd+H를 눌러도 아무 일도 일어나지 않습니다. 여기에 추가하면 Cmd+H를 누를 때 CommandH가 그 앱을 가립니다.";
+
+/* Menu button that lists the apps running now, to add one to that list. */
+"Add a Running App" = "실행 중인 앱 추가";
+
+/* Button that removes an app from that list. %@ is the app's name. */
+"Remove %@" = "%@ 제거";
+
 /* ===== System pane ===== */
 
 /* Settings switch label. Sentence case. */

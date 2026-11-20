@@ -104,6 +104,18 @@
 /* Explanation under the Show Desktop choice. */
 "Windows slide to the edges of the screen, and Cmd+H again brings them back. CommandH never appears in the Dock." = "視窗會滑到螢幕邊緣，再按一次 Cmd+H 即可讓它們回來。CommandH 不會出現在 Dock 中。";
 
+/* Card title in the Hiding pane: the list of apps that have no Hide menu command, which CommandH hides itself. Hide is the standard app menu command; use its official localized name. */
+"Apps without a Hide command" = "沒有「隱藏」指令的應用程式";
+
+/* Explanation under that card title. */
+"In some apps Cmd+H does nothing, because they have no Hide command. Add one here and CommandH hides it when you press Cmd+H." = "有些應用程式沒有「隱藏」指令，按 Cmd+H 不會有任何反應。在這裡加入後，按下 Cmd+H 時 CommandH 會將其隱藏。";
+
+/* Menu button that lists the apps running now, to add one to that list. */
+"Add a Running App" = "加入執行中的應用程式";
+
+/* Button that removes an app from that list. %@ is the app's name. */
+"Remove %@" = "移除 %@";
+
 /* ===== System pane ===== */
 
 /* Settings switch label. Sentence case. */

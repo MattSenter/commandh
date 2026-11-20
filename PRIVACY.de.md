@@ -10,7 +10,7 @@ CommandH erfasst keine Daten. Gar keine.
 - Es gibt kein Konto, keine Analysen, keine Absturzberichte, keine Werbung und kein Tracking.
 - Es liest weder deinen Bildschirm noch den Inhalt deiner Fenster oder deine Tastatureingaben, und es fragt nicht nach Berechtigungen für Bedienungshilfen, Bildschirmaufnahme oder Eingabeüberwachung.
 - Es prüft nur auf deinem Computer, welche Apps laufen und ob sie ausgeblendet sind, um zu entscheiden, wann Command-H Hilfe braucht. Diese Informationen verlassen nie deinen Computer und werden nicht gespeichert.
-- Seine drei Einstellungen (Aktiviert, In der Menüleiste anzeigen, Bei der Anmeldung öffnen) werden nur auf deinem Computer gesichert.
+- Seine Einstellungen (Aktiviert, In der Menüleiste anzeigen, Bei der Anmeldung öffnen und die Liste der Apps ohne Ausblenden-Befehl) werden nur auf deinem Computer gesichert.
 
 Falls sich daran jemals etwas ändert, steht es zuerst auf dieser Seite.
 

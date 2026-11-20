@@ -10,7 +10,7 @@ CommandH no recopila ningún dato. Ninguno.
 - No tiene cuenta, analíticas, informes de fallos, publicidad ni seguimiento.
 - No lee tu pantalla, el contenido de tus ventanas ni tus pulsaciones de teclas, y no pide ningún permiso de Accesibilidad, Grabación de pantalla ni Monitorización de entrada.
 - Solo comprueba qué apps están abiertas y si cada una está oculta, en tu equipo, para decidir cuándo Command-H necesita ayuda. Esa información nunca sale de tu equipo y no se guarda.
-- Sus tres ajustes (Activado, Mostrar en la barra de menús, Abrir al iniciar sesión) se guardan solo en tu equipo.
+- Sus ajustes (Activado, Mostrar en la barra de menús, Abrir al iniciar sesión y la lista de apps sin el comando Ocultar) se guardan solo en tu equipo.
 
 Si esto cambia algún día, esta página lo dirá primero.
 

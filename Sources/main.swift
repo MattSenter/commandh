@@ -17,6 +17,12 @@
 // visible one, it claims Cmd+H as a global hotkey and triggers the system's
 // Show Desktop, which slides the windows to the screen edges. Cmd+H again
 // brings them back.
+//
+// Separately, some apps (CapCut, say) have no Hide command at all, so Cmd+H
+// does nothing in them even with other apps showing. For the apps the user
+// lists in settings, CommandH claims Cmd+H while one is frontmost and hides it
+// with NSRunningApplication.hide(), which works on any app but the last one;
+// the stand-in above covers that case.
 
 import AppKit
 import Carbon.HIToolbox
@@ -93,7 +99,9 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
     private var showDesktopItem: NSMenuItem?
     private var menuBarItem: NSMenuItem!
     private var loginItem: NSMenuItem!
-    private lazy var hotKey = HotKey { ShowDesktop.toggle() }
+    private lazy var hotKey = HotKey { [weak self] in self?.hotKeyPressed() }
+    /// What the claimed Cmd+H does right now; decided in update().
+    private var hotKeyShowsDesktop = false
 
     /// Set only by the explicit Quit items. Every other quit collapses to the menu bar.
     private var isQuitting = false
@@ -118,6 +126,11 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
             return defaults.string(forKey: Keys.method).flatMap(HideMethod.init) ?? .hideApp
         }
         set { defaults.set(newValue.rawValue, forKey: Keys.method) }
+    }
+
+    /// Bundle IDs of apps with no Hide command of their own.
+    private var forceHideApps: Set<String> {
+        Set(defaults.stringArray(forKey: Keys.forceHideApps) ?? [])
     }
 
     private var showInMenuBar: Bool {
@@ -234,12 +247,27 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
         // Show Desktop: claim Cmd+H only while the front app is the last visible one.
         let front = NSWorkspace.shared.frontmostApplication
         let frontIsLast = visible.count == 1 && visible[0].processIdentifier == front?.processIdentifier
-        if enabled && method == .showDesktop && ShowDesktop.isAvailable && frontIsLast {
+        hotKeyShowsDesktop = enabled && method == .showDesktop && ShowDesktop.isAvailable && frontIsLast
+        // Force hide: claim Cmd+H while the front app is one the user listed as
+        // having no Hide command.
+        let forceHide = enabled && front?.bundleIdentifier.map(forceHideApps.contains) == true
+        if hotKeyShowsDesktop || forceHide {
             hotKey.register()
         } else {
             hotKey.unregister()
         }
         standInLog.notice("update front=\(front?.localizedName ?? "-", privacy: .public) visible=\(visible.map { $0.localizedName ?? "?" }.joined(separator: ","), privacy: .public) standIn=\(standIn) policy=\(NSApp.activationPolicy().rawValue) hidden=\(NSApp.isHidden) active=\(NSApp.isActive) placeholderVisible=\(self.placeholder.isVisible) onScreen=\(self.placeholder.occlusionState.contains(.visible))") // DEBUG-STANDIN
+    }
+
+    /// Cmd+H while CommandH holds the hotkey. Show Desktop wins when both apply:
+    /// a listed app that is also the last one showing can't be hidden without
+    /// the stand-in, which Show Desktop mode never uses.
+    private func hotKeyPressed() {
+        if hotKeyShowsDesktop {
+            ShowDesktop.toggle()
+        } else {
+            NSWorkspace.shared.frontmostApplication?.hide()
+        }
     }
 
     /// After the last app is hidden, CommandH is the active app. Once the user

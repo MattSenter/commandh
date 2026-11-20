@@ -104,6 +104,18 @@
 /* Explanation under the Show Desktop choice. */
 "Windows slide to the edges of the screen, and Cmd+H again brings them back. CommandH never appears in the Dock." = "As janelas deslizam para as bordas da tela, e outro Cmd+H as traz de volta. O CommandH nunca aparece no Dock.";
 
+/* Card title in the Hiding pane: the list of apps that have no Hide menu command, which CommandH hides itself. Hide is the standard app menu command; use its official localized name. */
+"Apps without a Hide command" = "Apps sem o comando Ocultar";
+
+/* Explanation under that card title. */
+"In some apps Cmd+H does nothing, because they have no Hide command. Add one here and CommandH hides it when you press Cmd+H." = "Em alguns apps o Cmd+H não faz nada, porque eles não têm o comando Ocultar. Adicione um aqui e o CommandH o ocultará quando você pressionar Cmd+H.";
+
+/* Menu button that lists the apps running now, to add one to that list. */
+"Add a Running App" = "Adicionar um app aberto";
+
+/* Button that removes an app from that list. %@ is the app's name. */
+"Remove %@" = "Remover %@";
+
 /* ===== System pane ===== */
 
 /* Settings switch label. Sentence case. */

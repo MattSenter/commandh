@@ -89,6 +89,7 @@ Abra a janela Ajustes abrindo o CommandH pela pasta Aplicativos (ou pelo Spotlig
 |---|---|---|
 | **Ativado** | Ocultar | Liga ou desliga o CommandH sem encerrá-lo. Desligado, o Cmd+H se comporta como no macOS padrão. |
 | **Quando só um app está visível** | Ocultar | Escolhe entre **Ocultar o app** e **Mostrar Mesa**. Veja [a comparação acima](#duas-formas-de-lidar-com-o-último-app). |
+| **Apps sem o comando Ocultar** | Ocultar | Lista os apps em que o Cmd+H não faz nada porque eles não têm o comando Ocultar. Escolha **Adicionar um app aberto** para adicionar um, e o CommandH o ocultará quando você pressionar Cmd+H. |
 | **Mostrar na barra de menus** | Sistema | Mostra ou remove o ícone ⌘H da sua barra de menus. Desativado, o CommandH funciona de forma invisível. Abra o CommandH pela pasta Aplicativos para voltar a esta janela. |
 | **Abrir ao iniciar sessão** | Sistema | Abre o CommandH automaticamente quando você inicia sessão. Ele abre discretamente, sem mostrar esta janela. |
 | **Encerrar CommandH** | Sistema | Encerra o app de verdade. Fechar a janela (ou pressionar Cmd+Q) só fecha a janela e mantém o CommandH em execução. |
@@ -147,6 +148,9 @@ O macOS só permite abrir ao iniciar sessão apps que estejam em um local estáv
 **A barra de menus mostra "CommandH" depois que oculto o meu último app.**
 No modo **Ocultar o app**, o CommandH passa a ser o app ativo depois que o último app é ocultado, então o nome dele aparece na barra de menus. Clique em qualquer app ou na Mesa para seguir em frente.
 
+**O Cmd+H não faz nada em um app específico.**
+Alguns apps (o CapCut é um deles) não têm o comando Ocultar, então o Cmd+H nunca funcionou neles. Abra o app e adicione-o em **Apps sem o comando Ocultar**, no painel **Ocultar**.
+
 ## Como funciona
 
 Antes de escrever o CommandH, testamos todas as formas que encontramos de ocultar diretamente o último app visível. Todas falham:
@@ -165,7 +169,9 @@ Todas elas acabam na mesma verificação interna do macOS, e essa verificação 
 
 **Mostrar Mesa** segue outro caminho. Enquanto o app da frente for o único visível, o CommandH registra o Cmd+H como atalho global (liberado assim que isso deixa de ser verdade) e aciona o Mostrar Mesa nativo do macOS. Fora desse único caso, o Cmd+H vai direto para os seus apps.
 
-Nenhum dos métodos precisa de permissão, e o CommandH nunca lê a sua tela nem o que você digita. O atalho global só existe no modo Mostrar Mesa e só enquanto um único app está visível.
+**Apps sem o comando Ocultar** usa o mesmo atalho. Enquanto um app da sua lista estiver na frente, o CommandH registra o Cmd+H e oculta esse app por conta própria. Se ele for o último app visível, vale o método que você escolheu acima.
+
+Nenhum dos métodos precisa de permissão, e o CommandH nunca lê a sua tela nem o que você digita. O atalho global só existe enquanto um único app está visível no modo Mostrar Mesa, ou enquanto um app da sua lista está na frente.
 
 O app inteiro tem menos de 500 linhas de Swift em [`Sources/`](Sources).
 

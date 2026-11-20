@@ -10,6 +10,52 @@ enum Keys {
     static let enabled = "enabled"
     static let method = "method"
     static let showInMenuBar = "showInMenuBar"
+    /// Bundle IDs (a string array) of apps CommandH hides itself on Cmd+H.
+    static let forceHideApps = "forceHideApps"
+}
+
+/// An app in the force hide list or the menu that adds to it.
+struct ListedApp: Identifiable {
+    let id: String // bundle ID
+    let name: String
+    let icon: NSImage
+
+    init(_ running: NSRunningApplication, bundleID: String) {
+        self.init(id: bundleID, name: running.localizedName ?? bundleID,
+                  icon: running.icon ?? NSWorkspace.shared.icon(for: .application))
+    }
+
+    /// A listed app, running or not. Falls back to the bundle ID for an app
+    /// that has since been deleted, so it can still be removed.
+    init(bundleID: String) {
+        if let running = NSRunningApplication.runningApplications(withBundleIdentifier: bundleID).first {
+            self.init(running, bundleID: bundleID)
+        } else if let url = NSWorkspace.shared.urlForApplication(withBundleIdentifier: bundleID) {
+            self.init(id: bundleID,
+                      name: FileManager.default.displayName(atPath: url.path).replacingOccurrences(of: ".app", with: ""),
+                      icon: NSWorkspace.shared.icon(forFile: url.path))
+        } else {
+            self.init(id: bundleID, name: bundleID, icon: NSWorkspace.shared.icon(for: .application))
+        }
+    }
+
+    private init(id: String, name: String, icon: NSImage) {
+        self.id = id
+        self.name = name
+        self.icon = icon
+    }
+
+    /// Regular (Dock) apps running now, CommandH excluded, by name.
+    static func running() -> [ListedApp] {
+        let me = Bundle.main.bundleIdentifier
+        var seen = Set<String>()
+        return NSWorkspace.shared.runningApplications.compactMap { app -> ListedApp? in
+            guard app.activationPolicy == .regular, let id = app.bundleIdentifier, id != me,
+                  seen.insert(id).inserted else { return nil }
+            return ListedApp(app, bundleID: id)
+        }
+        .sorted { $0.name.localizedCaseInsensitiveCompare($1.name) == .orderedAscending }
+    }
 }
 
 /// CommandH's few colors. Everything else uses the system's own, so the window
@@ -35,6 +81,10 @@ struct SettingsView: View {
     @AppStorage(Keys.method) private var method: HideMethod = .hideApp
     @AppStorage(Keys.showInMenuBar) private var showInMenuBar = true
     @State private var openAtLogin = SMAppService.mainApp.status == .enabled
+    /// Bundle IDs under Keys.forceHideApps; @AppStorage can't hold an array.
+    @State private var forceHideApps = UserDefaults.standard.stringArray(forKey: Keys.forceHideApps) ?? []
+    /// What the Add menu offers; refreshed as apps launch and quit.
+    @State private var runningApps = ListedApp.running()
     @State private var selection: Pane = .hiding
     /// Two-second "Copied" confirmation on Copy Version Info.
     @State private var copiedVersion = false
@@ -178,7 +228,59 @@ struct SettingsView: View {
                 .disabled(!enabled)
             }
             #endif
+            forceHideCard
         }
+    }
+
+    /// Apps with no Hide command of their own, which CommandH hides itself.
+    private var forceHideCard: some View {
+        card(Text("Apps without a Hide command")) {
+            caption("In some apps Cmd+H does nothing, because they have no Hide command. Add one here and CommandH hides it when you press Cmd+H.")
+            ForEach(forceHideApps.map(ListedApp.init(bundleID:))) { app in
+                HStack(spacing: 8) {
+                    Image(nsImage: app.icon).resizable().interpolation(.high)
+                        .frame(width: 20, height: 20)
+                        .accessibilityHidden(true)
+                    Text(verbatim: app.name).font(.system(size: 13))
+                    Spacer()
+                    Button {
+                        setForceHideApps(forceHideApps.filter { $0 != app.id })
+                    } label: {
+                        Image(systemName: "minus.circle")
+                    }
+                    .buttonStyle(.borderless)
+                    .accessibilityLabel(String(localized: "Remove \(app.name)", comment: "Button that removes an app from the list of apps CommandH hides. The argument is the app's name."))
+                    .help(String(localized: "Remove \(app.name)"))
+                }
+            }
+            let choices = runningApps.filter { !forceHideApps.contains($0.id) }
+            Menu {
+                ForEach(choices) { app in
+                    Button {
+                        setForceHideApps(forceHideApps + [app.id])
+                    } label: {
+                        Image(nsImage: app.icon)
+                        Text(verbatim: app.name)
+                    }
+                }
+            } label: {
+                Label("Add a Running App", systemImage: "plus")
+            }
+            .fixedSize()
+            .disabled(!enabled || choices.isEmpty)
+        }
+        .onReceive(NSWorkspace.shared.notificationCenter.publisher(for: NSWorkspace.didLaunchApplicationNotification)) { _ in
+            runningApps = ListedApp.running()
+        }
+        .onReceive(NSWorkspace.shared.notificationCenter.publisher(for: NSWorkspace.didTerminateApplicationNotification)) { _ in
+            runningApps = ListedApp.running()
+        }
+        .onAppear { runningApps = ListedApp.running() }
+    }
+
+    private func setForceHideApps(_ apps: [String]) {
+        forceHideApps = apps
+        UserDefaults.standard.set(apps, forKey: Keys.forceHideApps)
     }
 
     private func methodOption(_ title: LocalizedStringKey, _ detail: LocalizedStringKey) -> some View {

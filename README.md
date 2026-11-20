@@ -89,6 +89,7 @@ Open the Preferences window by opening CommandH from your Applications folder (o
 |---|---|---|
 | **Enabled** | Hiding | Turns CommandH on or off without quitting it. When off, Cmd+H behaves like stock macOS. |
 | **When only one app is showing** | Hiding | Chooses **Hide the app** or **Show Desktop**. See [the comparison above](#two-ways-to-handle-the-last-app). |
+| **Apps without a Hide command** | Hiding | Lists apps where Cmd+H does nothing because they have no Hide command. Choose **Add a Running App** to add one, and CommandH hides it when you press Cmd+H. |
 | **Show in menu bar** | System | Shows or removes the ⌘H icon in your menu bar. With it off, CommandH runs invisibly. Open CommandH from your Applications folder to get back to this window. |
 | **Open at login** | System | Starts CommandH automatically when you log in. It starts quietly, without opening this window. |
 | **Quit CommandH** | System | Actually quits the app. Closing the window (or pressing Cmd+Q) only closes the window and leaves CommandH running. |
@@ -147,6 +148,9 @@ macOS only allows apps in a stable location to open at login. Make sure CommandH
 **The menu bar shows "CommandH" after I hide my last app.**
 In **Hide the app** mode, CommandH becomes the active app after the last app hides, so its name appears in the menu bar. Click any app or the desktop to move on.
 
+**Cmd+H does nothing in one particular app.**
+Some apps (CapCut is one) have no Hide command, so Cmd+H never worked in them. Open that app, then add it under **Apps without a Hide command** in the **Hiding** pane.
+
 ## How it works
 
 Before writing CommandH, we tested every way we could find to hide the last visible app directly. All of them fail:
@@ -165,7 +169,9 @@ All of these hand off to the same check inside macOS, and that check only counts
 
 **Show Desktop** takes a different path. While the front app is the only one showing, CommandH registers Cmd+H as a global hotkey (released as soon as that stops being true) and triggers macOS's built-in Show Desktop. Outside that one case, Cmd+H goes straight to your apps.
 
-Neither method needs any permission, and CommandH never reads your screen or your keystrokes. The global hotkey only exists in Show Desktop mode and only while one app is showing.
+**Apps without a Hide command** use the same hotkey. While an app on your list is in front, CommandH registers Cmd+H and hides that app itself. If it's the last app showing, the method you picked above takes over.
+
+Neither method needs any permission, and CommandH never reads your screen or your keystrokes. The global hotkey only exists while one app is showing in Show Desktop mode, or while an app on your list is in front.
 
 The whole app is under 500 lines of Swift in [`Sources/`](Sources).
 

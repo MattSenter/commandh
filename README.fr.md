@@ -89,6 +89,7 @@ Pour ouvrir la fenêtre Réglages, ouvrez CommandH depuis votre dossier Applicat
 |---|---|---|
 | **Activé** | Masquage | Active ou désactive CommandH sans le quitter. Une fois désactivé, Cmd+H se comporte comme dans macOS d’origine. |
 | **Quand une seule app est affichée** | Masquage | Choisit **Masquer l’app** ou **Afficher le bureau**. Consultez [la comparaison ci-dessus](#deux-façons-de-gérer-la-dernière-app). |
+| **Apps sans commande Masquer** | Masquage | Liste les apps dans lesquelles Cmd+H ne fait rien, faute de commande Masquer. Choisissez **Ajouter une app ouverte** pour en ajouter une, et CommandH la masquera quand vous appuierez sur Cmd+H. |
 | **Afficher dans la barre des menus** | Système | Affiche ou retire l’icône ⌘H de votre barre des menus. Une fois désactivé, CommandH fonctionne de façon invisible. Ouvrez CommandH depuis votre dossier Applications pour revenir à cette fenêtre. |
 | **Ouvrir avec la session** | Système | Lance CommandH automatiquement à l’ouverture de votre session. Il démarre discrètement, sans ouvrir cette fenêtre. |
 | **Quitter CommandH** | Système | Quitte vraiment l’app. Fermer la fenêtre (ou appuyer sur Cmd+Q) ferme seulement la fenêtre et laisse CommandH ouvert. |
@@ -147,6 +148,9 @@ macOS n’autorise l’ouverture avec la session que pour les apps situées à u
 **La barre des menus affiche « CommandH » après que j’ai masqué ma dernière app.**
 En mode **Masquer l’app**, CommandH devient l’app active une fois la dernière app masquée, d’où son nom dans la barre des menus. Cliquez sur n’importe quelle app ou sur le bureau pour continuer.
 
+**Cmd+H ne fait rien dans une app en particulier.**
+Certaines apps (CapCut, par exemple) n’ont pas de commande Masquer, et Cmd+H n’y a donc jamais fonctionné. Ouvrez cette app, puis ajoutez-la sous **Apps sans commande Masquer**, dans la sous-fenêtre **Masquage**.
+
 ## Fonctionnement
 
 Avant d’écrire CommandH, nous avons testé toutes les méthodes que nous avons pu trouver pour masquer directement la dernière app visible. Toutes échouent :
@@ -165,7 +169,9 @@ Toutes ces méthodes aboutissent à la même vérification interne de macOS, et 
 
 **Afficher le bureau** emprunte un autre chemin. Tant que l’app au premier plan est la seule affichée, CommandH enregistre Cmd+H comme raccourci global (libéré dès que ce n’est plus le cas) et déclenche la fonction Afficher le bureau intégrée à macOS. En dehors de ce cas précis, Cmd+H va directement à vos apps.
 
-Aucune des deux méthodes ne demande d’autorisation, et CommandH ne lit jamais votre écran ni vos frappes au clavier. Le raccourci global n’existe qu’en mode Afficher le bureau, et seulement quand une seule app est affichée.
+**Apps sans commande Masquer** utilise le même raccourci. Tant qu’une app de votre liste est au premier plan, CommandH enregistre Cmd+H et masque lui-même cette app. Si c’est la dernière app affichée, la méthode choisie ci-dessus prend le relais.
+
+Aucune des deux méthodes ne demande d’autorisation, et CommandH ne lit jamais votre écran ni vos frappes au clavier. Le raccourci global n’existe que lorsqu’une seule app est affichée en mode Afficher le bureau, ou lorsqu’une app de votre liste est au premier plan.
 
 Toute l’app tient en moins de 500 lignes de Swift, dans [`Sources/`](Sources).
 

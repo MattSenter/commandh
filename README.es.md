@@ -89,6 +89,7 @@ Abre la ventana de ajustes abriendo CommandH desde tu carpeta Aplicaciones (o de
 |---|---|---|
 | **Activado** | Ocultación | Activa o desactiva CommandH sin salir de él. Cuando está desactivado, Cmd+H se comporta como en macOS de serie. |
 | **Cuando solo se ve una app** | Ocultación | Elige entre **Ocultar la app** y **Mostrar escritorio**. Consulta [la comparación de arriba](#dos-formas-de-gestionar-la-última-app). |
+| **Apps sin el comando Ocultar** | Ocultación | Lista de apps en las que Cmd+H no hace nada porque no tienen el comando Ocultar. Elige **Añadir una app abierta** para añadir una, y CommandH la ocultará cuando pulses Cmd+H. |
 | **Mostrar en la barra de menús** | Sistema | Muestra o quita el icono ⌘H de tu barra de menús. Si lo desactivas, CommandH funciona de forma invisible. Abre CommandH desde tu carpeta Aplicaciones para volver a esta ventana. |
 | **Abrir al iniciar sesión** | Sistema | Inicia CommandH automáticamente al iniciar sesión. Se inicia en silencio, sin abrir esta ventana. |
 | **Salir de CommandH** | Sistema | Sale de la app de verdad. Cerrar la ventana (o pulsar Cmd+Q) solo cierra la ventana y deja CommandH en ejecución. |
@@ -144,6 +145,9 @@ macOS solo permite abrir al iniciar sesión las apps que están en una ubicació
 **La barra de menús muestra "CommandH" después de ocultar mi última app.**
 En el modo **Ocultar la app**, CommandH pasa a ser la app activa cuando se oculta la última app, así que su nombre aparece en la barra de menús. Haz clic en cualquier app o en el escritorio para continuar.
 
+**Cmd+H no hace nada en una app concreta.**
+Algunas apps (CapCut es una de ellas) no tienen el comando Ocultar, así que Cmd+H nunca ha funcionado en ellas. Abre esa app y añádela en **Apps sin el comando Ocultar**, en el panel **Ocultación**.
+
 ## Cómo funciona
 
 Antes de escribir CommandH, probamos todas las formas que encontramos de ocultar directamente la última app visible. Todas fallan:
@@ -162,7 +166,9 @@ Todos estos métodos acaban en la misma comprobación interna de macOS, y esa co
 
 **Mostrar escritorio** sigue otro camino. Mientras la app en primer plano es la única que se ve, CommandH registra Cmd+H como atajo global (y lo libera en cuanto deja de ser así) y activa la función Mostrar escritorio integrada en macOS. Fuera de ese caso concreto, Cmd+H llega directamente a tus apps.
 
-Ninguno de los dos métodos necesita permisos, y CommandH nunca lee tu pantalla ni tus pulsaciones de teclas. El atajo global solo existe en el modo Mostrar escritorio y solo mientras se ve una única app.
+**Apps sin el comando Ocultar** usa el mismo atajo. Mientras una app de tu lista está en primer plano, CommandH registra Cmd+H y oculta esa app por su cuenta. Si es la última app que se ve, se aplica el método que hayas elegido arriba.
+
+Ninguno de los dos métodos necesita permisos, y CommandH nunca lee tu pantalla ni tus pulsaciones de teclas. El atajo global solo existe mientras se ve una única app en el modo Mostrar escritorio, o mientras una app de tu lista está en primer plano.
 
 Toda la app ocupa menos de 500 líneas de Swift en [`Sources/`](Sources).
 
