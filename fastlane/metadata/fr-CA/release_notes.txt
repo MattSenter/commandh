@@ -1,3 +1,8 @@
 Nouveau : certaines apps n’ont pas de commande Masquer, et Commande + H n’y a donc jamais fonctionné. Ajoutez-les sous Masquage dans les Réglages, et CommandH les masque pour vous.
 
-Nouveau aussi : le bouton Noter CommandH dans À propos.
+Nouveau aussi : les liens Noter CommandH et Partager CommandH en bas de la barre latérale des Réglages.
+
+Corrigé : Ouvrir avec la session affiche désormais le même état dans le menu de la barre des menus et dans les Réglages.
+
+Love,
+-Matt

@@ -90,7 +90,7 @@ private final class HotKey {
 
 // MARK: - App
 
-final class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
+final class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate, NSMenuDelegate {
     private var statusItem: NSStatusItem!
     private var statusVisibilityObservation: NSKeyValueObservation?
     private var settingStatusVisibility = false
@@ -439,6 +439,9 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
         menu.addItem(withTitle: String(localized: "Preferences…"), action: #selector(showSettings), keyEquivalent: ",").target = self
         menu.addItem(.separator())
         menu.addItem(withTitle: String(localized: "Quit CommandH"), action: #selector(quitApp), keyEquivalent: "q").target = self
+        // Open at Login can change in the settings window or System Settings,
+        // neither of which tells the menu. Re-read every state as it opens.
+        menu.delegate = self
         statusItem.menu = menu
 
         statusItem.isVisible = showInMenuBar
@@ -466,6 +469,8 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
         loginItem.state = SMAppService.mainApp.status == .enabled ? .on : .off
     }
 
+    func menuNeedsUpdate(_ menu: NSMenu) { refreshMenu() }
+
     @objc private func toggleEnabled() { enabled.toggle() }
     @objc private func chooseHideApp() { method = .hideApp }
     @objc private func chooseShowDesktop() { method = .showDesktop }
@@ -479,6 +484,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
             NSSound.beep()
         }
         refreshMenu()
+        NotificationCenter.default.post(name: .openAtLoginChanged, object: nil)
     }
 }
 

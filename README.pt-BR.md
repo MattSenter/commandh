@@ -96,6 +96,7 @@ Abra a janela Ajustes abrindo o CommandH pela pasta Aplicativos (ou pelo Spotlig
 | **Abrir ao iniciar sessão** | Sistema | Abre o CommandH automaticamente quando você inicia sessão. Ele abre discretamente, sem mostrar esta janela. |
 | **Encerrar CommandH** | Sistema | Encerra o app de verdade. Fechar a janela (ou pressionar Cmd+Q) só fecha a janela e mantém o CommandH em execução. |
 | **Avaliar o CommandH** | Sobre | Somente na versão da Mac App Store. Abre a App Store para você avaliar ou escrever uma resenha do CommandH. |
+| **Compartilhar o CommandH** | Barra lateral | Abre o menu Compartilhar do sistema com o link do CommandH na App Store. Na versão da Mac App Store, **Avaliar o CommandH** também fica aqui. |
 
 Os ajustes são salvos automaticamente e entram em vigor na hora.
 

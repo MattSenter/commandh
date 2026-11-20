@@ -96,6 +96,7 @@ CommandH 已在 [Mac App Store](https://apps.apple.com/app/id6825789142) 上架�
 | **登入時開啟** | 系統 | 登入時自動啟動 CommandH。它會安靜地啟動，不會開啟這個視窗。 |
 | **結束 CommandH** | 系統 | 真正結束應用程式。關閉視窗（或按 Cmd+Q）只會關閉視窗，CommandH 仍會繼續執行。 |
 | **為 CommandH 評分** | 關於 | 僅限 Mac App Store 版本。打開 App Store，為 CommandH 評分或撰寫評論。 |
+| **分享 CommandH** | 側邊欄 | 打開系統分享選單，並附上 CommandH 的 App Store 連結。在 Mac App Store 版本中，**為 CommandH 評分**也在這裡。 |
 
 設定會自動儲存，並立即生效。
 

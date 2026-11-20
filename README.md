@@ -96,6 +96,7 @@ Open the Preferences window by opening CommandH from your Applications folder (o
 | **Open at login** | System | Starts CommandH automatically when you log in. It starts quietly, without opening this window. |
 | **Quit CommandH** | System | Actually quits the app. Closing the window (or pressing Cmd+Q) only closes the window and leaves CommandH running. |
 | **Rate CommandH** | About | Mac App Store version only. Opens the App Store so you can rate or review CommandH. |
+| **Share CommandH** | Sidebar | Opens the system share sheet with CommandH's App Store link. In the Mac App Store version, **Rate CommandH** is here too. |
 
 Settings are saved automatically and apply right away.
 

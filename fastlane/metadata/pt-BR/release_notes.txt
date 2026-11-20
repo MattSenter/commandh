@@ -1,3 +1,8 @@
 Novidade: alguns apps não têm o comando Ocultar, então o Command-H nunca funcionou neles. Adicione esses apps em Ocultar, nos Ajustes, e o CommandH os oculta para você.
 
-Também novo: o botão Avaliar o CommandH em Sobre.
+Também novo: os links Avaliar o CommandH e Compartilhar o CommandH na parte inferior da barra lateral dos Ajustes.
+
+Corrigido: Abrir ao iniciar sessão agora mostra o mesmo estado no menu da barra de menus e nos Ajustes.
+
+Love,
+-Matt

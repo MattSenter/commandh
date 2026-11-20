@@ -81,6 +81,9 @@
 /* Copyright line in the sidebar. %@ is the company name, Senternet LLC, which links to its site. Keep it short: it must fit on one line. */
 "Copyright © 2026 %@" = "版权所有 © 2026 %@";
 
+/* Link at the bottom of the settings sidebar that opens the system share sheet with CommandH's App Store link. Shown in the App Store screenshots: never add the words Mac or macOS. */
+"Share CommandH" = "分享 CommandH";
+
 /* ===== Hiding pane ===== */
 
 /* Hiding pane intro. */

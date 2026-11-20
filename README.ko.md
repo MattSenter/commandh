@@ -96,6 +96,7 @@ CommandH는 [Mac App Store](https://apps.apple.com/app/id6825789142)에서 받�
 | **로그인 시 열기** | 시스템 | 로그인할 때 CommandH를 자동으로 시작합니다. 이 윈도우를 열지 않고 조용히 시작합니다. |
 | **CommandH 종료** | 시스템 | 앱을 실제로 종료합니다. 윈도우를 닫거나 Cmd+Q를 누르면 윈도우만 닫히고 CommandH는 계속 실행됩니다. |
 | **CommandH 평가하기** | 정보 | Mac App Store 버전 전용. App Store를 열어 CommandH를 평가하거나 리뷰를 남길 수 있습니다. |
+| **CommandH 공유하기** | 사이드바 | CommandH의 App Store 링크와 함께 시스템 공유 메뉴를 엽니다. Mac App Store 버전에서는 **CommandH 평가하기**도 여기에 있습니다. |
 
 설정은 자동으로 저장되며 바로 적용됩니다.
 

@@ -96,6 +96,7 @@ Du öffnest das Einstellungsfenster, indem du CommandH aus deinem Ordner „Prog
 | **Bei der Anmeldung öffnen** | System | Startet CommandH automatisch, wenn du dich anmeldest. Es startet still, ohne dieses Fenster zu öffnen. |
 | **CommandH beenden** | System | Beendet die App wirklich. Das Schließen des Fensters (oder Cmd+Q) schließt nur das Fenster, CommandH läuft weiter. |
 | **CommandH bewerten** | Über | Nur in der Version aus dem Mac App Store. Öffnet den App Store, damit du CommandH bewerten oder rezensieren kannst. |
+| **CommandH teilen** | Seitenleiste | Öffnet das Teilen-Menü des Systems mit dem App Store-Link von CommandH. In der Version aus dem Mac App Store steht hier auch **CommandH bewerten**. |
 
 Einstellungen werden automatisch gesichert und gelten sofort.
 

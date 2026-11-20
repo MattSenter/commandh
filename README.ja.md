@@ -96,6 +96,7 @@ CommandHは[Mac App Store](https://apps.apple.com/app/id6825789142)で入手で�
 | **ログイン時に開く** | システム | ログイン時にCommandHを自動的に起動します。このウインドウは開かず、静かに起動します。 |
 | **CommandHを終了** | システム | アプリを実際に終了します。ウインドウを閉じても（Cmd+Qを押しても）、ウインドウが閉じるだけでCommandHは実行され続けます。 |
 | **CommandHを評価** | 情報 | Mac App Store版のみ。App Storeを開き、CommandHを評価したりレビューを書いたりできます。 |
+| **CommandHを共有** | サイドバー | CommandHのApp Storeリンクを付けて、システムの共有メニューを開きます。Mac App Store版では**CommandHを評価**もここにあります。 |
 
 設定は自動的に保存され、すぐに反映されます。
 

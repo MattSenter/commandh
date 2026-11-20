@@ -96,6 +96,7 @@ Abre la ventana de ajustes abriendo CommandH desde tu carpeta Aplicaciones (o de
 | **Abrir al iniciar sesión** | Sistema | Inicia CommandH automáticamente al iniciar sesión. Se inicia en silencio, sin abrir esta ventana. |
 | **Salir de CommandH** | Sistema | Sale de la app de verdad. Cerrar la ventana (o pulsar Cmd+Q) solo cierra la ventana y deja CommandH en ejecución. |
 | **Valorar CommandH** | Acerca de | Solo en la versión del Mac App Store. Abre el App Store para que puedas valorar o reseñar CommandH. |
+| **Compartir CommandH** | Barra lateral | Abre el menú Compartir del sistema con el enlace de CommandH en el App Store. En la versión del Mac App Store, **Valorar CommandH** también está aquí. |
 
 Los ajustes se guardan automáticamente y se aplican al instante.
 

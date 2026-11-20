@@ -407,9 +407,9 @@ struct SettingsSlide: View {
                 .frame(height: 30)
                 SettingsView(onQuit: {})
                     .toggleStyle(ActiveSwitch())
-                    // Frame the content area of the real pane, omitting its unused lower space.
-                    .frame(height: 470, alignment: .top)
-                    .clipped()
+                    // The whole window at its real minimum size, so the sidebar footer
+                    // (Rate, Share, credit) shows as it does in the app.
+                    .frame(height: SettingsView.minimumSize.height)
             }
             .frame(width: SettingsView.minimumSize.width)
             .background(Color(nsColor: .windowBackgroundColor))
@@ -417,8 +417,8 @@ struct SettingsSlide: View {
             .overlay(RoundedRectangle(cornerRadius: 12).strokeBorder(.black.opacity(0.25), lineWidth: 1))
             .shadow(color: .black.opacity(0.5), radius: 30, y: 16)
             .environment(\.colorScheme, .light)
-            .scaleEffect(1.15)
-            .frame(height: 575)
+            .scaleEffect(0.86)
+            .frame(height: (SettingsView.minimumSize.height + 30) * 0.86)
             .padding(.bottom, 30)
         }
     }

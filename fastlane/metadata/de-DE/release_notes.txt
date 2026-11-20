@@ -1,3 +1,8 @@
 Neu: Manche Apps haben keinen Befehl „Ausblenden“, deshalb hat Command-H dort nie funktioniert. Füge diese Apps in den Einstellungen unter „Ausblenden“ hinzu, und CommandH blendet sie für dich aus.
 
-Außerdem neu: die Taste „CommandH bewerten“ im Bereich „Über“.
+Außerdem neu: die Links „CommandH bewerten“ und „CommandH teilen“ unten in der Seitenleiste der Einstellungen.
+
+Behoben: „Bei der Anmeldung öffnen“ zeigt jetzt im Menü der Menüleiste und in den Einstellungen denselben Zustand.
+
+Love,
+-Matt

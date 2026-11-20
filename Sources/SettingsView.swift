@@ -14,6 +14,20 @@ enum Keys {
     static let forceHideApps = "forceHideApps"
 }
 
+extension Notification.Name {
+    /// Posted when the menu bar menu turns Open at Login on or off, so an open
+    /// settings window shows the same thing.
+    static let openAtLoginChanged = Notification.Name("CommandHOpenAtLoginChanged")
+}
+
+/// CommandH on the App Store. Searching the store for the name does not find
+/// it (search rewrites "CommandH" as a typo), so the direct link is what gets shared.
+enum AppStoreLink {
+    static let page = URL(string: "https://apps.apple.com/app/id6825789142")!
+    /// Opens the App Store app on the rating and review form.
+    static let writeReview = URL(string: "macappstore://apps.apple.com/app/id6825789142?action=write-review")!
+}
+
 /// An app in the force hide list or the menu that adds to it.
 struct ListedApp: Identifiable {
     let id: String // bundle ID
@@ -144,6 +158,15 @@ struct SettingsView: View {
 
     // MARK: Sidebar
 
+    private func sidebarLink(_ title: LocalizedStringKey, icon: String) -> some View {
+        Label(title, systemImage: icon)
+            .labelStyle(.titleAndIcon)
+            .font(.system(size: 11))
+            .foregroundStyle(.secondary)
+            .lineLimit(1)
+            .contentShape(Rectangle())
+    }
+
     private var sidebar: some View {
         VStack(alignment: .leading, spacing: 4) {
             Image(nsImage: NSApp.applicationIconImage)
@@ -175,9 +198,31 @@ struct SettingsView: View {
                 .accessibilityAddTraits(selection == item ? .isSelected : [])
             }
             Spacer()
-            VStack(alignment: .leading, spacing: 4) {
-                BuiltByCredit(content: "settings")
-                CopyrightLine()
+            // Rate and Share are one click from any pane, then who made it.
+            VStack(alignment: .leading, spacing: 10) {
+                VStack(alignment: .leading, spacing: 6) {
+                    #if APP_STORE
+                    Button {
+                        NSWorkspace.shared.open(AppStoreLink.writeReview)
+                    } label: {
+                        sidebarLink("Rate CommandH", icon: "heart")
+                    }
+                    .buttonStyle(.plain)
+                    .pointingHandCursor()
+                    .accessibilityAddTraits(.isLink)
+                    #endif
+                    // The system share sheet: CommandH hands it a link and sends nothing itself.
+                    ShareLink(item: AppStoreLink.page, subject: Text(verbatim: "CommandH"),
+                              message: Text("Cmd+H that works on the last app, so you can finally see your desktop.")) {
+                        sidebarLink("Share CommandH", icon: "square.and.arrow.up")
+                    }
+                    .buttonStyle(.plain)
+                    .pointingHandCursor()
+                }
+                VStack(alignment: .leading, spacing: 4) {
+                    BuiltByCredit(content: "settings")
+                    CopyrightLine()
+                }
             }
             .fixedSize(horizontal: false, vertical: true)
             .padding(.horizontal, 10)
@@ -301,6 +346,11 @@ struct SettingsView: View {
             settingRow(Text("Open at login")) {
                 switchToggle($openAtLogin)
                     .onChange(of: openAtLogin) { _, on in setOpenAtLogin(on) }
+                    // The menu bar menu and System Settings change it too, so the
+                    // switch re-reads the system's answer instead of trusting its own.
+                    .onReceive(NotificationCenter.default.publisher(for: .openAtLoginChanged)) { _ in syncOpenAtLogin() }
+                    .onReceive(NotificationCenter.default.publisher(for: NSWindow.didBecomeKeyNotification)) { _ in syncOpenAtLogin() }
+                    .onAppear(perform: syncOpenAtLogin)
             }
             VStack(alignment: .leading, spacing: 6) {
                 settingRow(Text("Show in menu bar")) { switchToggle($showInMenuBar) }
@@ -318,8 +368,15 @@ struct SettingsView: View {
         }
     }
 
+    private func syncOpenAtLogin() {
+        let actual = SMAppService.mainApp.status == .enabled
+        if openAtLogin != actual { openAtLogin = actual }
+    }
+
     private func setOpenAtLogin(_ on: Bool) {
         let service = SMAppService.mainApp
+        // Already there: the switch was only catching up with a change made elsewhere.
+        guard on != (service.status == .enabled) else { return }
         do {
             if on { try service.register() } else { try service.unregister() }
         } catch {
@@ -381,8 +438,7 @@ struct SettingsView: View {
                     #if APP_STORE
                     // Opens the App Store app on CommandH's review form. A link the
                     // user clicks, like the others here: CommandH itself stays offline.
-                    webButton("Rate CommandH", icon: "star",
-                              url: "macappstore://apps.apple.com/app/id6825789142?action=write-review")
+                    webButton("Rate CommandH", icon: "heart", url: AppStoreLink.writeReview.absoluteString)
                     #endif
                     Spacer()
                 }

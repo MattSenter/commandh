@@ -39,4 +39,7 @@ promotional text are not indexed, so write those for people, not for search.
 `release_notes.txt` is required in every locale (`scripts/check-localization.py`). Rewrite it
 for each version, and name panes and buttons exactly as that language's
 `Localization/<lang>.lproj` does.
+Every release notes file ends with a blank line and then the sign-off, in English in every locale:
 
+    Love,
+    -Matt
